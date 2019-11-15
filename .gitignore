@@ -1,0 +1,4 @@
+.idea
+yolo-object-detection/yolo-coco/yolov3.weights
+yolo-object-detection/images/*
+yolo-object-detection/videos/*
