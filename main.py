@@ -27,7 +27,7 @@ import cv2
 from AlgoritamKeyPoints import *
 from Matchers import *
 from utils.imagesUtils import Accuracy, resizeImage, ShowMatch
-
+from utils.yolo import forward,initYolo
 
 def fullPipeLine(source, target):
     kp, des = KazeDetectKeyPoints(source)
@@ -43,14 +43,27 @@ def fullPipeLine(source, target):
 if __name__ == "__main__":
     """# import images"""
 
-    source = cv2.imread('images/DSC_0054.JPG')
+    weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
+    configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
+    labelPath = 'yolo-object-detection/yolo-coco/coco.names'
+    net = initYolo(weightsPath,configPath)
 
-    target = cv2.imread('images/DSC_0102.JPG')
+    image = cv2.imread('images/DSC_0054.JPG')
+    forward(net,image,labelPath)
+    forward(net,image,labelPath)
+    forward(net,image,labelPath)
+    forward(net,image,labelPath)
+    forward(net,image,labelPath)
+    forward(net,image,labelPath)
 
-    target = resizeImage(target, 0.1)
-
-    source = resizeImage(source, 0.1)
-
-    fullPipeLine(source, target)
+    # source = cv2.imread('images/DSC_0054.JPG')
+    #
+    # target = cv2.imread('images/DSC_0102.JPG')
+    #
+    # target = resizeImage(target, 0.1)
+    #
+    # source = resizeImage(source, 0.1)
+    #
+    # fullPipeLine(source, target)
 
     print("finish")

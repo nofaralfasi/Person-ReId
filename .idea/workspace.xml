@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e3c4659-72cd-40da-9388-7be41fd61801" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="9e3c4659-72cd-40da-9388-7be41fd61801" name="Default Changelist" comment="add Yolo Repo">
+      <change afterPath="$PROJECT_DIR$/utils/yolo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,8 +59,17 @@
       <updated>1572088195432</updated>
       <workItem from="1572088199564" duration="1425000" />
       <workItem from="1572099765057" duration="35000" />
-      <workItem from="1573828173422" duration="2809000" />
+      <workItem from="1573828173422" duration="3173000" />
+      <workItem from="1573832920905" duration="1185000" />
     </task>
+    <task id="LOCAL-00001" summary="add Yolo Repo">
+      <created>1573831022038</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1573831022039</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -71,10 +80,16 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add Yolo Repo" />
+    <option name="LAST_COMMIT_MESSAGE" value="add Yolo Repo" />
   </component>
 </project>
