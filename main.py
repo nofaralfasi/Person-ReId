@@ -48,13 +48,15 @@ if __name__ == "__main__":
     labelPath = 'yolo-object-detection/yolo-coco/coco.names'
     net = initYolo(weightsPath,configPath)
 
-    image = cv2.imread('images/DSC_0054.JPG')
-    forward(net,image,labelPath)
-    forward(net,image,labelPath)
-    forward(net,image,labelPath)
-    forward(net,image,labelPath)
-    forward(net,image,labelPath)
-    forward(net,image,labelPath)
+    image = cv2.imread('images/DSC_0102.JPG')
+    croped = forward(net,image,labelPath)
+
+    for i in croped:
+        cv2.imshow("croped",i)
+        key = cv2.waitKey(0)
+        while key != ord('q'):
+            pass
+
 
     # source = cv2.imread('images/DSC_0054.JPG')
     #

@@ -67,6 +67,7 @@ def forward(net,image,labelPath : "coco.names"):
                            0.3)
 
     # ensure at least one detection exists
+    crop=[]
     if len(idxs) > 0:
         # loop over the indexes we are keeping
         for i in idxs.flatten():
@@ -74,7 +75,11 @@ def forward(net,image,labelPath : "coco.names"):
             (x, y) = (boxes[i][0], boxes[i][1])
             (w, h) = (boxes[i][2], boxes[i][3])
 
+            if LABELS[classIDs[i]] == 'person':
+                crop.append(image[y:y+h,x:x+w])
+
             # draw a bounding box rectangle and label on the image
             #color = [int(c) for c in COLORS[classIDs[i]]]
-            print(LABELS[classIDs[i]])
-            print(confidences[i])
+            # print(LABELS[classIDs[i]])
+            # print(confidences[i])
+    return crop
