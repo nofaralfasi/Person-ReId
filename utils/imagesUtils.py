@@ -1,6 +1,6 @@
 """# resize image"""
 from builtins import dict
-
+import random as rnd
 import cv2
 
 
@@ -16,7 +16,7 @@ def ShowMatch(source, kp, target, kp2, matches):
 
     draw_params = dict(
                        singlePointColor=None,
-                       matchColor=(0, 255, 0),
+                       matchColor=(0, rnd.randint(0,255), 0),
                        flags=2)
 
     for i in kp:

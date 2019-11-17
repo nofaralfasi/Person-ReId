@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9e3c4659-72cd-40da-9388-7be41fd61801" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlgoritamKeyPoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgoritamKeyPoints.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/imagesUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/imagesUtils.py" afterDir="false" />
     </list>
@@ -65,7 +64,7 @@
       <workItem from="1573842481955" duration="529000" />
       <workItem from="1573843468070" duration="2558000" />
       <workItem from="1573999970925" duration="391000" />
-      <workItem from="1574001403374" duration="4137000" />
+      <workItem from="1574001403374" duration="5692000" />
     </task>
     <task id="LOCAL-00001" summary="add Yolo Repo">
       <created>1573831022038</created>
@@ -88,7 +87,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573834538719</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="sum description">
+      <created>1574007296605</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574007296606</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,6 +117,7 @@
     <MESSAGE value="add Yolo Repo" />
     <MESSAGE value="yolo foward" />
     <MESSAGE value="crop function yolo" />
-    <option name="LAST_COMMIT_MESSAGE" value="crop function yolo" />
+    <MESSAGE value="sum description" />
+    <option name="LAST_COMMIT_MESSAGE" value="sum description" />
   </component>
 </project>

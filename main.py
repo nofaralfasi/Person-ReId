@@ -11,6 +11,7 @@ Original file is located at
 #
 
 # install opencv
+from builtins import Exception
 
 """#Final Project - Source Target"""
 
@@ -29,10 +30,13 @@ from Matchers import *
 from utils.imagesUtils import Accuracy, resizeImage, ShowMatch
 from utils.yolo import forward,initYolo
 
-def fullPipeLine(source, target):
+def fullPipeLine(net,labelPath,source, target):
 
-    kpDesListS = KeyPointsBinary(source,1500)
-    kpDesListT = KeyPointsBinary(target,1500)
+    source = forward(net,source,labelPath)
+    target = forward(net,target,labelPath)
+
+    kpDesListS = KeyPointsBinary(source[0],1500)
+    kpDesListT = KeyPointsBinary(target[0],1500)
 
     finalMatches = []
     for kpS,DesS in kpDesListS:
@@ -40,8 +44,8 @@ def fullPipeLine(source, target):
             try:
                 matches = KazeMatcher(DesS, DesT)
                 finalMatches.extend(matches)
-            except Exception:
-                print(Exception)
+            except Exception as err:
+                print(err)
 
     kpFS = [ kp for kp,des in kpDesListS]
     kpFT = [ kp for kp,des in kpDesListT]
@@ -49,18 +53,20 @@ def fullPipeLine(source, target):
   #  print(len(kpBinaryS), len(des), len(kpT), len(desT), len(matches))
   #   print(Accuracy(kpBinaryS, matches))
   #   print(Accuracy(kpBinaryT, matches))
-    ShowMatch(source,kpFS,target,kpFT, finalMatches)
+    ShowMatch(source[0],kpFS,target[0],kpFT, finalMatches)
 
 
 if __name__ == "__main__":
     """# import images"""
     #
-    # weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
-    # configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
-    # labelPath = 'yolo-object-detection/yolo-coco/coco.names'
-    # net = initYolo(weightsPath,configPath)
+    weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
+    configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
+    labelPath = 'yolo-object-detection/yolo-coco/coco.names'
+    net = initYolo(weightsPath,configPath)
+    print("finish loading yolo ....")
+
+    # image = cv2.imread('images/DSC_0057.JPG')
     #
-    # image = cv2.imread('images/DSC_0102.JPG')
     # croped = forward(net,image,labelPath)
     #
     # for i in croped:
@@ -70,14 +76,14 @@ if __name__ == "__main__":
     #         pass
 
 
-    source = cv2.imread('images/DSC_0057.JPG',cv2.IMREAD_GRAYSCALE)
+    source = cv2.imread('images/DSC_0057.JPG')
 
-    target = cv2.imread('images/DSC_0057.JPG',cv2.IMREAD_GRAYSCALE)
+    target = cv2.imread('images/DSC_0057.JPG')
 
     target = resizeImage(target, 0.2)
 
     source = resizeImage(source, 0.2)
 
-    fullPipeLine(source, target)
+    fullPipeLine(net,labelPath,source, target)
 
     print("finish")
