@@ -28,32 +28,37 @@ import cv2
 from AlgoritamKeyPoints import *
 from Matchers import *
 from utils.imagesUtils import Accuracy, resizeImage, ShowMatch
-from utils.yolo import forward,initYolo
+from utils.yolo import forward, initYolo
 
-def fullPipeLine(net,labelPath,source, target):
 
-    source = forward(net,source,labelPath)
-    target = forward(net,target,labelPath)
+def fullPipeLine(net, labelPath, source, target):
+    # source = forward(net,source,labelPath)
+    # target = forward(net,target,labelPath)
 
-    kpDesListS = KeyPointsBinary(source[0],1500)
-    kpDesListT = KeyPointsBinary(target[0],1500)
+    theshold = 0.5
+    kpS, DesS = SiftDetectKeyPoints(source, None)
+    kpT, DesT = SiftDetectKeyPoints(target, None)
 
-    finalMatches = []
-    for kpS,DesS in kpDesListS:
-        for kpT,DesT in kpDesListT:
-            try:
-                matches = KazeMatcher(DesS, DesT)
-                finalMatches.extend(matches)
-            except Exception as err:
-                print(err)
+    # finalMatches = []
+    # for kpS, DesS in kpDesListS:
+    #     for kpT, DesT in kpDesListT:
+    print(len(DesS))
+    print(len(DesT))
 
-    kpFS = [ kp for kp,des in kpDesListS]
-    kpFT = [ kp for kp,des in kpDesListT]
-  #
-  #  print(len(kpBinaryS), len(des), len(kpT), len(desT), len(matches))
-  #   print(Accuracy(kpBinaryS, matches))
-  #   print(Accuracy(kpBinaryT, matches))
-    ShowMatch(source[0],kpFS,target[0],kpFT, finalMatches)
+    try:
+        matches = FLANNMATCHER(DesS, DesT,theshold)
+        ShowMatch(source, kpS, target, kpT, matches)
+
+    #        finalMatches.extend(matches)
+    except Exception as err:
+        print(err)
+
+    # kpFS = [kp for kp, des in kpDesListS]
+    # kpFT = [kp for kp, des in kpDesListT]
+    #
+    #  print(len(kpBinaryS), len(des), len(kpT), len(desT), len(matches))
+    #   print(Accuracy(kpBinaryS, matches))
+    #   print(Accuracy(kpBinaryT, matches))
 
 
 if __name__ == "__main__":
@@ -62,28 +67,28 @@ if __name__ == "__main__":
     weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
     configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
     labelPath = 'yolo-object-detection/yolo-coco/coco.names'
-    net = initYolo(weightsPath,configPath)
+    net = initYolo(weightsPath, configPath)
     print("finish loading yolo ....")
 
-    # image = cv2.imread('images/DSC_0057.JPG')
+    image = cv2.imread('images/DSC_0102.JPG')
+
+    croped = forward(net,image,labelPath)
+
+    for i in croped:
+        cv2.imshow("croped",i)
+        key = cv2.waitKey(0)
+        while key != ord('q'):
+            pass
+
+    # source = cv2.imread('images/color.png')
     #
-    # croped = forward(net,image,labelPath)
+    # target = cv2.imread('images/color_rotate.png')
     #
-    # for i in croped:
-    #     cv2.imshow("croped",i)
-    #     key = cv2.waitKey(0)
-    #     while key != ord('q'):
-    #         pass
-
-
-    source = cv2.imread('images/DSC_0057.JPG')
-
-    target = cv2.imread('images/DSC_0057.JPG')
-
-    target = resizeImage(target, 0.2)
-
-    source = resizeImage(source, 0.2)
-
-    fullPipeLine(net,labelPath,source, target)
+    #
+    # source = resizeImage(source, 0.5, 1)
+    #
+    # target = resizeImage(target, 1, 0.5)
+    #
+    # fullPipeLine(None, labelPath, source, target)
 
     print("finish")

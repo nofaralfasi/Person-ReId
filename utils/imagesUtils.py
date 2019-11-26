@@ -4,8 +4,8 @@ import random as rnd
 import cv2
 
 
-def resizeImage(source, factor):  # size is tuple (w,h)
-    return cv2.resize(source, None, fx=factor, fy=factor)
+def resizeImage(source, fx, fy):  # size is tuple (w,h)
+    return cv2.resize(source, None, fx=fx, fy=fy)
 
 
 def Accuracy(kp, matches):
@@ -13,15 +13,13 @@ def Accuracy(kp, matches):
 
 
 def ShowMatch(source, kp, target, kp2, matches):
-
     draw_params = dict(
-                       singlePointColor=None,
-                       matchColor=(0, rnd.randint(0,255), 0),
-                       flags=2)
+        singlePointColor=None,
+        matchColor=(255, 0, 0),
+        flags=2)
 
-    for i in kp:
-      for j in kp2:
-        img3 = cv2.drawMatchesKnn(source, i, target, j, matches[:10], None,**draw_params)
+    print("matches length {}".format(len(matches)))
+    img3 = cv2.drawMatchesKnn(source, kp, target, kp2, matches[:80], None, **draw_params)
     cv2.imshow("Match", img3)
     while True:
         if cv2.waitKey(1) & 0xFF == ord('q'):

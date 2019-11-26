@@ -5,7 +5,7 @@ import cv2
 def KeyPointsBinary(img, Threshold):
     kpOrb, desOrb = ORBDetectKeyPoints(img, Threshold)
     kpKaze, desKaze = KazeDetectKeyPoints(img)
-    return [(kpOrb,desOrb), (kpKaze,desKaze)]
+    return [(kpOrb,desOrb),(kpKaze,desKaze)]
 
 
 def KeyPointsFloat(img, Threshold):

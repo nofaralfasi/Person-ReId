@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9e3c4659-72cd-40da-9388-7be41fd61801" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/images/color.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AlgoritamKeyPoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgoritamKeyPoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/imagesUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/imagesUtils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +67,11 @@
       <workItem from="1573843468070" duration="2558000" />
       <workItem from="1573999970925" duration="391000" />
       <workItem from="1574001403374" duration="6552000" />
-      <workItem from="1574057885645" duration="7000" />
+      <workItem from="1574057885645" duration="33000" />
+      <workItem from="1574091163731" duration="1939000" />
+      <workItem from="1574426030656" duration="16000" />
+      <workItem from="1574780183658" duration="1326000" />
+      <workItem from="1574784675591" duration="1055000" />
     </task>
     <task id="LOCAL-00001" summary="add Yolo Repo">
       <created>1573831022038</created>
@@ -100,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574009483859</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="sum description">
+      <created>1574057899794</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1574057899794</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
