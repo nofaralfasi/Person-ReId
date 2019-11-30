@@ -8,18 +8,19 @@ Original file is located at
 """
 import cv2
 import os
-from utils.opticalFlow import getMaskFromOpticalFlow,PointsOpticalFlow
+from utils.opticalFlow import getMaskFromOpticalFlow, PointsOpticalFlow
+from utils.yolo import initYolo, TrackingByYolo
+
 if __name__ == "__main__":
     """# import images"""
 
     frames = []
     cap = cv2.VideoCapture('re-id/videos/vtest.avi')
-    ret,frame = cap.read()
+    ret, frame = cap.read()
     index = 0
     while ret:
         frames.append(frame)
         ret, frame = cap.read()
-
 
     # path = "re-id/sequenses/multi_shot/cam_a/person_0001"
     # f = []
@@ -31,5 +32,11 @@ if __name__ == "__main__":
     # f = list(map(lambda file: path + "/" + file, f))
     # #getMaskFromOpticalFlow(f,isVideo=False)
 
-    PointsOpticalFlow(frames, isVideo=True)
+    ## init yolo
 
+    weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
+    configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
+    labelPath = 'yolo-object-detection/yolo-coco/coco.names'
+    net = initYolo(weightsPath, configPath)
+
+    TrackingByYolo(frames, net, labelPath, isVideo=True)

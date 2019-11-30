@@ -2,20 +2,19 @@ import os
 import numpy as np
 import cv2
 
-def initYolo(weightPath : "yolov3.weights",configPath : "yolov3.cfg"):
+
+def initYolo(weightPath: "yolov3.weights", configPath: "yolov3.cfg"):
     print("[INFO] loading YOLO from disk...")
     net = cv2.dnn.readNetFromDarknet(configPath, weightPath)
     return net
 
 
-
-def forward(net,image,labelPath : "coco.names"):
-
+def forward(net, image, labelPath: "coco.names"):
     LABELS = open(labelPath).read().strip().split("\n")
     ##initialize a list of colors to represent each possible class label
     np.random.seed(42)
     COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),
-    dtype="uint8")
+                               dtype="uint8")
 
     (H, W) = image.shape[:2]
     ln = net.getLayerNames()
@@ -24,7 +23,6 @@ def forward(net,image,labelPath : "coco.names"):
                                  swapRB=True, crop=False)
     net.setInput(blob)
     layerOutputs = net.forward(ln)
-
 
     boxes = []
     confidences = []
@@ -63,11 +61,11 @@ def forward(net,image,labelPath : "coco.names"):
 
     # apply non-maxima suppression to suppress weak, overlapping bounding
     # boxes
-    idxs = cv2.dnn.NMSBoxes(boxes, confidences, 0.5,
-                           0.3)
+    idxs = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.3)
 
     # ensure at least one detection exists
-    crop=[]
+
+    croppingImages = []
     if len(idxs) > 0:
         # loop over the indexes we are keeping
         for i in idxs.flatten():
@@ -76,10 +74,36 @@ def forward(net,image,labelPath : "coco.names"):
             (w, h) = (boxes[i][2], boxes[i][3])
 
             if LABELS[classIDs[i]] == 'person':
-                crop.append(image[y:y+h,x:x+w])
+                croppingImages.append({"box": [(x, y), (x + w, y + h)], "confidence": confidences[i]})
 
             # draw a bounding box rectangle and label on the image
-            #color = [int(c) for c in COLORS[classIDs[i]]]
+            # color = [int(c) for c in COLORS[classIDs[i]]]
             # print(LABELS[classIDs[i]])
             # print(confidences[i])
-    return crop
+    return croppingImages
+
+
+def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names",isVideo: bool):
+    colorBlue = (255, 0, 0)
+    radius = 3
+    thicknessCircle = -1
+    thicknessRec = 2
+    myids = []
+    numOfFrames = len(sequences)
+    if numOfFrames > 1:
+        if isVideo:
+            frame1 = sequences[0]
+        else:
+            frame1 = cv2.imread(sequences[0])
+
+        myTrackingObject = forward(net, frame1, labelPath)
+
+        for subImageDescribe in myTrackingObject:
+            frame1 = cv2.rectangle(frame1, subImageDescribe["box"][0], subImageDescribe["box"][1], colorBlue, thicknessRec)
+            centerHuman = ((subImageDescribe["box"][0][0] + subImageDescribe["box"][1][0]) // 2
+                           , (subImageDescribe["box"][0][1] + subImageDescribe["box"][1][1]) // 2)
+
+            frame1 = cv2.circle(frame1, centerHuman, radius, colorBlue, thicknessCircle)
+
+        cv2.imshow('frame1', frame1)
+        k = cv2.waitKey(0) & 0xff
