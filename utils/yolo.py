@@ -83,12 +83,26 @@ def forward(net, image, labelPath: "coco.names"):
     return croppingImages
 
 
-def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names",isVideo: bool):
+def findIdByCenter(myIds, newPositionCenter):
+    myTarget = min(myIds.values(), key=lambda _id: abs(_id["centerHuman"] - newPositionCenter))
+    return myTarget["_id"]
+
+
+def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    # fontScale
+    fontScale = 1
+    # Line thickness of 2 px
+    thicknessText = 3
+
     colorBlue = (255, 0, 0)
+    colorRed = (0, 0, 255)
+
     radius = 3
     thicknessCircle = -1
     thicknessRec = 2
-    myids = []
+    myids = {}
+    indexIds = 1
     numOfFrames = len(sequences)
     if numOfFrames > 1:
         if isVideo:
@@ -99,11 +113,29 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names",is
         myTrackingObject = forward(net, frame1, labelPath)
 
         for subImageDescribe in myTrackingObject:
-            frame1 = cv2.rectangle(frame1, subImageDescribe["box"][0], subImageDescribe["box"][1], colorBlue, thicknessRec)
+            frame1 = cv2.rectangle(frame1, subImageDescribe["box"][0], subImageDescribe["box"][1],
+                                   colorBlue, thicknessRec)
             centerHuman = ((subImageDescribe["box"][0][0] + subImageDescribe["box"][1][0]) // 2
                            , (subImageDescribe["box"][0][1] + subImageDescribe["box"][1][1]) // 2)
 
-            frame1 = cv2.circle(frame1, centerHuman, radius, colorBlue, thicknessCircle)
+            frame1 = cv2.circle(frame1, centerHuman, radius, colorRed, thicknessCircle)
+            frame1 = cv2.putText(frame1, 'ID:' + str(indexIds), (centerHuman[0], centerHuman[1] - 50), font, fontScale,
+                                 (0, 0, 0), thicknessText, cv2.LINE_AA)
 
-        cv2.imshow('frame1', frame1)
-        k = cv2.waitKey(0) & 0xff
+            myids[indexIds] = {"_id": indexIds, "centerHuman": centerHuman, "box": subImageDescribe["box"]}
+            indexIds += 1
+
+        for index in range(1, numOfFrames):
+            if isVideo:
+                frame2 = sequences[index]
+            else:
+                frame2 = cv2.imread(sequences[index])
+
+            myTrackingObjectForward = forward(net, frame2, labelPath)
+
+            for subImageDescribe in myTrackingObjectForward:
+                # each crop find his id by center
+                centerHuman = ((subImageDescribe["box"][0][0] + subImageDescribe["box"][1][0]) // 2
+                               , (subImageDescribe["box"][0][1] + subImageDescribe["box"][1][1]) // 2)
+
+                idTarget = findIdByCenter(myids, centerHuman)
