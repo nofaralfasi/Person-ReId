@@ -76,7 +76,7 @@ def forward(net, image, labelPath: "coco.names"):
 
             if LABELS[classIDs[i]] == 'person':
                 # croppingImages.append({"box": [(x, y), (x + w, y + h)], "confidence": confidences[i]})
-                croppingImages.append([[(x+w) // 2 , (y+h) // 2]])
+                croppingImages.append([[(x+x+w) // 2 , (y+y+h) // 2]])
 
             # draw a bounding box rectangle and label on the image
             # color = [int(c) for c in COLORS[classIDs[i]]]
