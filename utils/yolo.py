@@ -89,14 +89,17 @@ def distance(pt1, pt2):
     return d
 
 
-def findIdByCenter(myIds, newPositionCenter):
-    _distances = list(map(lambda _id: {"_id": _id["_id"], "distance": distance(_id["centerHuman"],
-                                                                               newPositionCenter)}, myIds.values()))
-    d = min(_distances,key=lambda dis: dis["distance"])
-    print(d)
-    if d["distance"] > 100 :
-        return len(myIds.keys())+1
-    return d["_id"]
+def getCenter(box):
+    return (box[1][0] + box[0][0]) // 2, (box[1][1] + box[0][1]) // 2
+
+
+def findIdByCenter(objectsTargets, OldPositionCenter):
+    if len(objectsTargets) > 0:
+        d = min(objectsTargets, key=lambda dis: distance(getCenter(dis["box"]), OldPositionCenter))
+        objectsTargets.remove(d)
+        return d
+    else:
+        return None # id is missing
 
 
 def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
@@ -138,7 +141,7 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
             indexIds += 1
 
         # start capture
-        for index in range(1, numOfFrames - 760):
+        for index in range(1, numOfFrames, 1):
             if isVideo:
                 frame2 = sequences[index]
             else:
@@ -146,17 +149,41 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
 
             myTrackingObjectForward = forward(net, frame2, labelPath)
 
-            for subImageDescribe in myTrackingObjectForward:
+            # find ids from previous frame
+            keysToRemove = []
+            for _id in myids.values():
                 # each crop find his id by center
-                centerHuman = ((subImageDescribe["box"][0][0] + subImageDescribe["box"][1][0]) // 2
-                               , (subImageDescribe["box"][0][1] + subImageDescribe["box"][1][1]) // 2)
+                myNewTarget = findIdByCenter(myTrackingObjectForward, _id["centerHuman"])
 
-                idTarget = findIdByCenter(myids, centerHuman)
-                myids[idTarget] = {"_id": idTarget, "centerHuman": centerHuman, "box": subImageDescribe["box"]}
+                if myNewTarget is not None :
+                    myNewTarget["centerHuman"] = getCenter(myNewTarget["box"])
+                    myids[_id["_id"]] = {"_id": _id["_id"], "centerHuman": myNewTarget["centerHuman"],
+                                         "box": myNewTarget["box"]}
+                    frame2 = cv2.circle(frame2, myNewTarget["centerHuman"], radius, colorRed, thicknessCircle)
+                    frame2 = cv2.putText(frame2, 'ID:' + str(_id["_id"]), (myNewTarget["centerHuman"][0]
+                                                                           , myNewTarget["centerHuman"][1] - 50), font,
+                                         fontScale, (0, 0, 0), thicknessText, cv2.LINE_AA)
+                else:
+                    keysToRemove.append(_id["_id"])
+
+            for keyRemove in keysToRemove:
+                myids.pop(keyRemove)
+
+            print("missing ids ", len(myTrackingObjectForward))
+
+            # create new ids
+            for objectBox in myTrackingObjectForward:
+                # each crop find his id by center
+                newIdNumber = len(myids.keys()) + 1
+                centerHuman = getCenter(objectBox["box"])
+
+                myids[newIdNumber] = {"_id": newIdNumber, "centerHuman": centerHuman,
+                                      "box": objectBox["box"]}
+
                 frame2 = cv2.circle(frame2, centerHuman, radius, colorRed, thicknessCircle)
-                frame2 = cv2.putText(frame2, 'ID:' + str(idTarget), (centerHuman[0], centerHuman[1] - 50), font,
+                frame2 = cv2.putText(frame2, 'ID:' + str(newIdNumber), (centerHuman[0]
+                                                                        , centerHuman[1] - 50), font,
                                      fontScale, (0, 0, 0), thicknessText, cv2.LINE_AA)
-            print("*" * 30)
 
             cv2.imshow('frame', frame2)
             k = cv2.waitKey(30) & 0xff
