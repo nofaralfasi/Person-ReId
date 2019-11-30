@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import cv2
+import math
 
 
 def initYolo(weightPath: "yolov3.weights", configPath: "yolov3.cfg"):
@@ -83,9 +84,19 @@ def forward(net, image, labelPath: "coco.names"):
     return croppingImages
 
 
+def distance(pt1, pt2):
+    d = math.sqrt((pt2[0] - pt1[0]) ** 2 + (pt2[1] - pt1[1]) ** 2)
+    return d
+
+
 def findIdByCenter(myIds, newPositionCenter):
-    myTarget = min(myIds.values(), key=lambda _id: abs(_id["centerHuman"] - newPositionCenter))
-    return myTarget["_id"]
+    _distances = list(map(lambda _id: {"_id": _id["_id"], "distance": distance(_id["centerHuman"],
+                                                                               newPositionCenter)}, myIds.values()))
+    d = min(_distances,key=lambda dis: dis["distance"])
+    print(d)
+    if d["distance"] > 100 :
+        return len(myIds.keys())+1
+    return d["_id"]
 
 
 def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
@@ -112,6 +123,7 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
 
         myTrackingObject = forward(net, frame1, labelPath)
 
+        # first frame to tag each target with id  and register boxes
         for subImageDescribe in myTrackingObject:
             frame1 = cv2.rectangle(frame1, subImageDescribe["box"][0], subImageDescribe["box"][1],
                                    colorBlue, thicknessRec)
@@ -125,7 +137,8 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
             myids[indexIds] = {"_id": indexIds, "centerHuman": centerHuman, "box": subImageDescribe["box"]}
             indexIds += 1
 
-        for index in range(1, numOfFrames):
+        # start capture
+        for index in range(1, numOfFrames - 760):
             if isVideo:
                 frame2 = sequences[index]
             else:
@@ -139,3 +152,13 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
                                , (subImageDescribe["box"][0][1] + subImageDescribe["box"][1][1]) // 2)
 
                 idTarget = findIdByCenter(myids, centerHuman)
+                myids[idTarget] = {"_id": idTarget, "centerHuman": centerHuman, "box": subImageDescribe["box"]}
+                frame2 = cv2.circle(frame2, centerHuman, radius, colorRed, thicknessCircle)
+                frame2 = cv2.putText(frame2, 'ID:' + str(idTarget), (centerHuman[0], centerHuman[1] - 50), font,
+                                     fontScale, (0, 0, 0), thicknessText, cv2.LINE_AA)
+            print("*" * 30)
+
+            cv2.imshow('frame', frame2)
+            k = cv2.waitKey(30) & 0xff
+            if k == 27:
+                break
