@@ -75,7 +75,8 @@ def forward(net, image, labelPath: "coco.names"):
             (w, h) = (boxes[i][2], boxes[i][3])
 
             if LABELS[classIDs[i]] == 'person':
-                croppingImages.append({"box": [(x, y), (x + w, y + h)], "confidence": confidences[i]})
+                # croppingImages.append({"box": [(x, y), (x + w, y + h)], "confidence": confidences[i]})
+                croppingImages.append([[(x+w) // 2 , (y+h) // 2]])
 
             # draw a bounding box rectangle and label on the image
             # color = [int(c) for c in COLORS[classIDs[i]]]
@@ -102,7 +103,7 @@ def findIdByCenter(objectsTargets, OldPositionCenter):
         return None  # id is missing
 
 
-def DrawOnFrameMyIds(myids,frame):
+def DrawOnFrameMyIds(myids, frame):
     font = cv2.FONT_HERSHEY_SIMPLEX
     # fontScale
     fontScale = 1
@@ -118,12 +119,13 @@ def DrawOnFrameMyIds(myids,frame):
 
     for _id in myids.values():
         frame = cv2.rectangle(frame, myids[_id["_id"]]["box"][0], myids[_id["_id"]]["box"][1],
-                               colorBlue, thicknessRec)
+                              colorBlue, thicknessRec)
         frame = cv2.circle(frame, myids[_id["_id"]]["centerHuman"], radius, colorRed, thicknessCircle)
         frame = cv2.putText(frame, 'ID:' + str(_id["_id"]), (myids[_id["_id"]]["centerHuman"][0]
-                                                               , myids[_id["_id"]]["centerHuman"][1] - 50), font,
-                             fontScale, (255, 0, 0), thicknessText, cv2.LINE_AA)
+                                                             , myids[_id["_id"]]["centerHuman"][1] - 50), font,
+                            fontScale, (255, 0, 0), thicknessText, cv2.LINE_AA)
     return frame
+
 
 def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
     myids = {}
@@ -148,7 +150,7 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
 
                 if myNewTarget is not None:
                     myNewTarget["centerHuman"] = getCenter(myNewTarget["box"])
-                    myids[_id["_id"]]["centerHuman"] =  myNewTarget["centerHuman"]
+                    myids[_id["_id"]]["centerHuman"] = myNewTarget["centerHuman"]
                     myids[_id["_id"]]["box"] = myNewTarget["box"]
                 else:
                     # id was appear but now is missing
@@ -168,7 +170,7 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
                 myids[newIdNumber] = {"_id": newIdNumber, "centerHuman": centerHuman,
                                       "box": objectBox["box"]}
 
-            frame2 = DrawOnFrameMyIds(myids,frame2)
+            frame2 = DrawOnFrameMyIds(myids, frame2)
             cv2.imshow('frame', frame2)
             k = cv2.waitKey(0) & 0xff
             if k == 27:
