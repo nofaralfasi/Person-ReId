@@ -8,18 +8,28 @@ Original file is located at
 """
 import cv2
 import os
-from utils.opticalFlow import getMaskFromOpticalFlow
+from utils.opticalFlow import getMaskFromOpticalFlow,PointsOpticalFlow
 if __name__ == "__main__":
     """# import images"""
 
-    for i in range(1,30):
-        path = "re-id/sequenses/multi_shot/cam_a/person_000"+str(i)
-        f = []
-        for (dirpath, dirnames, filenames) in os.walk(path):
-            f.extend(filenames)
-            break
+    frames = []
+    cap = cv2.VideoCapture('re-id/videos/vtest.avi')
+    ret,frame = cap.read()
+    index = 0
+    while ret:
+        frames.append(frame)
+        ret, frame = cap.read()
 
-        f.sort()
-        f = list(map(lambda file: path + "/" + file, f))
 
-        getMaskFromOpticalFlow(f)
+    # path = "re-id/sequenses/multi_shot/cam_a/person_0001"
+    # f = []
+    # for (dirpath, dirnames, filenames) in os.walk(path):
+    #     f.extend(filenames)
+    #     break
+    #
+    # f.sort()
+    # f = list(map(lambda file: path + "/" + file, f))
+    # #getMaskFromOpticalFlow(f,isVideo=False)
+
+    PointsOpticalFlow(frames, isVideo=True)
+
