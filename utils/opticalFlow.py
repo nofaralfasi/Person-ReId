@@ -60,7 +60,7 @@ def PointsOpticalFlow(sequences: "array of frames sequences", isVideo: bool):
 
     # params for ShiTomasi corner detection
     feature_params = dict(maxCorners=100,
-                          qualityLevel=0.1,
+                          qualityLevel=0.4,
                           minDistance=7,
                           blockSize=7)
     # Parameters for lucas kanade optical flow
@@ -85,7 +85,7 @@ def PointsOpticalFlow(sequences: "array of frames sequences", isVideo: bool):
     for index in range(1, numOfFrames):
 
         if isVideo:
-            frame = sequences[0]
+            frame = sequences[index]
         else:
             frame = cv2.imread(sequences[index])
 
@@ -98,7 +98,7 @@ def PointsOpticalFlow(sequences: "array of frames sequences", isVideo: bool):
 
         # draw the tracks
         for i, (new, old) in enumerate(zip(good_new, good_old)):
-            epsilon = 0.9
+            epsilon = 0.3
             a, b = new.ravel()
             c, d = old.ravel()
             if abs(c - a) > epsilon or abs(d - b) > epsilon:
