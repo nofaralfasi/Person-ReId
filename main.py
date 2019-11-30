@@ -67,28 +67,28 @@ if __name__ == "__main__":
     weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
     configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
     labelPath = 'yolo-object-detection/yolo-coco/coco.names'
-    net = initYolo(weightsPath, configPath)
+    #net = initYolo(weightsPath, configPath)
     print("finish loading yolo ....")
 
-    image = cv2.imread('images/DSC_0102.JPG')
+    # image = cv2.imread('images/DSC_0102.JPG')
+    #
+    # croped = forward(net,image,labelPath)
+    #
+    # for i in croped:
+    #     cv2.imshow("croped",i)
+    #     key = cv2.waitKey(0)
+    #     while key != ord('q'):
+    #         pass
 
-    croped = forward(net,image,labelPath)
+    source = cv2.imread('images/color.png')
 
-    for i in croped:
-        cv2.imshow("croped",i)
-        key = cv2.waitKey(0)
-        while key != ord('q'):
-            pass
+    target = cv2.imread('images/color_rotate.png')
 
-    # source = cv2.imread('images/color.png')
-    #
-    # target = cv2.imread('images/color_rotate.png')
-    #
-    #
-    # source = resizeImage(source, 0.5, 1)
-    #
-    # target = resizeImage(target, 1, 0.5)
-    #
-    # fullPipeLine(None, labelPath, source, target)
+
+    source = resizeImage(source, 0.5, 1)
+
+    target = resizeImage(target, 1, 0.5)
+
+    fullPipeLine(None, labelPath, source, target)
 
     print("finish")
