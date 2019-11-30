@@ -99,7 +99,7 @@ def findIdByCenter(objectsTargets, OldPositionCenter):
         objectsTargets.remove(d)
         return d
     else:
-        return None # id is missing
+        return None  # id is missing
 
 
 def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
@@ -135,13 +135,14 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
 
             frame1 = cv2.circle(frame1, centerHuman, radius, colorRed, thicknessCircle)
             frame1 = cv2.putText(frame1, 'ID:' + str(indexIds), (centerHuman[0], centerHuman[1] - 50), font, fontScale,
-                                 (0, 0, 0), thicknessText, cv2.LINE_AA)
+                                 (255, 0, 0), thicknessText, cv2.LINE_AA)
 
             myids[indexIds] = {"_id": indexIds, "centerHuman": centerHuman, "box": subImageDescribe["box"]}
             indexIds += 1
 
         # start capture
-        for index in range(1, numOfFrames, 1):
+        for index in range(1300, numOfFrames, 10):
+            print("frame {}".format(index))
             if isVideo:
                 frame2 = sequences[index]
             else:
@@ -155,21 +156,25 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
                 # each crop find his id by center
                 myNewTarget = findIdByCenter(myTrackingObjectForward, _id["centerHuman"])
 
-                if myNewTarget is not None :
+                if myNewTarget is not None:
                     myNewTarget["centerHuman"] = getCenter(myNewTarget["box"])
-                    myids[_id["_id"]] = {"_id": _id["_id"], "centerHuman": myNewTarget["centerHuman"],
-                                         "box": myNewTarget["box"]}
-                    frame2 = cv2.circle(frame2, myNewTarget["centerHuman"], radius, colorRed, thicknessCircle)
-                    frame2 = cv2.putText(frame2, 'ID:' + str(_id["_id"]), (myNewTarget["centerHuman"][0]
-                                                                           , myNewTarget["centerHuman"][1] - 50), font,
-                                         fontScale, (0, 0, 0), thicknessText, cv2.LINE_AA)
+                    myids[_id["_id"]]["centerHuman"] =  myNewTarget["centerHuman"]
+                    myids[_id["_id"]]["box"] = myNewTarget["box"]
+
+                    frame2 = cv2.rectangle(frame2,  myids[_id["_id"]]["box"][0],  myids[_id["_id"]]["box"][1],
+                                           colorBlue, thicknessRec)
+                    frame2 = cv2.circle(frame2,  myids[_id["_id"]]["centerHuman"], radius, colorRed, thicknessCircle)
+                    frame2 = cv2.putText(frame2, 'ID:' + str(_id["_id"]), ( myids[_id["_id"]]["centerHuman"][0]
+                                                                           ,  myids[_id["_id"]]["centerHuman"][1] - 50), font,
+                                         fontScale, (255, 0, 0), thicknessText, cv2.LINE_AA)
                 else:
+                    # id was appear but now is missing
                     keysToRemove.append(_id["_id"])
 
             for keyRemove in keysToRemove:
                 myids.pop(keyRemove)
 
-            print("missing ids ", len(myTrackingObjectForward))
+            # print("missing ids ", len(myTrackingObjectForward))
 
             # create new ids
             for objectBox in myTrackingObjectForward:
@@ -180,12 +185,14 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
                 myids[newIdNumber] = {"_id": newIdNumber, "centerHuman": centerHuman,
                                       "box": objectBox["box"]}
 
+                frame2 = cv2.rectangle(frame2, objectBox["box"][0], objectBox["box"][1],
+                                       colorBlue, thicknessRec)
                 frame2 = cv2.circle(frame2, centerHuman, radius, colorRed, thicknessCircle)
                 frame2 = cv2.putText(frame2, 'ID:' + str(newIdNumber), (centerHuman[0]
                                                                         , centerHuman[1] - 50), font,
-                                     fontScale, (0, 0, 0), thicknessText, cv2.LINE_AA)
+                                     fontScale, (255, 0, 0), thicknessText, cv2.LINE_AA)
 
             cv2.imshow('frame', frame2)
-            k = cv2.waitKey(30) & 0xff
+            k = cv2.waitKey(1) & 0xff
             if k == 27:
                 break
