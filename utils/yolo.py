@@ -102,12 +102,12 @@ def findIdByCenter(objectsTargets, OldPositionCenter):
         return None  # id is missing
 
 
-def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
+def DrawOnFrameMyIds(myids,frame):
     font = cv2.FONT_HERSHEY_SIMPLEX
     # fontScale
     fontScale = 1
     # Line thickness of 2 px
-    thicknessText = 3
+    thicknessText = 1
 
     colorBlue = (255, 0, 0)
     colorRed = (0, 0, 255)
@@ -115,33 +115,23 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
     radius = 3
     thicknessCircle = -1
     thicknessRec = 2
+
+    for _id in myids.values():
+        frame = cv2.rectangle(frame, myids[_id["_id"]]["box"][0], myids[_id["_id"]]["box"][1],
+                               colorBlue, thicknessRec)
+        frame = cv2.circle(frame, myids[_id["_id"]]["centerHuman"], radius, colorRed, thicknessCircle)
+        frame = cv2.putText(frame, 'ID:' + str(_id["_id"]), (myids[_id["_id"]]["centerHuman"][0]
+                                                               , myids[_id["_id"]]["centerHuman"][1] - 50), font,
+                             fontScale, (255, 0, 0), thicknessText, cv2.LINE_AA)
+    return frame
+
+def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
     myids = {}
-    indexIds = 1
+    frameRate = 1
     numOfFrames = len(sequences)
     if numOfFrames > 1:
-        if isVideo:
-            frame1 = sequences[0]
-        else:
-            frame1 = cv2.imread(sequences[0])
-
-        myTrackingObject = forward(net, frame1, labelPath)
-
-        # first frame to tag each target with id  and register boxes
-        for subImageDescribe in myTrackingObject:
-            frame1 = cv2.rectangle(frame1, subImageDescribe["box"][0], subImageDescribe["box"][1],
-                                   colorBlue, thicknessRec)
-            centerHuman = ((subImageDescribe["box"][0][0] + subImageDescribe["box"][1][0]) // 2
-                           , (subImageDescribe["box"][0][1] + subImageDescribe["box"][1][1]) // 2)
-
-            frame1 = cv2.circle(frame1, centerHuman, radius, colorRed, thicknessCircle)
-            frame1 = cv2.putText(frame1, 'ID:' + str(indexIds), (centerHuman[0], centerHuman[1] - 50), font, fontScale,
-                                 (255, 0, 0), thicknessText, cv2.LINE_AA)
-
-            myids[indexIds] = {"_id": indexIds, "centerHuman": centerHuman, "box": subImageDescribe["box"]}
-            indexIds += 1
-
         # start capture
-        for index in range(1300, numOfFrames, 10):
+        for index in range(0, numOfFrames, frameRate):
             print("frame {}".format(index))
             if isVideo:
                 frame2 = sequences[index]
@@ -160,13 +150,6 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
                     myNewTarget["centerHuman"] = getCenter(myNewTarget["box"])
                     myids[_id["_id"]]["centerHuman"] =  myNewTarget["centerHuman"]
                     myids[_id["_id"]]["box"] = myNewTarget["box"]
-
-                    frame2 = cv2.rectangle(frame2,  myids[_id["_id"]]["box"][0],  myids[_id["_id"]]["box"][1],
-                                           colorBlue, thicknessRec)
-                    frame2 = cv2.circle(frame2,  myids[_id["_id"]]["centerHuman"], radius, colorRed, thicknessCircle)
-                    frame2 = cv2.putText(frame2, 'ID:' + str(_id["_id"]), ( myids[_id["_id"]]["centerHuman"][0]
-                                                                           ,  myids[_id["_id"]]["centerHuman"][1] - 50), font,
-                                         fontScale, (255, 0, 0), thicknessText, cv2.LINE_AA)
                 else:
                     # id was appear but now is missing
                     keysToRemove.append(_id["_id"])
@@ -185,14 +168,8 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
                 myids[newIdNumber] = {"_id": newIdNumber, "centerHuman": centerHuman,
                                       "box": objectBox["box"]}
 
-                frame2 = cv2.rectangle(frame2, objectBox["box"][0], objectBox["box"][1],
-                                       colorBlue, thicknessRec)
-                frame2 = cv2.circle(frame2, centerHuman, radius, colorRed, thicknessCircle)
-                frame2 = cv2.putText(frame2, 'ID:' + str(newIdNumber), (centerHuman[0]
-                                                                        , centerHuman[1] - 50), font,
-                                     fontScale, (255, 0, 0), thicknessText, cv2.LINE_AA)
-
+            frame2 = DrawOnFrameMyIds(myids,frame2)
             cv2.imshow('frame', frame2)
-            k = cv2.waitKey(1) & 0xff
+            k = cv2.waitKey(0) & 0xff
             if k == 27:
                 break
