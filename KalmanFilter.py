@@ -161,7 +161,7 @@ class ProcessImage:
         cv.destroyAllWindows()
 
     def Update(self, detections, myids):
-        if len(detections) > 0:
+        if len(detections) > 0: # example 1
             if len(myids) == 0:  # dont have yet ids but we detected
                 # let assign all of them to myids
                 for detect in detections:
@@ -173,7 +173,7 @@ class ProcessImage:
                     myids.append(track)
                 return myids
 
-            if len(myids) > 0:
+            if len(myids) > 0: # exmaple 2
                 # so we have detections but we already have ids
                 # lets detect them
                 # create a cost function
@@ -190,9 +190,12 @@ class ProcessImage:
                             pass
 
                 # Let's average the squared ERROR
-                cost = 0.5 * cost
+                cost = 0.25 * cost
                 # Using Hungarian Algorithm assign the correct detected measurements
                 # to predicted tracks
+
+                if len(myids) == 2 and len(detections)  == 1:
+                    print("here")
                 row_ind, col_ind = linear_sum_assignment(cost)
                 assignment = []
                 for _ in range(N):
@@ -214,6 +217,7 @@ class ProcessImage:
                     else:
                         myids[i].skipped_frames += 1
 
+                print(un_assigned_tracks)
                 # If tracks are not detected for long time, remove them
                 del_tracks = []
                 for i in range(len(myids)):
@@ -251,8 +255,9 @@ class ProcessImage:
                         myids[i].coords = detections[assignment[i]]
                         myids[i].prediction = prediction
                     else:
-                        myids[i].coords = (np.array([[0], [0]]))
-                        myids[i].prediction = (np.array([[0], [0]]))
+                        pass
+                        # myids[i].coords = (np.array([[0], [0]]))
+                        # myids[i].prediction = (np.array([[0], [0]]))
 
                 return myids
         else:
