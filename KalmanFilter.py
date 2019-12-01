@@ -118,7 +118,7 @@ class ProcessImage:
         # kfObject = KalmanFilter()
 
         skipFrame = 0
-        vid = cv.VideoCapture('re-id/videos/How People Walk.mp4')
+        vid = cv.VideoCapture('re-id/videos/storyLove.mp4')
 
         if vid.isOpened() == False:
             print('Cannot open input video')
@@ -131,7 +131,7 @@ class ProcessImage:
         while vid.isOpened():
             rc, frame = vid.read()
 
-            if skipFrame < 1300:
+            if skipFrame < 1:
                 rc, frame = vid.read()
                 skipFrame += 1
                 continue
@@ -139,12 +139,16 @@ class ProcessImage:
             if rc:
                 balls = yolo.forward(frame)
 
+                if len(balls) > 0:
+                    for b in balls:
+                        cv.circle(frame, (int(b[0]), int(b[1])), 20, [255, 0, 0], 2, 8)
+
                 myids = self.Update(balls, myids)
 
                 print(len(myids))
                 for myid in myids:
                     cv.circle(frame, (int(myid.coords[0]), int(myid.coords[1])), 20, [0, 0, 255], 2, 8)
-                    cv.putText(frame, "Predicted id : "+str(myid.index)
+                    cv.putText(frame, "Predicted id : " + str(myid.index)
                                , (int(myid.coords[0]), int(myid.coords[1] - 30)),
                                cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
                 cv.imshow('Input', frame)
@@ -197,6 +201,7 @@ class ProcessImage:
                     if assignment[i] != -1:
                         # check for cost distance threshold.
                         # If cost is very high then un_assign (delete) the track
+                        print(cost[i][assignment[i]])
                         if cost[i][assignment[i]] > 1600:
                             assignment[i] = -1
                             un_assigned_tracks.append(i)
@@ -207,7 +212,7 @@ class ProcessImage:
                 # If tracks are not detected for long time, remove them
                 del_tracks = []
                 for i in range(len(myids)):
-                    if myids[i].skipped_frames > 30:
+                    if myids[i].skipped_frames > 10:
                         del_tracks.append(i)
                 if len(del_tracks) > 0:  # only when skipped frame exceeds max
                     for id in del_tracks:
@@ -240,6 +245,7 @@ class ProcessImage:
                 return myids
         else:
             return []
+
 
 # Main Function
 def main():
