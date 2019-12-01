@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/kalmanYolo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KalmanFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/KalmanFilter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kalman.py" beforeDir="false" afterPath="$PROJECT_DIR$/kalman.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainKalman.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainKalman.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/yolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/yolo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,7 +56,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.mainKalman">
+  <component name="RunManager" selected="Python.KalmanFilter">
     <configuration name="KalmanFilter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Final Project Afeka" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -97,6 +101,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="kalmanYolo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Final Project Afeka" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kalmanYolo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="mainKalman" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Final Project Afeka" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -111,28 +137,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mainKalman.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="opticalFlowMainTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Final Project Afeka" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opticalFlowMainTest.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -165,11 +169,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.KalmanFilter" />
+        <item itemvalue="Python.kalmanYolo" />
+        <item itemvalue="Python.kalman" />
         <item itemvalue="Python.mainKalman" />
         <item itemvalue="Python.tracker" />
-        <item itemvalue="Python.kalman" />
-        <item itemvalue="Python.KalmanFilter" />
-        <item itemvalue="Python.opticalFlowMainTest" />
       </list>
     </recent_temporary>
   </component>
@@ -186,7 +190,8 @@
       <workItem from="1575108012962" duration="27119000" />
       <workItem from="1575144955785" duration="6000" />
       <workItem from="1575144974831" duration="15000" />
-      <workItem from="1575146887355" duration="1636000" />
+      <workItem from="1575146887355" duration="1722000" />
+      <workItem from="1575188482344" duration="5560000" />
     </task>
     <task id="LOCAL-00001" summary="optical flow">
       <created>1575112722454</created>
@@ -258,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575148441848</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add project kalman for exmaple">
+      <created>1575148605967</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1575148605967</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,10 +296,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="add project kalman for exmaple" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Final_Project_Afeka$mainKalman.coverage" NAME="mainKalman Coverage Results" MODIFIED="1575148524897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$mainKalman.coverage" NAME="mainKalman Coverage Results" MODIFIED="1575189474826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$tracker.coverage" NAME="tracker Coverage Results" MODIFIED="1575147480887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/kalmanproject" />
-    <SUITE FILE_PATH="coverage/Final_Project_Afeka$KalmanFilter.coverage" NAME="KalmanFilter Coverage Results" MODIFIED="1575141749647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Final_Project_Afeka$kalman.coverage" NAME="kalman Coverage Results" MODIFIED="1575142625515" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$kalmanYolo.coverage" NAME="kalmanYolo Coverage Results" MODIFIED="1575193149002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$KalmanFilter.coverage" NAME="KalmanFilter Coverage Results" MODIFIED="1575193904717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$kalman.coverage" NAME="kalman Coverage Results" MODIFIED="1575190906662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$opticalFlowMainTest.coverage" NAME="opticalFlowMainTest Coverage Results" MODIFIED="1575140837232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

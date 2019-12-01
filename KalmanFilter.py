@@ -1,19 +1,20 @@
-#--------------------------------------------------------------------
+# --------------------------------------------------------------------
 # Implements Ball motion prediction using Kalman Filter
 #
 # Author: Sriram Emarose [sriram.emarose@gmail.com]
 #
 #
 #
-#--------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 import cv2 as cv
 import numpy as np
+from utils.yolo import forward, initYolo
 import sys
+
 
 # Instantiate OCV kalman filter
 class KalmanFilter:
-
     kf = cv.KalmanFilter(4, 2)
     kf.measurementMatrix = np.array([[1, 0, 0, 0], [0, 1, 0, 0]], np.float32)
     kf.transitionMatrix = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]], np.float32)
@@ -26,15 +27,19 @@ class KalmanFilter:
         return predicted
 
 
-
-#Performs required image processing to get ball coordinated in the video
+# Performs required image processing to get ball coordinated in the video
 class ProcessImage:
 
     def DetectObject(self):
 
-        vid = cv.VideoCapture('re-id/videos/ball.mp4')
+        weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
+        configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
+        labelPath = 'yolo-object-detection/yolo-coco/coco.names'
+        net = initYolo(weightsPath, configPath)
+        skipFrame = 0
+        vid = cv.VideoCapture('re-id/videos/How People Walk.mp4')
 
-        if(vid.isOpened() == False):
+        if (vid.isOpened() == False):
             print('Cannot open input video')
             return
 
@@ -45,22 +50,34 @@ class ProcessImage:
         kfObj = KalmanFilter()
         predictedCoords = np.zeros((2, 1), np.float32)
 
-        while(vid.isOpened()):
+        while (vid.isOpened()):
             rc, frame = vid.read()
 
-            if(rc == True):
-                [ballX, ballY] = self.DetectBall(frame)
-                predictedCoords = kfObj.Estimate(ballX, ballY)
+            while (skipFrame < 70):
+                rc, frame = vid.read()
+                skipFrame += 1
 
-                # Draw Actual coords from segmentation
-                cv.circle(frame, (int(ballX), int(ballY)), 20, [0,0,255], 2, 8)
-                cv.line(frame,(int(ballX), int(ballY + 20)), (int(ballX + 50), int(ballY + 20)), [100,100,255], 2,8)
-                cv.putText(frame, "Actual", (int(ballX + 50), int(ballY + 20)), cv.FONT_HERSHEY_SIMPLEX,0.5, [50,200,250])
+            if rc:
+                balls = forward(net, frame, labelPath)
 
-                # Draw Kalman Filter Predicted output
-                cv.circle(frame, (predictedCoords[0], predictedCoords[1]), 20, [0,255,255], 2, 8)
-                cv.line(frame, (predictedCoords[0] + 16, predictedCoords[1] - 15), (predictedCoords[0] + 50, predictedCoords[1] - 30), [100, 10, 255], 2, 8)
-                cv.putText(frame, "Predicted", (int(predictedCoords[0] + 50), int(predictedCoords[1] - 30)), cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
+                if len(balls) > 0:
+                    [ballX, ballY] = balls[0]
+
+                    predictedCoords = kfObj.Estimate(ballX, ballY)
+
+                    # Draw Actual coords from segmentation
+                    cv.circle(frame, (int(ballX), int(ballY)), 20, [0, 0, 255], 2, 8)
+                    cv.line(frame, (int(ballX), int(ballY + 20)), (int(ballX + 50), int(ballY + 20)), [100, 100, 255],
+                            2, 8)
+                    cv.putText(frame, "Actual", (int(ballX + 50), int(ballY + 20)), cv.FONT_HERSHEY_SIMPLEX, 0.5,
+                               [50, 200, 250])
+
+                    # Draw Kalman Filter Predicted output
+                    cv.circle(frame, (predictedCoords[0], predictedCoords[1]), 20, [0, 255, 255], 2, 8)
+                    cv.line(frame, (predictedCoords[0] + 16, predictedCoords[1] - 15),
+                            (predictedCoords[0] + 50, predictedCoords[1] - 30), [100, 10, 255], 2, 8)
+                    cv.putText(frame, "Predicted", (int(predictedCoords[0] + 50), int(predictedCoords[1] - 30)),
+                               cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
                 cv.imshow('Input', frame)
 
                 if (cv.waitKey(30) & 0xFF == ord('q')):
@@ -76,36 +93,35 @@ class ProcessImage:
     def DetectBall(self, frame):
 
         # Set threshold to filter only green color & Filter it
-        lowerBound = np.array([130,30,0], dtype = "uint8")
-        upperBound = np.array([255,255,90], dtype = "uint8")
+        lowerBound = np.array([130, 30, 0], dtype="uint8")
+        upperBound = np.array([255, 255, 90], dtype="uint8")
         greenMask = cv.inRange(frame, lowerBound, upperBound)
 
         # Dilate
         kernel = np.ones((5, 5), np.uint8)
         greenMaskDilated = cv.dilate(greenMask, kernel)
-        #cv.imshow('Thresholded', greenMaskDilated)
+        # cv.imshow('Thresholded', greenMaskDilated)
 
         # Find ball blob as it is the biggest green object in the frame
         [nLabels, labels, stats, centroids] = cv.connectedComponentsWithStats(greenMaskDilated, 8, cv.CV_32S)
 
         # First biggest contour is image border always, Remove it
-        stats = np.delete(stats, (0), axis = 0)
+        stats = np.delete(stats, (0), axis=0)
         try:
             maxBlobIdx_i, maxBlobIdx_j = np.unravel_index(stats.argmax(), stats.shape)
 
-        # This is our ball coords that needs to be tracked
-            ballX = stats[maxBlobIdx_i, 0] + (stats[maxBlobIdx_i, 2]/2)
-            ballY = stats[maxBlobIdx_i, 1] + (stats[maxBlobIdx_i, 3]/2)
+            # This is our ball coords that needs to be tracked
+            ballX = stats[maxBlobIdx_i, 0] + (stats[maxBlobIdx_i, 2] / 2)
+            ballY = stats[maxBlobIdx_i, 1] + (stats[maxBlobIdx_i, 3] / 2)
             return [ballX, ballY]
         except:
-               pass
+            pass
 
-        return [0,0]
+        return [0, 0]
 
 
-#Main Function
+# Main Function
 def main():
-
     processImg = ProcessImage()
     processImg.DetectObject()
 

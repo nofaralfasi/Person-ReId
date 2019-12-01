@@ -35,7 +35,6 @@ def main():
 
     while True:
         state = 0.1 * np.random.randn(2, 1)
-
         kalman.transitionMatrix = np.array([[1., 1.], [0., 1.]])
         kalman.measurementMatrix = 1. * np.ones((1, 2))
         kalman.processNoiseCov = 1e-5 * np.eye(2)
@@ -49,8 +48,9 @@ def main():
                         np.around(img_height/2 - img_width/3*sin(angle), 1).astype(int))
 
             state_angle = state[0, 0]
+            print(state_angle)
             state_pt = calc_point(state_angle)
-
+            print("state pt  {} ".format(state_pt))
             prediction = kalman.predict()
             predict_angle = prediction[0, 0]
             predict_pt = calc_point(predict_angle)
@@ -61,6 +61,8 @@ def main():
             measurement = np.dot(kalman.measurementMatrix, state) + measurement
 
             measurement_angle = measurement[0, 0]
+            print("measurement_angle {} ".format(measurement_angle))
+
             measurement_pt = calc_point(measurement_angle)
 
             # plot points
