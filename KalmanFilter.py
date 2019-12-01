@@ -180,10 +180,10 @@ class ProcessImage:
                     for j in range(len(detections)):
                         try:
                             diff = myids[i].kf.Estimate(myids[i].coords) - detections[j]
-                            distance = np.sqrt(diff[0][0] * diff[0][0] +
-                                               diff[1][0] * diff[1][0])
+                            print(diff.shape)
+                            distance = np.sqrt(diff[0][0] * diff[0][0] + diff[1][0] * diff[1][0])
                             cost[i][j] = distance
-                        except:
+                        except Exception as e:
                             pass
 
                 # Let's average the squared ERROR
