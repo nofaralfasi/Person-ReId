@@ -139,8 +139,14 @@ class ProcessImage:
             if rc:
                 balls = yolo.forward(frame)
 
-                self.Update(balls, myids)
+                myids = self.Update(balls, myids)
 
+                print(len(myids))
+                for myid in myids:
+                    cv.circle(frame, (int(myid.coords[0]), int(myid.coords[1])), 20, [0, 0, 255], 2, 8)
+                    cv.putText(frame, "Predicted id : "+str(myid.index)
+                               , (int(myid.coords[0]), int(myid.coords[1] - 30)),
+                               cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
                 cv.imshow('Input', frame)
 
                 if cv.waitKey(30) & 0xFF == ord('q'):
@@ -191,7 +197,7 @@ class ProcessImage:
                     if assignment[i] != -1:
                         # check for cost distance threshold.
                         # If cost is very high then un_assign (delete) the track
-                        if cost[i][assignment[i]] > 1500:
+                        if cost[i][assignment[i]] > 1600:
                             assignment[i] = -1
                             un_assigned_tracks.append(i)
                         pass
@@ -201,7 +207,7 @@ class ProcessImage:
                 # If tracks are not detected for long time, remove them
                 del_tracks = []
                 for i in range(len(myids)):
-                    if myids[i].skipped_frames > 150:
+                    if myids[i].skipped_frames > 30:
                         del_tracks.append(i)
                 if len(del_tracks) > 0:  # only when skipped frame exceeds max
                     for id in del_tracks:
@@ -232,7 +238,8 @@ class ProcessImage:
                         myids[i].coords = myids[i].kf.Estimate(np.array([[0], [0]]))
 
                 return myids
-
+        else:
+            return []
 
 # Main Function
 def main():
