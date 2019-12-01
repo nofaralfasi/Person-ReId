@@ -78,7 +78,7 @@ class ProcessImage:
                 if len(balls) > 0:
                     for ball in balls:
                         # create track
-                        predictedCoords = kfObject.Estimate(ball[0], ball[1])
+                        predictedCoords = kfObject.Estimate(ball)
 
                         ballX, ballY = ball
 
@@ -102,7 +102,7 @@ class ProcessImage:
 
                 cv.imshow('Input', frame)
 
-                if cv.waitKey(30) & 0xFF == ord('q'):
+                if cv.waitKey(0) & 0xFF == ord('q'):
                     break
 
         vid.release()
@@ -118,7 +118,7 @@ class ProcessImage:
         # kfObject = KalmanFilter()
 
         skipFrame = 0
-        vid = cv.VideoCapture('re-id/videos/storyLove.mp4')
+        vid = cv.VideoCapture('re-id/videos/How People Walk.mp4')
 
         if vid.isOpened() == False:
             print('Cannot open input video')
@@ -131,7 +131,7 @@ class ProcessImage:
         while vid.isOpened():
             rc, frame = vid.read()
 
-            if skipFrame < 1:
+            if skipFrame < 1300:
                 rc, frame = vid.read()
                 skipFrame += 1
                 continue
@@ -145,7 +145,6 @@ class ProcessImage:
 
                 myids = self.Update(balls, myids)
 
-                print(len(myids))
                 for myid in myids:
                     cv.circle(frame, (int(myid.coords[0]), int(myid.coords[1])), 20, [0, 0, 255], 2, 8)
                     cv.putText(frame, "Predicted id : " + str(myid.index)
@@ -153,7 +152,7 @@ class ProcessImage:
                                cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
                 cv.imshow('Input', frame)
 
-                if cv.waitKey(30) & 0xFF == ord('q'):
+                if cv.waitKey(0) & 0xFF == ord('q'):
                     break
 
         vid.release()
@@ -165,7 +164,11 @@ class ProcessImage:
                 # let assign all of them to myids
                 for detect in detections:
                     track = Track(len(myids) + 1, detect)
+                    track.coords = track.kf.Estimate(detect)
+
                     myids.append(track)
+                return myids
+
             if len(myids) > 0:
                 # so we have detections but we already have ids
                 # lets detect them
@@ -201,7 +204,6 @@ class ProcessImage:
                     if assignment[i] != -1:
                         # check for cost distance threshold.
                         # If cost is very high then un_assign (delete) the track
-                        print(cost[i][assignment[i]])
                         if cost[i][assignment[i]] > 1600:
                             assignment[i] = -1
                             un_assigned_tracks.append(i)
@@ -241,7 +243,6 @@ class ProcessImage:
                         myids[i].coords = myids[i].kf.Estimate(detections[assignment[i]])
                     else:
                         myids[i].coords = myids[i].kf.Estimate(np.array([[0], [0]]))
-
                 return myids
         else:
             return []
