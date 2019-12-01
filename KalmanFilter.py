@@ -9,8 +9,18 @@
 
 import cv2 as cv
 import numpy as np
-from utils.yolo import forward, initYolo
-import sys
+from utils.yolo import Yolo
+
+
+class Tracker:
+    def __init__(self):
+        self.tracks = []
+
+
+class Track:
+    def __init__(self, trackId):
+        self.trackId = trackId
+        self.kf = KalmanFilter()
 
 
 # Instantiate OCV kalman filter
@@ -31,15 +41,15 @@ class KalmanFilter:
 class ProcessImage:
 
     def DetectObject(self):
+        yolo = Yolo()
+        yolo.initYolo()  # upload weights to ram
 
-        weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
-        configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
-        labelPath = 'yolo-object-detection/yolo-coco/coco.names'
-        net = initYolo(weightsPath, configPath)
+        tracker = Tracker()
+
         skipFrame = 0
         vid = cv.VideoCapture('re-id/videos/How People Walk.mp4')
 
-        if (vid.isOpened() == False):
+        if vid.isOpened() == False:
             print('Cannot open input video')
             return
 
@@ -47,37 +57,46 @@ class ProcessImage:
         height = int(vid.get(4))
 
         # Create Kalman Filter Object
-        kfObj = KalmanFilter()
+        # kfObj = KalmanFilter()
         predictedCoords = np.zeros((2, 1), np.float32)
 
-        while (vid.isOpened()):
+        while vid.isOpened():
             rc, frame = vid.read()
 
-            while (skipFrame < 70):
+            if skipFrame < 1300:
                 rc, frame = vid.read()
                 skipFrame += 1
+                continue
 
             if rc:
-                balls = forward(net, frame, labelPath)
+                balls = yolo.forward(frame)
 
                 if len(balls) > 0:
-                    [ballX, ballY] = balls[0]
+                    for ball in balls:
+                        # create track
+                        track = Track(len(tracker.tracks) + 1)
+                        tracker.tracks.append(track)
+                        predictedCoords = track.kf.Estimate(ball[0], ball[1])
 
-                    predictedCoords = kfObj.Estimate(ballX, ballY)
+                        ballX = ball[0]
+                        ballY = ball[1]
 
-                    # Draw Actual coords from segmentation
-                    cv.circle(frame, (int(ballX), int(ballY)), 20, [0, 0, 255], 2, 8)
-                    cv.line(frame, (int(ballX), int(ballY + 20)), (int(ballX + 50), int(ballY + 20)), [100, 100, 255],
-                            2, 8)
-                    cv.putText(frame, "Actual", (int(ballX + 50), int(ballY + 20)), cv.FONT_HERSHEY_SIMPLEX, 0.5,
-                               [50, 200, 250])
+                        # Draw Actual coords from segmentation
+                        cv.circle(frame, (int(ballX), int(ballY)), 20, [0, 0, 255], 2, 8)
+                        cv.line(frame, (int(ballX), int(ballY + 20)), (int(ballX + 50), int(ballY + 20)),
+                                [100, 100, 255],
+                                2, 8)
+                        cv.putText(frame, "Actual", (int(ballX + 50), int(ballY + 20)), cv.FONT_HERSHEY_SIMPLEX, 0.5,
+                                   [50, 200, 250])
 
-                    # Draw Kalman Filter Predicted output
-                    cv.circle(frame, (predictedCoords[0], predictedCoords[1]), 20, [0, 255, 255], 2, 8)
-                    cv.line(frame, (predictedCoords[0] + 16, predictedCoords[1] - 15),
-                            (predictedCoords[0] + 50, predictedCoords[1] - 30), [100, 10, 255], 2, 8)
-                    cv.putText(frame, "Predicted", (int(predictedCoords[0] + 50), int(predictedCoords[1] - 30)),
-                               cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
+                        # Draw Kalman Filter Predicted output
+                        cv.circle(frame, (predictedCoords[0], predictedCoords[1]), 20, [0, 255, 255], 2, 8)
+                        cv.line(frame, (predictedCoords[0] + 16, predictedCoords[1] - 15),
+                                (predictedCoords[0] + 50, predictedCoords[1] - 30), [100, 10, 255], 2, 8)
+                        cv.putText(frame, "Predicted", (int(predictedCoords[0] + 50), int(predictedCoords[1] - 30)),
+                                   cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
+                        cv.putText(frame, "Id"+str(track.trackId), (int(predictedCoords[0] + 50), int(predictedCoords[1] - 100)),
+                                   cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
                 cv.imshow('Input', frame)
 
                 if (cv.waitKey(30) & 0xFF == ord('q')):
