@@ -31,9 +31,10 @@ class KalmanFilter:
 
 
 class Track:
-    def __init__(self, index, coords):
+    def __init__(self, index, coords,prediction):
         self.coords = coords
         self.index = index
+        self.prediction = prediction
         self.kf = KalmanFilter()
         self.skipped_frames = 0
 
@@ -79,10 +80,8 @@ class ProcessImage:
                     for ball in balls:
                         # create track
                         predictedCoords = kfObject.Estimate(ball)
-
                         ballX, ballY = ball
 
-                        print(ballX, ballY)
                         print(predictedCoords)
 
                         # Draw Actual coords from segmentation
@@ -100,6 +99,7 @@ class ProcessImage:
                         cv.putText(frame, "Predicted", (int(predictedCoords[0] + 50), int(predictedCoords[1] - 30)),
                                    cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
 
+                print("*" * 20)
                 cv.imshow('Input', frame)
 
                 if cv.waitKey(0) & 0xFF == ord('q'):
@@ -109,6 +109,7 @@ class ProcessImage:
         cv.destroyAllWindows()
 
     def DetectObjectLiran(self):
+
         yolo = Yolo()
         yolo.initYolo()  # upload weights to ram
         track_colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0),
@@ -118,7 +119,7 @@ class ProcessImage:
         # kfObject = KalmanFilter()
 
         skipFrame = 0
-        vid = cv.VideoCapture('re-id/videos/How People Walk.mp4')
+        vid = cv.VideoCapture('re-id/videos/storyLove.mp4')
 
         if vid.isOpened() == False:
             print('Cannot open input video')
@@ -126,34 +127,35 @@ class ProcessImage:
 
         width = int(vid.get(3))
         height = int(vid.get(4))
-
+        self.indexCounter = 0
         myids = []
         while vid.isOpened():
             rc, frame = vid.read()
 
-            if skipFrame < 1300:
+            if skipFrame < 1:
                 rc, frame = vid.read()
                 skipFrame += 1
                 continue
 
             if rc:
                 balls = yolo.forward(frame)
-
-                if len(balls) > 0:
-                    for b in balls:
-                        cv.circle(frame, (int(b[0]), int(b[1])), 20, [255, 0, 0], 2, 8)
-
                 myids = self.Update(balls, myids)
 
                 for myid in myids:
-                    cv.circle(frame, (int(myid.coords[0]), int(myid.coords[1])), 20, [0, 0, 255], 2, 8)
+                    cv.circle(frame, (int(myid.prediction[0]), int(myid.prediction[1])), 20, [0, 0, 255], 2, 8)
                     cv.putText(frame, "Predicted id : " + str(myid.index)
-                               , (int(myid.coords[0]), int(myid.coords[1] - 30)),
+                               , (int(myid.prediction[0]), int(myid.prediction[1] - 30)),
                                cv.FONT_HERSHEY_SIMPLEX, 0.5, [50, 200, 250])
-                cv.imshow('Input', frame)
 
-                if cv.waitKey(0) & 0xFF == ord('q'):
-                    break
+                    cv.circle(frame, (int(myid.coords[0]), int(myid.coords[1])), 20, [255, 0, 255], 2, 8)
+                    cv.putText(frame, "Actual id : " + str(myid.index)
+                               , (int(myid.coords[0]), int(myid.coords[1] - 30)),
+                               cv.FONT_HERSHEY_SIMPLEX, 0.5, [255, 200, 250])
+
+            cv.imshow('Input', frame)
+
+            if cv.waitKey(30) & 0xFF == ord('q'):
+                break
 
         vid.release()
         cv.destroyAllWindows()
@@ -163,9 +165,11 @@ class ProcessImage:
             if len(myids) == 0:  # dont have yet ids but we detected
                 # let assign all of them to myids
                 for detect in detections:
-                    track = Track(len(myids) + 1, detect)
-                    track.coords = track.kf.Estimate(detect)
+                    track = Track(self.indexCounter, detect,None)
+                    prediction = track.kf.Estimate(detect)
+                    track.prediction = prediction
 
+                    self.indexCounter += 1
                     myids.append(track)
                 return myids
 
@@ -179,8 +183,7 @@ class ProcessImage:
                 for i in range(len(myids)):
                     for j in range(len(detections)):
                         try:
-                            diff = myids[i].kf.Estimate(myids[i].coords) - detections[j]
-                            print(diff.shape)
+                            diff = myids[i].prediction - detections[j]
                             distance = np.sqrt(diff[0][0] * diff[0][0] + diff[1][0] * diff[1][0])
                             cost[i][j] = distance
                         except Exception as e:
@@ -204,7 +207,7 @@ class ProcessImage:
                     if assignment[i] != -1:
                         # check for cost distance threshold.
                         # If cost is very high then un_assign (delete) the track
-                        if cost[i][assignment[i]] > 1600:
+                        if cost[i][assignment[i]] > 500:
                             assignment[i] = -1
                             un_assigned_tracks.append(i)
                         pass
@@ -214,7 +217,7 @@ class ProcessImage:
                 # If tracks are not detected for long time, remove them
                 del_tracks = []
                 for i in range(len(myids)):
-                    if myids[i].skipped_frames > 10:
+                    if myids[i].skipped_frames > 100:
                         del_tracks.append(i)
                 if len(del_tracks) > 0:  # only when skipped frame exceeds max
                     for id in del_tracks:
@@ -231,7 +234,10 @@ class ProcessImage:
 
                 if len(un_assigned_detects) != 0:
                     for i in range(len(un_assigned_detects)):
-                        track = Track(len(myids) + 1, detections[un_assigned_detects[i]])
+                        track = Track(self.indexCounter, detections[un_assigned_detects[i]],None)
+                        prediction = track.kf.Estimate(detections[un_assigned_detects[i]])
+                        track.prediction = prediction
+                        self.indexCounter += 1
                         myids.append(track)
 
                 # Update KalmanFilter state, lastResults and tracks trace
@@ -240,9 +246,14 @@ class ProcessImage:
 
                     if assignment[i] != -1:
                         myids[i].skipped_frames = 0
-                        myids[i].coords = myids[i].kf.Estimate(detections[assignment[i]])
+                        prediction = myids[i].kf.Estimate(detections[assignment[i]])
+
+                        myids[i].coords = detections[assignment[i]]
+                        myids[i].prediction = prediction
                     else:
-                        myids[i].coords = myids[i].kf.Estimate(np.array([[0], [0]]))
+                        myids[i].coords = (np.array([[0], [0]]))
+                        myids[i].prediction = (np.array([[0], [0]]))
+
                 return myids
         else:
             return []
