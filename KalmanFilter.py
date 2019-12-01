@@ -22,14 +22,10 @@ class KalmanFilter:
     lastResult = np.array([[0], [255]])
 
     #
-    def Estimate(self, coordX, coordY):
+    def Estimate(self, coords):
         ''' This function estimates the position of the object'''
-        measured = np.array([[np.float32(coordX)], [np.float32(coordY)]])
+        measured = np.array([[np.float32(coords[0])], [np.float32(coords[1])]])
         self.kf.correct(measured)
-        predicted = self.kf.predict()
-        return predicted
-
-    def predict(self):
         predicted = self.kf.predict()
         return predicted
 
@@ -39,7 +35,6 @@ class Track:
         self.coords = coords
         self.index = index
         self.kf = KalmanFilter()
-        self.predictions = self.kf.Estimate(coords[0], coords[1])
         self.skipped_frames = 0
 
 
@@ -132,11 +127,7 @@ class ProcessImage:
         width = int(vid.get(3))
         height = int(vid.get(4))
 
-        # Create Kalman Filter Object
-        # kfObj = KalmanFilter()
-        # predictedCoords = np.zeros((2, 1), np.float32)
-
-        trackingList = []
+        myids = []
         while vid.isOpened():
             rc, frame = vid.read()
 
@@ -148,16 +139,7 @@ class ProcessImage:
             if rc:
                 balls = yolo.forward(frame)
 
-                if len(balls) > 0:
-                    if len(trackingList) == 0:
-                        # we have balls and we dont tracking yet ,lets assign them
-                        for b in balls:
-                            indexCounter = len(trackingList) + 1
-                            track = Track(indexCounter, b)
-                            trackingList.append(track)
-
-                # for t in trackingList:
-                #     frame = cv.circle(frame, (int(t.coords[0]), int(t.coords[1])), 20, [0, 0, 255], 2, 8)
+                self.Update(balls, myids)
 
                 cv.imshow('Input', frame)
 
@@ -167,89 +149,89 @@ class ProcessImage:
         vid.release()
         cv.destroyAllWindows()
 
-    def Assigns(self, balls, trackingList):
+    def Update(self, detections, myids):
+        if len(detections) > 0:
+            if len(myids) == 0:  # dont have yet ids but we detected
+                # let assign all of them to myids
+                for detect in detections:
+                    track = Track(len(myids) + 1, detect)
+                    myids.append(track)
+            if len(myids) > 0:
+                # so we have detections but we already have ids
+                # lets detect them
+                # create a cost function
+                N = len(myids)
+                M = len(detections)
+                cost = np.zeros(shape=(N, M))  # Cost matrix
+                for i in range(len(myids)):
+                    for j in range(len(detections)):
+                        try:
+                            diff = myids[i].kf.Estimate(myids[i].coords) - detections[j]
+                            distance = np.sqrt(diff[0][0] * diff[0][0] +
+                                               diff[1][0] * diff[1][0])
+                            cost[i][j] = distance
+                        except:
+                            pass
 
-        N = len(trackingList)
-        M = len(balls)
-        cost = np.zeros(shape=(N, M))  # Cost matrix
-        for i in range(len(trackingList)):
-            for j in range(len(balls)):
-                try:
-                    diff = trackingList[i].predictions - balls[j]
-                    distance = np.sqrt(diff[0][0] * diff[0][0] +
-                                       diff[1][0] * diff[1][0])
-                    cost[i][j] = distance
-                except:
-                    pass
+                # Let's average the squared ERROR
+                cost = 0.5 * cost
+                # Using Hungarian Algorithm assign the correct detected measurements
+                # to predicted tracks
+                row_ind, col_ind = linear_sum_assignment(cost)
+                assignment = []
+                for _ in range(N):
+                    assignment.append(-1)
 
-        # Let's average the squared ERROR
-        cost = (0.5) * cost
-        # Using Hungarian Algorithm assign the correct detected measurements
-        # to predicted tracks
-        assignment = []
-        for _ in range(N):
-            assignment.append(-1)
-        row_ind, col_ind = linear_sum_assignment(cost)
+                for i in range(len(row_ind)):
+                    assignment[row_ind[i]] = col_ind[i]
 
-        for i in range(len(row_ind)):
-            assignment[row_ind[i]] = col_ind[i]
+                # Identify tracks with no assignment, if any
+                un_assigned_tracks = []
+                for i in range(len(assignment)):
+                    if assignment[i] != -1:
+                        # check for cost distance threshold.
+                        # If cost is very high then un_assign (delete) the track
+                        if cost[i][assignment[i]] > 1500:
+                            assignment[i] = -1
+                            un_assigned_tracks.append(i)
+                        pass
+                    else:
+                        myids[i].skipped_frames += 1
 
-        # Identify tracks with no assignment, if any
-        un_assigned_tracks = []
-        for i in range(len(assignment)):
-            if assignment[i] != -1:
-                # check for cost distance threshold.
-                # If cost is very high then un_assign (delete) the track
-                # print(cost[i][assignment[i]])
-                if cost[i][assignment[i]] > 160:
-                    assignment[i] = -1
-                    un_assigned_tracks.append(i)
-                pass
-            else:
-                trackingList[i].skipped_frames += 1
+                # If tracks are not detected for long time, remove them
+                del_tracks = []
+                for i in range(len(myids)):
+                    if myids[i].skipped_frames > 150:
+                        del_tracks.append(i)
+                if len(del_tracks) > 0:  # only when skipped frame exceeds max
+                    for id in del_tracks:
+                        if id < len(myids):
+                            del myids[id]
+                            del assignment[id]
+                        else:
+                            print("ERROR: id is greater than length of tracks")
+                # Now look for un_assigned detects
+                un_assigned_detects = []
+                for i in range(len(detections)):
+                    if i not in assignment:
+                        un_assigned_detects.append(i)
 
-        # If tracks are not detected for long time, remove them
-        del_tracks = []
-        for i in range(len(trackingList)):
-            if trackingList[i].skipped_frames > 100:
-                del_tracks.append(i)
-        if len(del_tracks) > 0:  # only when skipped frame exceeds max
-            for id in del_tracks:
-                if id < len(trackingList):
-                    del trackingList[id]
-                    del assignment[id]
-                else:
-                    print("ERROR: id is greater than length of tracks")
+                if len(un_assigned_detects) != 0:
+                    for i in range(len(un_assigned_detects)):
+                        track = Track(len(myids) + 1, detections[un_assigned_detects[i]])
+                        myids.append(track)
 
-        un_assigned_detects = []
-        for i in range(len(balls)):
-            if i not in assignment:
-                un_assigned_detects.append(i)
+                # Update KalmanFilter state, lastResults and tracks trace
+                for i in range(len(assignment)):
+                    # self.tracks[i].KF.predict()
 
-        # Start new tracks
-        if len(un_assigned_detects) != 0:
-            for i in range(len(un_assigned_detects)):
-                track = Track(len(trackingList) + 1, balls[un_assigned_detects[i]])
-                trackingList.append(track)
+                    if assignment[i] != -1:
+                        myids[i].skipped_frames = 0
+                        myids[i].coords = myids[i].kf.Estimate(detections[assignment[i]])
+                    else:
+                        myids[i].coords = myids[i].kf.Estimate(np.array([[0], [0]]))
 
-        # Update KalmanFilter state, lastResults and tracks trace
-        for i in range(len(assignment)):
-            trackingList[i].kf.predict()
-
-            if assignment[i] != -1:
-                trackingList[i].skipped_frames = 0
-                trackingList[i].predictions = trackingList[i].kf.Estimate(balls[assignment[i]][0],
-                                                                          balls[assignment[i]][1])
-            else:
-                trackingList[i].predictions = trackingList[i].kf.Estimate(0, 0)
-
-            # if len(trackingList[i].trace) > self.max_trace_length:
-            #     for j in range(len(trackingList[i].trace) -
-            #                    self.max_trace_length):
-            #         del trackingList[i].trace[j]
-
-            # trackingList[i].trace.append(trackingList[i].prediction)
-            trackingList[i].kf.lastResult = trackingList[i].predictions
+                return myids
 
 
 # Main Function
