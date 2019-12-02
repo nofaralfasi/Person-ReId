@@ -80,8 +80,8 @@ def mtx2rvec(R):
 
 def draw_str(dst, target, s):
     x, y = target
-    cv.putText(dst, s, (x+1, y+1), cv.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness = 2, lineType=cv.LINE_AA)
-    cv.putText(dst, s, (x, y), cv.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv.LINE_AA)
+    cv.putText(dst, s, (x+1, y+1), cv.FONT_HERSHEY_PLAIN, 1.0, (255,0 ,0), thickness = 2, lineType=cv.LINE_AA)
+    cv.putText(dst, s, (x, y), cv.FONT_HERSHEY_PLAIN, 1.0, (255, 0, 0), lineType=cv.LINE_AA)
 
 class Sketcher:
     def __init__(self, windowname, dests, colors_func):

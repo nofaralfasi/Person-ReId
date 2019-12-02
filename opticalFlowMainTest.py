@@ -9,7 +9,7 @@ Original file is located at
 import cv2
 import os
 from utils.opticalFlow import getMaskFromOpticalFlow, PointsOpticalFlow
-from utils.yolo import initYolo, TrackingByYolo
+from utils.yolo import TrackingByYolo, Yolo
 
 if __name__ == "__main__":
     """# import images"""
@@ -34,9 +34,7 @@ if __name__ == "__main__":
 
     ## init yolo
 
-    weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
-    configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
-    labelPath = 'yolo-object-detection/yolo-coco/coco.names'
-    net = initYolo(weightsPath, configPath)
+    yolo = Yolo()
+    yolo.initYolo()
 
-    TrackingByYolo(frames, net, labelPath, isVideo=True)
+    TrackingByYolo(frames, yolo, isVideo=True)

@@ -84,7 +84,7 @@ class Yolo:
 
                 if LABELS[classIDs[i]] == 'person':
                     # croppingImages.append({"box": [(x, y), (x + w, y + h)], "confidence": confidences[i]})
-                    croppingImages.append([(x + x + w) // 2, (y + y + h) // 2])
+                    croppingImages.append([(x, y), (x+w, y+h)])
 
                 # draw a bounding box rectangle and label on the image
                 # color = [int(c) for c in COLORS[classIDs[i]]]
@@ -135,8 +135,24 @@ def DrawOnFrameMyIds(myids, frame):
     return frame
 
 
-def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", isVideo: bool):
-    myids = {}
+class Human:
+    def __init__(self, indexCount):
+        self.indexCount = indexCount
+        self.frames = []
+        self.missingFrames = 0
+
+
+def DrawHumans(humans, frame):
+    colorBlue = (255, 0, 0)
+    thicknessRec = 2
+    for h in humans:
+        cv2.rectangle(frame, h.frames[-1][0], h.frames[-1][1],
+                      colorBlue, thicknessRec)
+
+
+def TrackingByYolo(sequences: [], yolo, isVideo: bool):
+    myPeople = []
+    counterId = 0
     frameRate = 1
     numOfFrames = len(sequences)
     if numOfFrames > 1:
@@ -148,37 +164,17 @@ def TrackingByYolo(sequences: [], net: "darkNet net", labelPath: "coco.names", i
             else:
                 frame2 = cv2.imread(sequences[index])
 
-            myTrackingObjectForward = forward(net, frame2, labelPath)
+            if index == 0:
+                # first time
+                croppedImage = yolo.forward(frame2)
+                for c in croppedImage:
+                    human = Human(counterId)
+                    counterId += 1
+                    human.frames.append(c)
+                    myPeople.append(human)
 
+            DrawHumans(myPeople, frame2)
             # find ids from previous frame
-            keysToRemove = []
-            for _id in myids.values():
-                # each crop find his id by center
-                myNewTarget = findIdByCenter(myTrackingObjectForward, _id["centerHuman"])
-
-                if myNewTarget is not None:
-                    myNewTarget["centerHuman"] = getCenter(myNewTarget["box"])
-                    myids[_id["_id"]]["centerHuman"] = myNewTarget["centerHuman"]
-                    myids[_id["_id"]]["box"] = myNewTarget["box"]
-                else:
-                    # id was appear but now is missing
-                    keysToRemove.append(_id["_id"])
-
-            for keyRemove in keysToRemove:
-                myids.pop(keyRemove)
-
-            # print("missing ids ", len(myTrackingObjectForward))
-
-            # create new ids
-            for objectBox in myTrackingObjectForward:
-                # each crop find his id by center
-                newIdNumber = len(myids.keys()) + 1
-                centerHuman = getCenter(objectBox["box"])
-
-                myids[newIdNumber] = {"_id": newIdNumber, "centerHuman": centerHuman,
-                                      "box": objectBox["box"]}
-
-            frame2 = DrawOnFrameMyIds(myids, frame2)
             cv2.imshow('frame', frame2)
             k = cv2.waitKey(0) & 0xff
             if k == 27:
