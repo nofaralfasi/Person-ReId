@@ -37,13 +37,20 @@ feature_params = dict( maxCorners = 500,
                        minDistance = 7,
                        blockSize = 7 )
 
+class Track:
+    def __init__(self,indexCount):
+        self.indexCount = indexCount
+        self.tr = []
+
+
 class App:
     def __init__(self, video_src):
-        self.track_len = 10
+        self.track_len = 1
         self.detect_interval = 5
         self.tracks = []
         self.cam = video.create_capture(video_src)
         self.frame_idx = 0
+        self.indexCount = 0
 
     def run(self):
         while True:
@@ -53,7 +60,7 @@ class App:
 
             if len(self.tracks) > 0:
                 img0, img1 = self.prev_gray, frame_gray
-                p0 = np.float32([tr[-1] for tr in self.tracks]).reshape(-1, 1, 2)
+                p0 = np.float32([tr.tr[-1] for tr in self.tracks]).reshape(-1, 1, 2)
                 p1, _st, _err = cv.calcOpticalFlowPyrLK(img0, img1, p0, None, **lk_params)
                 p0r, _st, _err = cv.calcOpticalFlowPyrLK(img1, img0, p1, None, **lk_params)
                 d = abs(p0-p0r).reshape(-1, 2).max(-1)
@@ -62,29 +69,33 @@ class App:
                 for tr, (x, y), good_flag in zip(self.tracks, p1.reshape(-1, 2), good):
                     if not good_flag:
                         continue
-                    xt ,yt = tr[-1]
-                    therhold = 0.0001
+                    xt ,yt = tr.tr[-1]
+                    therhold = 0.000001
                     if abs(x - xt) > therhold and abs(yt - y) > therhold:
-                        tr.append((x, y))
-                        if len(tr) > self.track_len:
-                            del tr[0]
+                        tr.tr.append((x, y))
+                        if len(tr.tr) > self.track_len:
+                            del tr.tr[0]
                         new_tracks.append(tr)
                         cv.circle(vis, (x, y), 2, (0, 255, 0), -1)
-                        #draw_str(vis,(int(x),int(y-30)),"id "+str(self.tracks.index(tr)))
+                        draw_str(vis,(int(x),int(y-30)),"id "+str(tr.indexCount))
 
                 self.tracks = new_tracks
-                cv.polylines(vis, [np.int32(tr) for tr in self.tracks], False, (0, 255, 0))
-                draw_str(vis, (20, 20), 'track count: %d' % len(self.tracks))
 
+                cv.polylines(vis, [np.int32(tr.tr) for tr in self.tracks], False, (0, 255, 0))
+                draw_str(vis, (20, 20), 'track count: %d' % len(self.tracks))
+            
             if self.frame_idx % self.detect_interval == 0:
                 mask = np.zeros_like(frame_gray)
                 mask[:] = 255
-                for x, y in [np.int32(tr[-1]) for tr in self.tracks]:
+                for x, y in [np.int32(tr.tr[-1]) for tr in self.tracks]:
                     cv.circle(mask, (x, y), 5, 0, -1)
                 p = cv.goodFeaturesToTrack(frame_gray, mask = mask, **feature_params)
                 if p is not None:
                     for x, y in np.float32(p).reshape(-1, 2):
-                        self.tracks.append([(x, y)])
+                        trTemp = Track(self.indexCount)
+                        self.indexCount += 1
+                        trTemp.tr.append((x,y))
+                        self.tracks.append(trTemp)
 
 
             self.frame_idx += 1
