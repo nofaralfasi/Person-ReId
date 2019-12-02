@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/opticalFlowLiran/lk_trackGroupBy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/opticalFlowLiran/common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/lk_track.py" beforeDir="false" afterPath="$PROJECT_DIR$/opticalFlowLiran/lk_track.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opticalFlowMainTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/opticalFlowMainTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/yolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/yolo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -200,7 +196,7 @@
       <workItem from="1575227801156" duration="1985000" />
       <workItem from="1575287182805" duration="1434000" />
       <workItem from="1575290974467" duration="9907000" />
-      <workItem from="1575310443161" duration="1094000" />
+      <workItem from="1575310443161" duration="1197000" />
     </task>
     <task id="LOCAL-00001" summary="optical flow">
       <created>1575112722454</created>
@@ -363,7 +359,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575288583887</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="add yolo tracking">
+      <created>1575311551261</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1575311551261</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,7 +392,8 @@
     <MESSAGE value="only yolo without ids" />
     <MESSAGE value="only yolo without ids-works" />
     <MESSAGE value="optical flow solution" />
-    <option name="LAST_COMMIT_MESSAGE" value="optical flow solution" />
+    <MESSAGE value="add yolo tracking" />
+    <option name="LAST_COMMIT_MESSAGE" value="add yolo tracking" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -172,7 +172,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool):
                     counterId += 1
                     human.frames.append(c)
                     myPeople.append(human)
-
+            # Todo add when index > 0 append to mypeople and compare keyPoints between two human
             DrawHumans(myPeople, frame2)
             # find ids from previous frame
             cv2.imshow('frame', frame2)
