@@ -15,9 +15,9 @@ if __name__ == "__main__":
     """# import images"""
 
     frames = []
-    cap = cv2.VideoCapture('dataset/re-id/videos/storyLove.mp4')
+    cap = cv2.VideoCapture('dataset/re-id/videos/vtest.avi')
     i = 0
-    while i < 12:
+    while i < 30:
         ret, frame = cap.read()
         i += 1
 

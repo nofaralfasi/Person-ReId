@@ -1,5 +1,6 @@
-
 import cv2
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def DrawOnFrameMyIds(myids, frame):
@@ -33,3 +34,24 @@ def DrawHumans(MyPeople, frame):
         cv2.rectangle(frame, human.locations[-1][0], human.locations[-1][1],
                       colorBlue, thicknessRec)
 
+
+def ShowPeopleTable(MyPeople):
+    maxFramesHuman= max(MyPeople, key=lambda human: len(human.frames))
+    print(len(maxFramesHuman.frames))
+    fig, ax = plt.subplots(nrows=len(MyPeople), ncols=len(maxFramesHuman.frames), sharex=True, sharey=True, )
+    for idx,human in enumerate(MyPeople):
+        for jdx,frame in enumerate(human.frames):
+            print(idx,jdx)
+            ax[idx,jdx].imshow(frame)
+
+    plt.show()
+
+
+def show_images(images: list) -> None:
+    n: int = len(images)
+    f = plt.figure()
+    for i in range(n):
+        # Debug, plot figure
+        f.add_subplot(1, n, i + 1)
+        plt.imshow(images[i])
+    plt.show(block=True)
