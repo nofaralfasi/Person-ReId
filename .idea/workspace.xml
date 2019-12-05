@@ -2,39 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/finalProject/utils/matchers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/finalProject/utils/tracking/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/keyPoints/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/human.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/classes/human.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/yolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/classes/yolo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0053.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0053.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0054.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0054.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0055.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0055.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0056.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0056.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0057.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0057.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0058.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0058.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0059.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0059.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0060.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0060.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0061.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0061.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0062.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0062.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/DSC_0102.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/DSC_0102.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/aliea.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/aliea.JPG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/color.png" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/color.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/color_rotate.png" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/images/color_rotate.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opticalFlowMainTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/opticalFlowMainTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/images/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/drawing/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/drawing/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/drawing/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/drawing/common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/drawing/draw.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/drawing/draw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/images/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/images/imagesUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/images/imagesUtils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/keyPoints/AlgoritamKeyPoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/keyPoints/AlgoritamKeyPoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/keyPoints/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/classes/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/matchers/Matchers.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/matchers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tracking/TrackingByYolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0053.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0053.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0054.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0054.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0055.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0055.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0056.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0056.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0057.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0057.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0058.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0058.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0059.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0059.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0060.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0060.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0061.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0061.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0062.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0062.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/DSC_0102.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/DSC_0102.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/aliea.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/aliea.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/color.png" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/color.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/images/color_rotate.png" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/images/color_rotate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/classes/human.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/classes/human.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/classes/yolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/classes/yolo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/utils/keyPoints/AlgoritamKeyPoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/keyPoints/AlgoritamKeyPoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowMainTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/yoloTrackerMain.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -243,7 +232,7 @@
       <workItem from="1575287182805" duration="1434000" />
       <workItem from="1575290974467" duration="9907000" />
       <workItem from="1575310443161" duration="1223000" />
-      <workItem from="1575573983641" duration="983000" />
+      <workItem from="1575573983641" duration="2376000" />
     </task>
     <task id="LOCAL-00001" summary="optical flow">
       <created>1575112722454</created>
@@ -427,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575574840437</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="refactor project with folders">
+      <created>1575574993426</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1575574993426</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

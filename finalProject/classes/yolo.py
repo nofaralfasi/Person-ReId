@@ -82,7 +82,7 @@ class Yolo:
 
                 if LABELS[classIDs[i]] == 'person':
                     # croppingImages.append({"box": [(x, y), (x + w, y + h)], "confidence": confidences[i]})
-                    croppingImages.append([(x, y), (x+w, y+h)])
+                    croppingImages.append({"location": [(x, y), (x + w, y + h)], "frame": image[x:x + w, y:y + h]})
 
                 # draw a bounding box rectangle and label on the image
                 # color = [int(c) for c in COLORS[classIDs[i]]]

@@ -24,10 +24,10 @@ def SiftDetectKeyPoints(img, Threshold):
 """# Surf Algoritam"""
 
 
-def SuftDetectKeyPoints(img, Threshold):
+def SuftDetectKeyPoints(img, Threshold=0.5):
     suft = cv2.xfeatures2d.SURF_create()
     kp, des = suft.detectAndCompute(img, None)
-    return (kp, des)
+    return kp, des
 
 
 """#orb algoritam"""

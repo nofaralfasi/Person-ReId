@@ -4,6 +4,8 @@
 """
 import cv2
 
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import SuftDetectKeyPoints
+
 
 def KazeMatcher(desc1, desc2):
     matcher = cv2.DescriptorMatcher_create(cv2.DescriptorMatcher_BRUTEFORCE_HAMMING)
@@ -12,6 +14,23 @@ def KazeMatcher(desc1, desc2):
 
 
 """# BF MATCHER"""
+
+
+def findClosesHuman(human, myPeople):
+    keyTarget, DescriptionTarget = SuftDetectKeyPoints(human["frame"])
+    maxMatch = []
+    for p in myPeople:
+        MatchP = []
+        for frame in p.frames:
+            kp, dp = SuftDetectKeyPoints(frame)
+            goodMatch = FLANNMATCHER(DescriptionTarget, dp, 0.7)
+            acc = len(goodMatch) / len(keyTarget)
+            MatchP.append(acc)
+        MaxAcc = max(MatchP)
+        maxMatch.append((p, MaxAcc))
+
+    return maxMatch
+
 
 
 def BFMatcher(des1, des2, threshold):

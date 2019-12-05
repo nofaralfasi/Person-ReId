@@ -9,3 +9,4 @@ class Human:
         self.indexCount = indexCount
         self.frames = []
         self.missingFrames = 0
+        self.locations = []
