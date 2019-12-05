@@ -7,8 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1V5pgYFxuUwxiOg7D3zlqYixvA5FNf66K
 """
 import cv2
-from classes.yolo import  Yolo
-from utils.tracking.TrackingByYolo import TrackingByYolo
+
+from finalProject.classes.yolo import Yolo
+from finalProject.utils.tracking.TrackingByYolo import TrackingByYolo
 
 if __name__ == "__main__":
     """# import images"""
