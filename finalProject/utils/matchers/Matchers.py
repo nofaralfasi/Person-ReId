@@ -16,21 +16,26 @@ def KazeMatcher(desc1, desc2):
 """# BF MATCHER"""
 
 
-def findClosesHuman(human, myPeople):
+def findClosesHuman(human, myPeople,max_length_frames=5):
     keyTarget, DescriptionTarget = SuftDetectKeyPoints(human["frame"])
     maxMatch = []
     for p in myPeople:
+        if len(p.frames) > max_length_frames:
+            p.frames = p.frames[-max_length_frames:]
+
         MatchP = []
         for frame in p.frames:
             kp, dp = SuftDetectKeyPoints(frame)
             goodMatch = FLANNMATCHER(DescriptionTarget, dp, 0.7)
-            acc = len(goodMatch) / len(keyTarget)
+            if len(keyTarget) == 0:
+                acc = 0
+            else:
+                acc = len(goodMatch) / len(keyTarget)
             MatchP.append(acc)
         MaxAcc = max(MatchP)
         maxMatch.append((p, MaxAcc))
 
     return maxMatch
-
 
 
 def BFMatcher(des1, des2, threshold):

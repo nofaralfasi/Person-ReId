@@ -26,10 +26,10 @@ def DrawOnFrameMyIds(myids, frame):
     return frame
 
 
-def DrawHumans(humans, frame):
+def DrawHumans(MyPeople, frame):
     colorBlue = (255, 0, 0)
     thicknessRec = 2
-    for h in humans:
-        cv2.rectangle(frame, h.frames[-1][0], h.frames[-1][1],
+    for human in MyPeople:
+        cv2.rectangle(frame, human.locations[-1][0], human.locations[-1][1],
                       colorBlue, thicknessRec)
 

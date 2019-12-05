@@ -23,6 +23,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool):
                 # first time
                 croppedImage = yolo.forward(frame2)
                 for c in croppedImage:
+                    print(c)
                     human = Human(counterId)
                     counterId += 1
                     human.frames.append(c["frame"])
@@ -30,16 +31,24 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool):
                     myPeople.append(human)
             elif index > 0:
                 croppedImage = yolo.forward(frame2)
+                print("list of detection", len(croppedImage))
                 for c in croppedImage:
                     maxMatch = findClosesHuman(c, myPeople)
-                    print(maxMatch)
-                    cv2.imshow('target', c["frame"])
-                    k = cv2.waitKey(0) & 0xff
+                    element = max(maxMatch, key=lambda item: item[1])
+                    # cv2.imshow('target', c["frame"])
+                    if element[1] > 0.2:
+                        # cv2.imshow('HighScoreHuman', element[0].frames[-1])
+                        # print('HighScoreHuman', element[1])
+                        indexer = myPeople.index(element[0])
+                        myPeople[indexer].frames.append(c["frame"])
+                        myPeople[indexer].locations.append(c["location"])
+                    # k = cv2.waitKey(10) & 0xff
+
 
             # Todo add when index > 0 append to mypeople and compare keyPoints between two human
             DrawHumans(myPeople, frame2)
             # find ids from previous frame
             cv2.imshow('frame', frame2)
-            k = cv2.waitKey(0) & 0xff
+            k = cv2.waitKey(10) & 0xff
             if k == 27:
                 break
