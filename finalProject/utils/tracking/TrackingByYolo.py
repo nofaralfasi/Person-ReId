@@ -37,16 +37,19 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool):
                 croppedImage = list(filter(lambda crop : crop["frame"].size,croppedImage))
                 print("list of detection", len(croppedImage))
                 for c in croppedImage:
-                    maxMatch = findClosesHuman(c, myPeople)
-                    element = max(maxMatch, key=lambda item: item[1])
-                    # cv2.imshow('target', c["frame"])
-                    if element[1] > 0.2:  # score match
-                        # cv2.imshow('HighScoreHuman', element[0].frames[-1])
-                        # print('HighScoreHuman', element[1])
-                        indexer = myPeople.index(element[0])
-                        myPeople[indexer].frames.append(c["frame"])
-                        myPeople[indexer].locations.append(c["location"])
-                    # k = cv2.waitKey(10) & 0xff
+                    if len(myPeople) > 0:
+                        maxMatch = findClosesHuman(c, myPeople)
+                        element = max(maxMatch, key=lambda item: item[1])
+                        # cv2.imshow('target', c["frame"])
+                        if element[1] > 0.2:  # score match
+                            # cv2.imshow('HighScoreHuman', element[0].frames[-1])
+                            # print('HighScoreHuman', element[1])
+                            indexer = myPeople.index(element[0])
+                            myPeople[indexer].frames.append(c["frame"])
+                            myPeople[indexer].locations.append(c["location"])
+                        # k = cv2.waitKey(10) & 0xff
+                    else:
+                        pass # TODO add him to myPeople
 
             DrawHumans(myPeople, drawFrame)
             # find ids from previous frame
