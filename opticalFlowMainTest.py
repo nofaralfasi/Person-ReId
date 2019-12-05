@@ -7,9 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1V5pgYFxuUwxiOg7D3zlqYixvA5FNf66K
 """
 import cv2
-import os
-from utils.opticalFlow import getMaskFromOpticalFlow, PointsOpticalFlow
-from utils.yolo import TrackingByYolo, Yolo
+from classes.yolo import  Yolo
+from utils.tracking.TrackingByYolo import TrackingByYolo
 
 if __name__ == "__main__":
     """# import images"""

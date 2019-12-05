@@ -2,8 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/classes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classes/human.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/drawing/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/drawing/draw.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/images/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/keyPoints/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/matchers/Matchers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/matchers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/tracking/TrackingByYolo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Final Project Afeka.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Final Project Afeka.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/yolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/yolo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AlgoritamKeyPoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/keyPoints/AlgoritamKeyPoints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KalmanFilter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matchers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kalman.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/TrackingBugs.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/drawing/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/lk_track.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/lk_trackGroupBy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/tst_scene_render.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/video.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowLiran/vtest.avi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/opticalFlowMainTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/opticalFlowMainTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/speedEst.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/imagesUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/images/imagesUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/opticalFlow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/yolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/yolo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +51,13 @@
     <expand />
     <select />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -37,10 +70,18 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/re-id/videos" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/classes" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/utils/keyPoints" />
+      <recent name="$PROJECT_DIR$/utils/matchers" />
+      <recent name="$PROJECT_DIR$/classes" />
+      <recent name="$PROJECT_DIR$/utils/drawing" />
+      <recent name="$PROJECT_DIR$/utils/yolo" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/classes" />
       <recent name="$PROJECT_DIR$/re-id/videos" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -170,11 +211,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.lk_track" />
-        <item itemvalue="Python.KalmanFilter" />
         <item itemvalue="Python.tracker" />
         <item itemvalue="Python.mainKalman" />
+        <item itemvalue="Python.lk_track" />
         <item itemvalue="Python.kalmanYolo" />
+        <item itemvalue="Python.KalmanFilter" />
       </list>
     </recent_temporary>
   </component>
@@ -196,7 +237,8 @@
       <workItem from="1575227801156" duration="1985000" />
       <workItem from="1575287182805" duration="1434000" />
       <workItem from="1575290974467" duration="9907000" />
-      <workItem from="1575310443161" duration="1197000" />
+      <workItem from="1575310443161" duration="1223000" />
+      <workItem from="1575573983641" duration="834000" />
     </task>
     <task id="LOCAL-00001" summary="optical flow">
       <created>1575112722454</created>
@@ -366,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575311551261</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="add yolo tracking">
+      <created>1575311648781</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1575311648781</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,22 +443,6 @@
     <MESSAGE value="optical flow solution" />
     <MESSAGE value="add yolo tracking" />
     <option name="LAST_COMMIT_MESSAGE" value="add yolo tracking" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KalmanFilter.py</url>
-          <line>197</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KalmanFilter.py</url>
-          <line>207</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$mainKalman.coverage" NAME="mainKalman Coverage Results" MODIFIED="1575189474826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

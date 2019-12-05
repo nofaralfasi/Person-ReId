@@ -24,11 +24,9 @@ from builtins import Exception
 # !pip install opencv-contrib-python==3.4.2.16
 #
 # using opencv
-import cv2
-from AlgoritamKeyPoints import *
-from Matchers import *
-from utils.imagesUtils import Accuracy, resizeImage, ShowMatch
-from utils.yolo import forward, initYolo
+from utils.keyPoints.AlgoritamKeyPoints import *
+from utils.matchers.Matchers import *
+from utils.images.imagesUtils import resizeImage, ShowMatch
 
 
 def fullPipeLine(net, labelPath, source, target):
