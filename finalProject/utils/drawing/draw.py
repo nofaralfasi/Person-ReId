@@ -36,14 +36,17 @@ def DrawHumans(MyPeople, frame):
 
 
 def ShowPeopleTable(MyPeople):
-    maxFramesHuman= max(MyPeople, key=lambda human: len(human.history))
-    fig, ax = plt.subplots(nrows=len(MyPeople)+1, ncols=len(maxFramesHuman.history)+1, sharex=True, sharey=True, )
-    for idx,human in enumerate(MyPeople):
-        for jdx,frame in enumerate(human.history):
-            print(idx,jdx)
-            ax[idx,jdx].imshow(frame)
+    if len(MyPeople) == 0:
+        print("no people found")
+    else:
+        maxFramesHuman = max(MyPeople, key=lambda human: len(human.frames))
+        fig, ax = plt.subplots(nrows=len(MyPeople) + 1, ncols=len(maxFramesHuman.frames) + 1, sharex=True, sharey=True, )
+        for idx, human in enumerate(MyPeople):
+            for jdx, frame in enumerate(human.frames):
+                print(idx, jdx)
+                ax[idx, jdx].imshow(frame)
 
-    plt.show()
+        plt.show()
 
 
 def show_images(images: list) -> None:
@@ -52,5 +55,7 @@ def show_images(images: list) -> None:
     for i in range(n):
         # Debug, plot figure
         f.add_subplot(1, n, i + 1)
+        # convert BGR to RGB
+        #images[i] = cv2.cvtColor(images[i],images[i], cv2.COLOR_BGR2RGB)
         plt.imshow(images[i])
     plt.show(block=True)

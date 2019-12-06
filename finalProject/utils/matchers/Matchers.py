@@ -16,26 +16,32 @@ def KazeMatcher(desc1, desc2):
 """# BF MATCHER"""
 
 
-def findClosesHuman(human, myPeople, max_length_frames=3):
+def findClosesHuman(human, myPeople, max_length_frames=5):
     keyTarget, DescriptionTarget = SuftDetectKeyPoints(human["frame"])
+    if keyTarget is None or DescriptionTarget is None:
+        return None  # dont have key points for this human
     maxMatch = []
-
     for p in myPeople:
         if len(p.frames) > max_length_frames:
-            p.history.extend(p.frames[0:len(p.frames)-max_length_frames])
+            p.history.extend(p.frames[0:len(p.frames) - max_length_frames])
             p.frames = p.frames[-max_length_frames:]
 
         MatchP = []
         for frame in p.frames:
             kp, dp = SuftDetectKeyPoints(frame)
-            if len(dp) > 0 and len(DescriptionTarget) > 0:
+            if kp is None or dp is None:
+                continue
+            else:
                 goodMatch = FLANNMATCHER(DescriptionTarget, dp, 0.9)
             if len(keyTarget) == 0:
                 acc = 0
             else:
                 acc = len(goodMatch) / len(keyTarget)
             MatchP.append(acc)
-        MaxAcc = max(MatchP)
+        if len(MatchP) > 0:
+            MaxAcc = max(MatchP)
+        else:
+            MaxAcc = 0
         maxMatch.append((p, MaxAcc))
 
     return maxMatch
@@ -62,11 +68,15 @@ def FLANNMATCHER(des1, des2, threshold):  # threshold is the distance between th
     index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
     search_params = dict(checks=50)  # or pass empty dictionary
     flann = cv2.FlannBasedMatcher(index_params, search_params)
-    matches = flann.knnMatch(des1, des2, k=2)
-    # Need to draw only good matches, so create a mask
-    good = []
-    # ratio test as per Lowe's paper
-    for i, (m, n) in enumerate(matches):
-        if m.distance < threshold * n.distance:
-            good.append([m])
-    return good
+
+    if len(des1) >= 2 and len(des2) >= 2:
+        matches = flann.knnMatch(des1, des2, k=2)
+        # Need to draw only good matches, so create a mask
+        good = []
+        # ratio test as per Lowe's paper
+        for i, (m, n) in enumerate(matches):
+            if m.distance < threshold * n.distance:
+                good.append([m])
+        return good
+    else:
+        return []
