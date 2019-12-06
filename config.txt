@@ -2,12 +2,12 @@
   "inputVideo" : "dataset/re-id/videos/cctv1.mp4",
   "isVideo" : true,
   "skipRateFrameFromBeginning" : 5,
-  "frameRate" : 1 ,
+  "frameRate" : 5 ,
   "thresholdAppendToHuman" : 0.5,
   "thresholdAppendNewHumanStart" : 0.1,
   "thresholdAppendNewHumanEnd" : 0.5,
   "WaitKeySecond" : 30,
-  "showHistory" : false,
+  "showHistory" : true,
   "FlannMatcherThreshold" : 0.9,
   "max_length_frames" : 5
 
