@@ -10,35 +10,40 @@ import cv2
 
 from finalProject.classes.yolo import Yolo
 from finalProject.utils.tracking.TrackingByYolo import TrackingByYolo
+import json
 
 if __name__ == "__main__":
     """# import images"""
 
-    frames = []
-    cap = cv2.VideoCapture('dataset/re-id/videos/cctv1.mp4')
-    i = 0
-    while i < 1:
-        ret, frame = cap.read()
-        i += 1
+    with open('./config.txt') as file_json:
 
-    index = 0
-    while ret:
-        frames.append(frame)
-        ret, frame = cap.read()
+        config = json.load(file_json)
 
-    # path = "re-id/sequenses/multi_shot/cam_a/person_0001"
-    # f = []
-    # for (dirpath, dirnames, filenames) in os.walk(path):
-    #     f.extend(filenames)
-    #     break
-    #
-    # f.sort()
-    # f = list(map(lambda file: path + "/" + file, f))
-    # #getMaskFromOpticalFlow(f,isVideo=False)
+        frames = []
+        cap = cv2.VideoCapture(config["inputVideo"])
+        i = 0
+        while i < config["skipRateFrameFromBeginning"]:
+            ret, frame = cap.read()
+            i += 1
 
-    ## init yolo
+        index = 0
+        while ret:
+            frames.append(frame)
+            ret, frame = cap.read()
 
-    yolo = Yolo()
-    yolo.initYolo()
+        # path = "re-id/sequenses/multi_shot/cam_a/person_0001"
+        # f = []
+        # for (dirpath, dirnames, filenames) in os.walk(path):
+        #     f.extend(filenames)
+        #     break
+        #
+        # f.sort()
+        # f = list(map(lambda file: path + "/" + file, f))
+        # #getMaskFromOpticalFlow(f,isVideo=False)
 
-    TrackingByYolo(frames, yolo, isVideo=True)
+        ## init yolo
+
+        yolo = Yolo()
+        yolo.initYolo()
+
+        TrackingByYolo(frames, yolo,isVideo=config["isVideo"],config=config)

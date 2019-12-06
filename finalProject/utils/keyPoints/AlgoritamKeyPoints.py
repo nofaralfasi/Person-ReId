@@ -5,14 +5,14 @@ import cv2
 def KeyPointsBinary(img, Threshold):
     kpOrb, desOrb = ORBDetectKeyPoints(img, Threshold)
     kpKaze, desKaze = KazeDetectKeyPoints(img)
-    return [(kpOrb,desOrb),(kpKaze,desKaze)]
+    return [(kpOrb, desOrb), (kpKaze, desKaze)]
 
 
 def KeyPointsFloat(img, Threshold):
     kpSurf, desSurf = SuftDetectKeyPoints(img, Threshold)
     kpSift, desSift = SiftDetectKeyPoints(img, Threshold)
 
-    return [(kpSurf,desSurf), (kpSift,desSift)]
+    return [(kpSurf, desSurf), (kpSift, desSift)]
 
 
 def SiftDetectKeyPoints(img, Threshold):
