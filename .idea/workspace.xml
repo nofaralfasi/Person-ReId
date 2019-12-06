@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/classes/human.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/classes/human.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/finalProject/utils/drawing/draw.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/drawing/draw.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yoloTrackerMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/yoloTrackerMain.py" afterDir="false" />
     </list>
@@ -80,7 +82,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.yoloTrackerMain">
-    <configuration name="kalmanYolo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="TrackingByYolo" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Final Project Afeka" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -88,12 +90,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/finalProject/utils/tracking" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kalmanYolo.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -193,10 +195,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.yoloTrackerMain" />
+        <item itemvalue="Python.TrackingByYolo" />
         <item itemvalue="Python.tracker" />
         <item itemvalue="Python.mainKalman" />
         <item itemvalue="Python.lk_track" />
-        <item itemvalue="Python.kalmanYolo" />
       </list>
     </recent_temporary>
   </component>
@@ -219,7 +221,9 @@
       <workItem from="1575287182805" duration="1434000" />
       <workItem from="1575290974467" duration="9907000" />
       <workItem from="1575310443161" duration="1223000" />
-      <workItem from="1575573983641" duration="10084000" />
+      <workItem from="1575573983641" duration="10180000" />
+      <workItem from="1575620204181" duration="9000" />
+      <workItem from="1575634193651" duration="2145000" />
     </task>
     <task id="LOCAL-00001" summary="optical flow">
       <created>1575112722454</created>
@@ -431,7 +435,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575583841961</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="add yolo learning algo">
+      <created>1575584157241</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1575584157241</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -470,6 +481,7 @@
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$kalman.coverage" NAME="kalman Coverage Results" MODIFIED="1575190906662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$opticalFlowMainTest.coverage" NAME="opticalFlowMainTest Coverage Results" MODIFIED="1575140837232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$lk_track.coverage" NAME="lk_track Coverage Results" MODIFIED="1575305862132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opticalFlowLiran" />
-    <SUITE FILE_PATH="coverage/Final_Project_Afeka$yoloTrackerMain.coverage" NAME="yoloTrackerMain Coverage Results" MODIFIED="1575584083505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$yoloTrackerMain.coverage" NAME="yoloTrackerMain Coverage Results" MODIFIED="1575636339104" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$TrackingByYolo.coverage" NAME="TrackingByYolo Coverage Results" MODIFIED="1575635859132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/finalProject/utils/tracking" />
   </component>
 </project>

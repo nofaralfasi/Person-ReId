@@ -10,3 +10,4 @@ class Human:
         self.frames = []
         self.missingFrames = 0
         self.locations = []
+        self.history = []

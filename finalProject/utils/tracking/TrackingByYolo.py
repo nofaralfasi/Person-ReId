@@ -9,7 +9,7 @@ import copy
 def TrackingByYolo(sequences: [], yolo, isVideo: bool):
     myPeople = []
     counterId = 0
-    frameRate = 1
+    frameRate = 10
     numOfFrames = len(sequences)
     if numOfFrames > 1:
         # start capture
@@ -24,39 +24,42 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool):
             if index == 0:
                 # first time
                 croppedImage = yolo.forward(frame2)
+                croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
                 for c in croppedImage:
-                    # print(c)
-                    if c["frame"].size:
-                        human = Human(counterId)
-                        counterId += 1
-                        human.frames.append(c["frame"])
-                        human.locations.append(c["location"])
-                        myPeople.append(human)
+                    human = Human(counterId)
+                    counterId += 1
+                    human.frames.append(c["frame"])
+                    human.locations.append(c["location"])
+                    myPeople.append(human)
             elif index > 0:
                 croppedImage = yolo.forward(frame2)
-                croppedImage = list(filter(lambda crop : crop["frame"].size,croppedImage))
+                croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
                 print("list of detection", len(croppedImage))
                 for c in croppedImage:
                     if len(myPeople) > 0:
                         maxMatch = findClosesHuman(c, myPeople)
                         element = max(maxMatch, key=lambda item: item[1])
-                        # cv2.imshow('target', c["frame"])
+                        # cv2.imshow('targetFromMovie', c["frame"])
+                        print('scoreHumanFromMyPeople', element[1])
                         if element[1] > 0.2:  # score match
-                            # cv2.imshow('HighScoreHuman', element[0].frames[-1])
-                            # print('HighScoreHuman', element[1])
+                            # cv2.imshow('scoreHumanImageFromMyPeople', element[0].frames[-1])
                             indexer = myPeople.index(element[0])
                             myPeople[indexer].frames.append(c["frame"])
                             myPeople[indexer].locations.append(c["location"])
-                        # k = cv2.waitKey(10) & 0xff
+                        # k = cv2.waitKey(0) & 0xff
                     else:
-                        pass # TODO add him to myPeople
+                        human = Human(counterId)
+                        counterId += 1
+                        human.frames.append(c["frame"])
+                        human.locations.append(c["location"])
+                        myPeople.append(human)
 
-            DrawHumans(myPeople, drawFrame)
+            # DrawHumans(myPeople, drawFrame)
             # find ids from previous frame
-            cv2.imshow('frame', drawFrame)
-            k = cv2.waitKey(10) & 0xff
-            if k == 27:
-                break
+            # cv2.imshow('frame', drawFrame)
+            # k = cv2.waitKey(0) & 0xff
+            # if k == 27:
+            #     break
 
     for p in myPeople:
         print("number of frames in one person")

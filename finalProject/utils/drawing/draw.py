@@ -36,10 +36,10 @@ def DrawHumans(MyPeople, frame):
 
 
 def ShowPeopleTable(MyPeople):
-    maxFramesHuman= max(MyPeople, key=lambda human: len(human.frames))
-    fig, ax = plt.subplots(nrows=len(MyPeople)+1, ncols=len(maxFramesHuman.frames)+1, sharex=True, sharey=True, )
+    maxFramesHuman= max(MyPeople, key=lambda human: len(human.history))
+    fig, ax = plt.subplots(nrows=len(MyPeople)+1, ncols=len(maxFramesHuman.history)+1, sharex=True, sharey=True, )
     for idx,human in enumerate(MyPeople):
-        for jdx,frame in enumerate(human.frames):
+        for jdx,frame in enumerate(human.history):
             print(idx,jdx)
             ax[idx,jdx].imshow(frame)
 
