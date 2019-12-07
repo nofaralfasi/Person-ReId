@@ -2,6 +2,16 @@
 from builtins import dict
 import random as rnd
 import cv2
+import math
+
+
+def distance(pt1, pt2):
+    d = math.sqrt((pt2[0] - pt1[0]) ** 2 + (pt2[1] - pt1[1]) ** 2)
+    return d
+
+
+def getCenter(box):
+    return (box[1][0] + box[0][0]) // 2, (box[1][1] + box[0][1]) // 2
 
 
 def resizeImage(source, fx, fy):  # size is tuple (w,h)
@@ -9,7 +19,7 @@ def resizeImage(source, fx, fy):  # size is tuple (w,h)
 
 
 def Accuracy(kp, matches):
-    return (len(matches) / (len(kp)))
+    return len(matches) / (len(kp))
 
 
 def ShowMatch(source, kp, target, kp2, matches):

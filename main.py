@@ -24,11 +24,9 @@ from builtins import Exception
 # !pip install opencv-contrib-python==3.4.2.16
 #
 # using opencv
-import cv2
-from AlgoritamKeyPoints import *
-from Matchers import *
-from utils.imagesUtils import Accuracy, resizeImage, ShowMatch
-from utils.yolo import forward, initYolo
+from utils.keyPoints.AlgoritamKeyPoints import *
+from utils.matchers.Matchers import *
+from utils.images.imagesUtils import resizeImage, ShowMatch
 
 
 def fullPipeLine(net, labelPath, source, target):
@@ -66,8 +64,8 @@ if __name__ == "__main__":
     #
     weightsPath = 'yolo-object-detection/yolo-coco/yolov3.weights'
     configPath = 'yolo-object-detection/yolo-coco/yolov3.cfg'
-    # labelPath = 'yolo-object-detection/yolo-coco/coco.names'
-    # net = initYolo(weightsPath, configPath)
+    labelPath = 'yolo-object-detection/yolo-coco/coco.names'
+    #net = initYolo(weightsPath, configPath)
     print("finish loading yolo ....")
 
     # image = cv2.imread('images/DSC_0102.JPG')
@@ -82,13 +80,13 @@ if __name__ == "__main__":
 
     source = cv2.imread('images/color.png')
 
-    target = cv2.imread('images/color.png')
+    target = cv2.imread('images/color_rotate.png')
 
 
     source = resizeImage(source, 0.5, 1)
 
-    target = resizeImage(target, 0.5, 1)
+    target = resizeImage(target, 1, 0.5)
 
-    fullPipeLine(None, None, source, target)
+    fullPipeLine(None, labelPath, source, target)
 
     print("finish")

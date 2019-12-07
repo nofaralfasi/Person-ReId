@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9e3c4659-72cd-40da-9388-7be41fd61801" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/images/color.png" afterDir="false" />
+    <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="add config file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlgoritamKeyPoints.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgoritamKeyPoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/imagesUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/imagesUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/utils/drawing/draw.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/drawing/draw.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/myplot3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/screenshots/myplot5.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -22,19 +38,37 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1SjsAWHCyhouUhOGchpEjsi9UoO" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1UKb0FznrGWJU8wKWZNuCxODG2S" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/screenshots" />
+      <recent name="$PROJECT_DIR$/final-project" />
+      <recent name="$PROJECT_DIR$/datasets" />
+      <recent name="$PROJECT_DIR$/utils/keyPoints" />
+      <recent name="$PROJECT_DIR$/utils/matchers" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/images" />
+      <recent name="$PROJECT_DIR$/dataset/re-id/videos" />
+      <recent name="$PROJECT_DIR$/classes" />
+      <recent name="$PROJECT_DIR$/re-id/videos" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -49,73 +83,399 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="Python.yoloTrackerMain">
+    <configuration name="TrackingByYolo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Final Project Afeka" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/finalProject/utils/tracking" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/finalProject/utils/tracking/TrackingByYolo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mainKalman" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Final Project Afeka" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mainKalman.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_color" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Final Project Afeka" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_color.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tracker" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Final Project Afeka" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/kalmanproject" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kalmanproject/tracker.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="yoloTrackerMain" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Final Project Afeka" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/yoloTrackerMain.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.yoloTrackerMain" />
+        <item itemvalue="Python.test_color" />
+        <item itemvalue="Python.TrackingByYolo" />
+        <item itemvalue="Python.tracker" />
+        <item itemvalue="Python.mainKalman" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9e3c4659-72cd-40da-9388-7be41fd61801" name="Default Changelist" comment="" />
-      <created>1572088195432</created>
+      <changelist id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="" />
+      <created>1575108008617</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1572088195432</updated>
-      <workItem from="1572088199564" duration="1425000" />
-      <workItem from="1572099765057" duration="35000" />
-      <workItem from="1573828173422" duration="3173000" />
-      <workItem from="1573832920905" duration="1639000" />
-      <workItem from="1573842481955" duration="529000" />
-      <workItem from="1573843468070" duration="2558000" />
-      <workItem from="1573999970925" duration="391000" />
-      <workItem from="1574001403374" duration="6552000" />
-      <workItem from="1574057885645" duration="33000" />
-      <workItem from="1574091163731" duration="1939000" />
-      <workItem from="1574426030656" duration="16000" />
-      <workItem from="1574780183658" duration="1326000" />
-      <workItem from="1574784675591" duration="1055000" />
+      <updated>1575108008617</updated>
+      <workItem from="1575108012962" duration="27119000" />
+      <workItem from="1575144955785" duration="6000" />
+      <workItem from="1575144974831" duration="15000" />
+      <workItem from="1575146887355" duration="1722000" />
+      <workItem from="1575188482344" duration="24243000" />
+      <workItem from="1575227801156" duration="1985000" />
+      <workItem from="1575287182805" duration="1434000" />
+      <workItem from="1575290974467" duration="9907000" />
+      <workItem from="1575310443161" duration="1223000" />
+      <workItem from="1575573983641" duration="10180000" />
+      <workItem from="1575620204181" duration="9000" />
+      <workItem from="1575634193651" duration="5442000" />
+      <workItem from="1575639680256" duration="1850000" />
+      <workItem from="1575641825819" duration="3089000" />
+      <workItem from="1575724086083" duration="9255000" />
     </task>
-    <task id="LOCAL-00001" summary="add Yolo Repo">
-      <created>1573831022038</created>
+    <task id="LOCAL-00001" summary="optical flow">
+      <created>1575112722454</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1573831022039</updated>
+      <updated>1575112722454</updated>
     </task>
-    <task id="LOCAL-00002" summary="yolo foward">
-      <created>1573834133734</created>
+    <task id="LOCAL-00002" summary="optical flow">
+      <created>1575118699125</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1573834133734</updated>
+      <updated>1575118699125</updated>
     </task>
-    <task id="LOCAL-00003" summary="crop function yolo">
-      <created>1573834538719</created>
+    <task id="LOCAL-00003" summary="optical flow">
+      <created>1575119191878</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1573834538719</updated>
+      <updated>1575119191878</updated>
     </task>
-    <task id="LOCAL-00004" summary="sum description">
-      <created>1574007296605</created>
+    <task id="LOCAL-00004" summary="optical flow- yolo">
+      <created>1575129010073</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1574007296606</updated>
+      <updated>1575129010073</updated>
     </task>
-    <task id="LOCAL-00005" summary="sum description">
-      <created>1574009483859</created>
+    <task id="LOCAL-00005" summary="optical flow- yolo">
+      <created>1575130276139</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1574009483859</updated>
+      <updated>1575130276139</updated>
     </task>
-    <task id="LOCAL-00006" summary="sum description">
-      <created>1574057899794</created>
+    <task id="LOCAL-00006" summary="optical flow- yolo">
+      <created>1575132532790</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1574057899794</updated>
+      <updated>1575132532790</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="optical flow- yolo">
+      <created>1575136498697</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1575136498697</updated>
+    </task>
+    <task id="LOCAL-00008" summary="optical flow- yolo">
+      <created>1575138047689</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1575138047689</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add project kalman for exmaple">
+      <created>1575146913237</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1575146913237</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add project kalman for exmaple">
+      <created>1575148441848</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1575148441848</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add project kalman for exmaple">
+      <created>1575148605967</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1575148605967</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add project kalman for exmaple">
+      <created>1575194119730</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1575194119730</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add project kalman for exmaple">
+      <created>1575195125112</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1575195125112</updated>
+    </task>
+    <task id="LOCAL-00014" summary="only yolo without ids">
+      <created>1575198488663</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1575198488663</updated>
+    </task>
+    <task id="LOCAL-00015" summary="only yolo without ids">
+      <created>1575202220460</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1575202220460</updated>
+    </task>
+    <task id="LOCAL-00016" summary="only yolo without ids">
+      <created>1575205965194</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1575205965194</updated>
+    </task>
+    <task id="LOCAL-00017" summary="only yolo without ids-works">
+      <created>1575207216981</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1575207216981</updated>
+    </task>
+    <task id="LOCAL-00018" summary="only yolo without ids-works">
+      <created>1575208165798</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1575208165798</updated>
+    </task>
+    <task id="LOCAL-00019" summary="only yolo without ids-works">
+      <created>1575210023690</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1575210023690</updated>
+    </task>
+    <task id="LOCAL-00020" summary="only yolo without ids-works">
+      <created>1575210256113</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1575210256113</updated>
+    </task>
+    <task id="LOCAL-00021" summary="only yolo without ids-works">
+      <created>1575228875637</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1575228875637</updated>
+    </task>
+    <task id="LOCAL-00022" summary="only yolo without ids-works">
+      <created>1575229784257</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1575229784257</updated>
+    </task>
+    <task id="LOCAL-00023" summary="optical flow solution">
+      <created>1575288583886</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1575288583887</updated>
+    </task>
+    <task id="LOCAL-00024" summary="add yolo tracking">
+      <created>1575311551261</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1575311551261</updated>
+    </task>
+    <task id="LOCAL-00025" summary="add yolo tracking">
+      <created>1575311648781</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1575311648781</updated>
+    </task>
+    <task id="LOCAL-00026" summary="refactor project with folders">
+      <created>1575574840437</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1575574840437</updated>
+    </task>
+    <task id="LOCAL-00027" summary="refactor project with folders">
+      <created>1575574993426</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1575574993426</updated>
+    </task>
+    <task id="LOCAL-00028" summary="refactor project with folders">
+      <created>1575576375749</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1575576375749</updated>
+    </task>
+    <task id="LOCAL-00029" summary="add yolo learning algo">
+      <created>1575579784078</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1575579784078</updated>
+    </task>
+    <task id="LOCAL-00030" summary="add yolo learning algo">
+      <created>1575583841961</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1575583841961</updated>
+    </task>
+    <task id="LOCAL-00031" summary="add yolo learning algo">
+      <created>1575584157241</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1575584157241</updated>
+    </task>
+    <task id="LOCAL-00032" summary="add yolo learning algo">
+      <created>1575636348594</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1575636348594</updated>
+    </task>
+    <task id="LOCAL-00033" summary="add yolo learning algo">
+      <created>1575641517449</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1575641517449</updated>
+    </task>
+    <task id="LOCAL-00034" summary="add config file">
+      <created>1575643482542</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1575643482542</updated>
+    </task>
+    <task id="LOCAL-00035" summary="add config file">
+      <created>1575644000289</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1575644000289</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,10 +495,28 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add Yolo Repo" />
-    <MESSAGE value="yolo foward" />
-    <MESSAGE value="crop function yolo" />
-    <MESSAGE value="sum description" />
-    <option name="LAST_COMMIT_MESSAGE" value="sum description" />
+    <MESSAGE value="optical flow" />
+    <MESSAGE value="optical flow- yolo" />
+    <MESSAGE value="add project kalman for exmaple" />
+    <MESSAGE value="only yolo without ids" />
+    <MESSAGE value="only yolo without ids-works" />
+    <MESSAGE value="optical flow solution" />
+    <MESSAGE value="add yolo tracking" />
+    <MESSAGE value="refactor project with folders" />
+    <MESSAGE value="add yolo learning algo" />
+    <MESSAGE value="add config file" />
+    <option name="LAST_COMMIT_MESSAGE" value="add config file" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$mainKalman.coverage" NAME="mainKalman Coverage Results" MODIFIED="1575189474826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$tracker.coverage" NAME="tracker Coverage Results" MODIFIED="1575147480887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/kalmanproject" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$kalmanYolo.coverage" NAME="kalmanYolo Coverage Results" MODIFIED="1575193149002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$KalmanFilter.coverage" NAME="KalmanFilter Coverage Results" MODIFIED="1575295812179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$test_color.coverage" NAME="test_color Coverage Results" MODIFIED="1575641365260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$kalman.coverage" NAME="kalman Coverage Results" MODIFIED="1575190906662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$opticalFlowMainTest.coverage" NAME="opticalFlowMainTest Coverage Results" MODIFIED="1575140837232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$lk_track.coverage" NAME="lk_track Coverage Results" MODIFIED="1575305862132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opticalFlowLiran" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$yoloTrackerMain.coverage" NAME="yoloTrackerMain Coverage Results" MODIFIED="1575733773756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$TrackingByYolo.coverage" NAME="TrackingByYolo Coverage Results" MODIFIED="1575638011946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/finalProject/utils/tracking" />
   </component>
 </project>
