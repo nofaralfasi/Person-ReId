@@ -3,7 +3,7 @@
 #Kaze Matcher for binary classification - orb , kaze ,brief,fast
 """
 import cv2
-
+import numpy as np
 from finalProject.utils.keyPoints.AlgoritamKeyPoints import SuftDetectKeyPoints
 
 
@@ -22,6 +22,7 @@ def findClosesHuman(human, myPeople, config: "config file"):
         return None  # dont have key points for this human
     maxMatch = []
     for p in myPeople:
+        # remove trace frames
         if len(p.frames) > config["max_length_frames"]:
             p.history.extend(p.frames[0:len(p.frames) - config["max_length_frames"]])
             p.frames = p.frames[-config["max_length_frames"]:]
@@ -39,10 +40,10 @@ def findClosesHuman(human, myPeople, config: "config file"):
                 acc = len(goodMatch) / len(keyTarget)
             MatchP.append(acc)
         if len(MatchP) > 0:
-            MaxAcc = max(MatchP)
+            MeanAcc = np.mean(MatchP)
         else:
-            MaxAcc = 0
-        maxMatch.append((p, MaxAcc))
+            MeanAcc = 0
+        maxMatch.append((p, MeanAcc))
 
     return maxMatch
 

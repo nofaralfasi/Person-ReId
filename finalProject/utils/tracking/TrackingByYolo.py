@@ -26,6 +26,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
                 croppedImage = yolo.forward(frame2)
                 croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
                 for c in croppedImage:
+                    # TODO check if they have any features
                     human = Human(counterId)
                     counterId += 1
                     human.frames.append(c["frame"])
@@ -50,6 +51,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
                             myPeople[indexer].frames.append(c["frame"])
                             myPeople[indexer].locations.append(c["location"])
                         # k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
+                        # append new human in buckets
                         elif config["thresholdAppendNewHumanStart"] < element[1] < config["thresholdAppendNewHumanEnd"]:
                             human = Human(counterId)
                             counterId += 1
@@ -63,7 +65,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
                         human.locations.append(c["location"])
                         myPeople.append(human)
 
-            # DrawHumans(myPeople, drawFrame)
+            DrawHumans(myPeople, drawFrame)
             # find ids from previous frame
             cv2.imshow('frame', drawFrame)
             k = cv2.waitKey(config["WaitKeySecond"]) & 0xff

@@ -1,14 +1,14 @@
 {
-  "inputVideo" : "dataset/re-id/videos/cctv1.mp4",
+  "inputVideo" : "dataset/re-id/videos/How People Walk.mp4",
   "isVideo" : true,
-  "skipRateFrameFromBeginning" : 5,
-  "frameRate" : 5 ,
-  "thresholdAppendToHuman" : 0.5,
+  "skipRateFrameFromBeginning" : 12,
+  "frameRate" : 1,
+  "thresholdAppendToHuman" : 0.4,
   "thresholdAppendNewHumanStart" : 0.1,
-  "thresholdAppendNewHumanEnd" : 0.5,
-  "WaitKeySecond" : 30,
-  "showHistory" : true,
+  "thresholdAppendNewHumanEnd" : 0.2,
+  "WaitKeySecond" : 10,
+  "showHistory" : false,
   "FlannMatcherThreshold" : 0.9,
-  "max_length_frames" : 5
+  "max_length_frames" : 3
 
 }

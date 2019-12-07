@@ -2,6 +2,8 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
+from finalProject.utils.drawing.common import draw_str
+
 
 def DrawOnFrameMyIds(myids, frame):
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -33,6 +35,7 @@ def DrawHumans(MyPeople, frame):
     for human in MyPeople:
         cv2.rectangle(frame, human.locations[-1][0], human.locations[-1][1],
                       colorBlue, thicknessRec)
+        draw_str(frame, human.locations[-1][0], "id "+str(human.indexCount))
 
 
 def ShowPeopleTable(MyPeople,config : "configFile"):
@@ -45,14 +48,22 @@ def ShowPeopleTable(MyPeople,config : "configFile"):
             photos = "frames"
 
         maxFramesHuman = max(MyPeople, key=lambda human: len(human.__getattribute__(photos)))
-        fig, ax = plt.subplots(nrows=len(MyPeople) + 1, ncols=len(maxFramesHuman.__getattribute__(photos)) + 1, sharex=True,
-                               sharey=True, )
-        for idx, human in enumerate(MyPeople):
-            for jdx, frame in enumerate(human.__getattribute__(photos)):
-                print(idx, jdx)
-                ax[idx, jdx].imshow(frame)
 
-        plt.show()
+        rows = len(list(filter(lambda human : len(human.__getattribute__(photos)) > 0, MyPeople)))+1
+
+        cols = len(maxFramesHuman.__getattribute__(photos))+1
+
+        print("rows ", rows)
+        print("cols", cols)
+
+        if rows > 0 and cols > 0 :
+            fig, ax = plt.subplots(nrows=rows, ncols=cols, sharex=True,sharey=True )
+            for idx, human in enumerate(MyPeople):
+                for jdx, frame in enumerate(human.__getattribute__(photos)):
+                    print(idx, jdx)
+                    ax[idx, jdx].imshow(frame)
+
+            plt.show()
 
 
 def show_images(images: list) -> None:
