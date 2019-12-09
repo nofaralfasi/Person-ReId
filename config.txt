@@ -1,9 +1,9 @@
 {
-  "inputVideo" : "dataset/re-id/videos/output3.mp4",
-  "isVideo" : true,
+  "inputVideo" : "dataset/images/liran",
+  "isVideo" : false,
   "skipRateFrameFromBeginning" : 1,
   "videoFrameLength" : 50,
-  "frameRate" : 5,
+  "frameRate" : 1,
   "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,
   "thresholdAppendNewHumanEnd" : 0.2,

@@ -8,10 +8,10 @@ Original file is located at
 """
 import cv2
 import pprint
-
+import os
 from finalProject.classes.enumTypeKeyPoints import NamesAlgorithms
 from finalProject.classes.yolo import Yolo
-from finalProject.utils.drawing.common import draw_keypoints
+from finalProject.utils.drawing.draw import drawOnScatter
 from finalProject.utils.keyPoints.AlgoritamKeyPoints import createDescriptorTarget
 from finalProject.utils.tracking.TrackingByYolo import TrackingByYolo
 import matplotlib.pyplot as plt
@@ -26,26 +26,26 @@ if __name__ == "__main__":
         config = json.load(file_json)
 
         frames = []
-        cap = cv2.VideoCapture(config["inputVideo"])
-        i = 0
-        while i < config["skipRateFrameFromBeginning"]:
-            ret, frame = cap.read()
-            i += 1
 
-        index = 0
-        while ret:
-            frames.append(frame)
-            ret, frame = cap.read()
+        if config["isVideo"]:
+            cap = cv2.VideoCapture(config["inputVideo"])
+            i = 0
+            while i < config["skipRateFrameFromBeginning"]:
+                ret, frame = cap.read()
+                i += 1
 
-        # path = "re-id/sequenses/multi_shot/cam_a/person_0001"
-        # f = []
-        # for (dirpath, dirnames, filenames) in os.walk(path):
-        #     f.extend(filenames)
-        #     break
-        #
-        # f.sort()
-        # f = list(map(lambda file: path + "/" + file, f))
-        # #getMaskFromOpticalFlow(f,isVideo=False)
+            index = 0
+            while ret:
+                frames.append(frame)
+                ret, frame = cap.read()
+        else:
+            path = config["inputVideo"]
+            for (dirpath, dirnames, filenames) in os.walk(path):
+                frames.extend(filenames)
+                break
+
+            frames.sort()
+            frames = list(map(lambda file: path + "/" + file, frames))
 
         ## init yolo
 
@@ -60,22 +60,24 @@ if __name__ == "__main__":
         #
         # pp.pprint(descriptorTarget)
 
-        frameExmaple = descriptorTarget[1][0]
-
-        frameExmaple["frame"] = cv2.cvtColor(frameExmaple["frame"], cv2.COLOR_BGR2RGB)
-        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.KAZE.name]["keys"], color=(255, 0, 0))
-        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.ORB.name]["keys"], color=(0, 255, 255))
-        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.SURF.name]["keys"], color=(255, 255, 0))
-        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.SIFT.name]["keys"], color=(0, 255, 0))
+        frameExmaple = descriptorTarget[0][0]
 
         fig, ax = plt.subplots()
 
-        labels = NamesAlgorithms.KAZE.name + "- Color : RED \n" + \
-                 NamesAlgorithms.ORB.name + "- Color : light Blue \n" + \
-                 NamesAlgorithms.SURF.name + "- Color : YELLOW \n" + \
-                 NamesAlgorithms.SIFT.name + "- Color : Green \n"
-
-        ax.set_xlabel(labels)
+        frameExmaple["frame"] = cv2.cvtColor(frameExmaple["frame"], cv2.COLOR_BGR2RGB)
 
         ax.imshow(frameExmaple["frame"])
+
+        keys = [
+            (frameExmaple[NamesAlgorithms.KAZE.name]["keys"], 'tab:blue', NamesAlgorithms.KAZE.name),
+            (frameExmaple[NamesAlgorithms.ORB.name]["keys"], 'tab:orange', NamesAlgorithms.ORB.name),
+            (frameExmaple[NamesAlgorithms.SURF.name]["keys"], 'tab:green', NamesAlgorithms.SURF.name),
+            (frameExmaple[NamesAlgorithms.SIFT.name]["keys"], 'tab:red', NamesAlgorithms.SIFT.name),
+          ]
+
+        for key in keys:
+            drawOnScatter(ax, key[0], key[1], label=key[2])
+
+        ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+        ax.grid(True)
         plt.show()
