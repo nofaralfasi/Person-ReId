@@ -14,6 +14,8 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
     if numOfFrames > 1:
         # start capture
         for index in range(0, numOfFrames, frameRate):
+            affectedPeople = []
+
             print("frame {}".format(index))
             if isVideo:
                 frame2 = sequences[index]
@@ -28,6 +30,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
                 for c in croppedImage:
                     # TODO check if they have any features
                     human = Human(counterId)
+                    affectedPeople.append(counterId)
                     counterId += 1
                     human.frames.append(c["frame"])
                     human.locations.append(c["location"])
@@ -35,7 +38,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
             elif index > 0:
                 croppedImage = yolo.forward(frame2)
                 croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
-                # print("list of detection", len(croppedImage))
+                print("list of detection", len(croppedImage))
                 for c in croppedImage:
                     if len(myPeople) > 0:
                         maxMatch = findClosesHuman(c, myPeople, config=config)
@@ -44,28 +47,31 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
 
                         element = max(maxMatch, key=lambda item: item[1])
                         # cv2.imshow('targetFromMovie', c["frame"])
-                        print('scoreHumanFromMyPeople', element[1])
+                        # print('scoreHumanFromMyPeople', element[1])
                         if element[1] > config["thresholdAppendToHuman"]:  # score match
                             # cv2.imshow('scoreHumanImageFromMyPeople', element[0].frames[-1])
                             indexer = myPeople.index(element[0])
+                            affectedPeople.append(indexer)
                             myPeople[indexer].frames.append(c["frame"])
                             myPeople[indexer].locations.append(c["location"])
                         # k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
                         # append new human in buckets
                         elif config["thresholdAppendNewHumanStart"] < element[1] < config["thresholdAppendNewHumanEnd"]:
                             human = Human(counterId)
+                            affectedPeople.append(counterId)
                             counterId += 1
                             human.frames.append(c["frame"])
                             human.locations.append(c["location"])
                             myPeople.append(human)
                     else:
                         human = Human(counterId)
+                        affectedPeople.append(counterId)
                         counterId += 1
                         human.frames.append(c["frame"])
                         human.locations.append(c["location"])
                         myPeople.append(human)
 
-            DrawHumans(myPeople, drawFrame)
+            DrawHumans(myPeople, drawFrame, affectedPeople)
             # find ids from previous frame
             cv2.imshow('frame', drawFrame)
             k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
@@ -77,4 +83,5 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
         print("number of frames in Person #", index)
         print(len(p.frames))
 
-    ShowPeopleTable(myPeople,config=config)
+    ShowPeopleTable(myPeople, config=config)
+    print("done")

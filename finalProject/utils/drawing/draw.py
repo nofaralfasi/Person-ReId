@@ -29,16 +29,17 @@ def DrawOnFrameMyIds(myids, frame):
     return frame
 
 
-def DrawHumans(MyPeople, frame):
-    colorBlue = (255, 0, 0)
+def DrawHumans(MyPeople, frame, affectedPeople):
     thicknessRec = 2
-    for human in MyPeople:
-        cv2.rectangle(frame, human.locations[-1][0], human.locations[-1][1],
-                      colorBlue, thicknessRec)
-        draw_str(frame, human.locations[-1][0], "id "+str(human.indexCount))
+    for index in affectedPeople:
+        color = MyPeople[index].colorIndex
+        print(color)
+        cv2.rectangle(frame, MyPeople[index].locations[-1][0], MyPeople[index].locations[-1][1],
+                      color, thicknessRec)
+        draw_str(frame, MyPeople[index].locations[-1][0], "id "+str(MyPeople[index].indexCount))
 
 
-def ShowPeopleTable(MyPeople,config : "configFile"):
+def ShowPeopleTable(MyPeople, config: "configFile"):
     if len(MyPeople) == 0:
         print("no people found")
     else:

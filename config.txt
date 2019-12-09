@@ -1,14 +1,14 @@
 {
-  "inputVideo" : "dataset/re-id/videos/How People Walk.mp4",
+  "inputVideo" : "dataset/re-id/videos/output3.mp4",
   "isVideo" : true,
-  "skipRateFrameFromBeginning" : 12,
-  "frameRate" : 1,
-  "thresholdAppendToHuman" : 0.4,
+  "skipRateFrameFromBeginning" : 2,
+  "frameRate" : 5,
+  "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,
   "thresholdAppendNewHumanEnd" : 0.2,
   "WaitKeySecond" : 10,
   "showHistory" : false,
   "FlannMatcherThreshold" : 0.9,
-  "max_length_frames" : 3
+  "max_length_frames" : 5
 
 }
