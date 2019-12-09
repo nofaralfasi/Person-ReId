@@ -7,9 +7,15 @@ Original file is located at
     https://colab.research.google.com/drive/1V5pgYFxuUwxiOg7D3zlqYixvA5FNf66K
 """
 import cv2
+import pprint
 
+from finalProject.classes.enumTypeKeyPoints import NamesAlgorithms
 from finalProject.classes.yolo import Yolo
+from finalProject.utils.drawing.common import draw_keypoints
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import createDescriptorTarget
 from finalProject.utils.tracking.TrackingByYolo import TrackingByYolo
+import matplotlib.pyplot as plt
+
 import json
 
 if __name__ == "__main__":
@@ -46,4 +52,30 @@ if __name__ == "__main__":
         yolo = Yolo()
         yolo.initYolo()
 
-        TrackingByYolo(frames, yolo,isVideo=config["isVideo"],config=config)
+        myTargets = TrackingByYolo(frames, yolo, isVideo=config["isVideo"], config=config)
+
+        descriptorTarget = createDescriptorTarget(myTargets)
+
+        pp = pprint.PrettyPrinter(indent=4)
+        #
+        # pp.pprint(descriptorTarget)
+
+        frameExmaple = descriptorTarget[1][0]
+
+        frameExmaple["frame"] = cv2.cvtColor(frameExmaple["frame"], cv2.COLOR_BGR2RGB)
+        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.KAZE.name]["keys"], color=(255, 0, 0))
+        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.ORB.name]["keys"], color=(0, 255, 255))
+        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.SURF.name]["keys"], color=(255, 255, 0))
+        draw_keypoints(frameExmaple["frame"], frameExmaple[NamesAlgorithms.SIFT.name]["keys"], color=(0, 255, 0))
+
+        fig, ax = plt.subplots()
+
+        labels = NamesAlgorithms.KAZE.name + "- Color : RED \n" + \
+                 NamesAlgorithms.ORB.name + "- Color : light Blue \n" + \
+                 NamesAlgorithms.SURF.name + "- Color : YELLOW \n" + \
+                 NamesAlgorithms.SIFT.name + "- Color : Green \n"
+
+        ax.set_xlabel(labels)
+
+        ax.imshow(frameExmaple["frame"])
+        plt.show()

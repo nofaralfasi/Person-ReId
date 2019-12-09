@@ -1,7 +1,8 @@
 {
   "inputVideo" : "dataset/re-id/videos/output3.mp4",
   "isVideo" : true,
-  "skipRateFrameFromBeginning" : 2,
+  "skipRateFrameFromBeginning" : 1,
+  "videoFrameLength" : 50,
   "frameRate" : 5,
   "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,

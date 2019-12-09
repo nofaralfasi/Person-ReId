@@ -6,11 +6,19 @@ from finalProject.utils.matchers.Matchers import findClosesHuman
 import copy
 
 
-def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
+def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
     myPeople = []
     counterId = 0
     frameRate = config["frameRate"]
-    numOfFrames = len(sequences)
+    if config["videoFrameLength"] == -1:
+        numOfFrames = len(sequences)
+    else:
+        numOfFrames = config["videoFrameLength"]
+
+    if config["videoFrameLength"] > len(sequences):
+        print("videoFrameLength larger then video")
+        numOfFrames = len(sequences)
+
     if numOfFrames > 1:
         # start capture
         for index in range(0, numOfFrames, frameRate):
@@ -71,17 +79,19 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool,config:"file"):
                         human.locations.append(c["location"])
                         myPeople.append(human)
 
-            DrawHumans(myPeople, drawFrame, affectedPeople)
+            #DrawHumans(myPeople, drawFrame, affectedPeople)
             # find ids from previous frame
-            cv2.imshow('frame', drawFrame)
-            k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
-            if k == 27:
-                break
+            # cv2.imshow('frame', drawFrame)
+            # k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
+            # if k == 27:
+            #     break
 
-    print("number of people ", len(myPeople))
-    for index, p in enumerate(myPeople):
-        print("number of frames in Person #", index)
-        print(len(p.frames))
+    # print("number of people ", len(myPeople))
+    # for index, p in enumerate(myPeople):
+    #     print("number of frames in Person #", index)
+    #     print(len(p.frames))
+    #
+    # ShowPeopleTable(myPeople, config=config)
+    # print("done")
 
-    ShowPeopleTable(myPeople, config=config)
-    print("done")
+    return myPeople
