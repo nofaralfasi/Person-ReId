@@ -1,8 +1,8 @@
 {
-  "inputVideo" : "dataset/images/liran",
-  "isVideo" : false,
-  "skipRateFrameFromBeginning" : 1,
-  "videoFrameLength" : 50,
+  "inputVideo" : "dataset/re-id/videos/storyLove.mp4",
+  "isVideo" : true,
+  "skipRateFrameFromBeginning" : 12,
+  "videoFrameLength" : 10,
   "frameRate" : 1,
   "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,
