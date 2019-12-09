@@ -4,7 +4,7 @@
 """
 import cv2
 import numpy as np
-from finalProject.utils.keyPoints.AlgoritamKeyPoints import SuftDetectKeyPoints
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import SurfDetectKeyPoints
 
 
 def KazeMatcher(desc1, desc2):
@@ -17,7 +17,7 @@ def KazeMatcher(desc1, desc2):
 
 
 def findClosesHuman(human, myPeople, config: "config file"):
-    keyTarget, DescriptionTarget = SuftDetectKeyPoints(human["frame"])
+    keyTarget, DescriptionTarget = SurfDetectKeyPoints(human["frame"])
     if keyTarget is None or DescriptionTarget is None:
         return None  # dont have key points for this human
     maxMatch = []
@@ -29,7 +29,7 @@ def findClosesHuman(human, myPeople, config: "config file"):
 
         MatchP = []
         for frame in p.frames:
-            kp, dp = SuftDetectKeyPoints(frame)
+            kp, dp = SurfDetectKeyPoints(frame)
             if kp is None or dp is None:
                 continue
             else:
