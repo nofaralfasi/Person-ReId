@@ -79,19 +79,19 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                         human.locations.append(c["location"])
                         myPeople.append(human)
 
-            # DrawHumans(myPeople, drawFrame, affectedPeople)
+            DrawHumans(myPeople, drawFrame, affectedPeople)
             # find ids from previous frame
-            # cv2.imshow('frame', drawFrame)
-            # k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
-            # if k == 27:
-            #     break
+            cv2.imshow('frame', drawFrame)
+            k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
+            if k == 27:
+                break
 
     # print("number of people ", len(myPeople))
     # for index, p in enumerate(myPeople):
     #     print("number of frames in Person #", index)
     #     print(len(p.frames))
     #
-    ShowPeopleTable(myPeople, config=config)
-    print("done")
+    # ShowPeopleTable(myPeople, config=config)
+    # print("done")
 
     return myPeople

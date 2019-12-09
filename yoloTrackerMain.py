@@ -76,7 +76,8 @@ if __name__ == "__main__":
           ]
 
         for key in keys:
-            drawOnScatter(ax, key[0], key[1], label=key[2])
+            if len(key[0]) > 0:
+                drawOnScatter(ax, key[0], key[1], label=key[2])
 
         ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         ax.grid(True)

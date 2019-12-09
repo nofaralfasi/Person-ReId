@@ -1,8 +1,8 @@
 {
-  "inputVideo" : "dataset/re-id/videos/storyLove.mp4",
+  "inputVideo" : "dataset/re-id/videos/cctv1.mp4",
   "isVideo" : true,
-  "skipRateFrameFromBeginning" : 12,
-  "videoFrameLength" : 10,
+  "skipRateFrameFromBeginning" : 1,
+  "videoFrameLength" : 20,
   "frameRate" : 1,
   "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,
