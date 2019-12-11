@@ -1,13 +1,13 @@
 {
-  "inputVideo" : "dataset/videos/vtest.avi",
+  "inputVideo" : "dataset/videos/green.mp4",
   "isVideo" : true,
   "skipRateFrameFromBeginning" : 1,
-  "videoFrameLength" : 20,
-  "frameRate" : 1,
+  "videoFrameLength" : 30,
+  "frameRate" : 4,
   "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,
   "thresholdAppendNewHumanEnd" : 0.2,
-  "WaitKeySecond" : 10,
+  "WaitKeySecond" : 40,
   "showHistory" : false,
   "FlannMatcherThreshold" : 0.9,
   "max_length_frames" : 5

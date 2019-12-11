@@ -1,4 +1,5 @@
 """ **Matchers**
+
 #Kaze Matcher for binary classification - orb , kaze ,brief,fast
 """
 import cv2
@@ -14,6 +15,24 @@ def KazeMatcher(desc1, desc2):
 
 """# BF MATCHER"""
 
+# def findCornera():
+#     filename = 'org_min.jpg'
+#     img = cv2.imread(filename)
+#     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+#
+#     gray = np.float32(gray)
+#     dst = cv2.cornerHarris(gray,2,3,0.04)
+#
+#     #result is dilated for marking the corners, not important
+#     dst = cv2.dilate(dst,None)
+#
+#     # Threshold for an optimal value, it may vary depending on the image.
+#     img[dst>0.01*dst.max()]=[0,0,255]
+#
+#     cv2.imshow('dst',img)
+#     if cv2.waitKey(0) & 0xff == 27:
+#         cv2.destroyAllWindows()
+
 
 def findClosesHuman(human, myPeople, config: "config file"):
     keyTarget, DescriptionTarget = SurfDetectKeyPoints(human["frame"])
@@ -26,17 +45,20 @@ def findClosesHuman(human, myPeople, config: "config file"):
             p.history.extend(p.frames[0:len(p.frames) - config["max_length_frames"]])
             p.frames = p.frames[-config["max_length_frames"]:]
 
+        goodMatch = []
         MatchP = []
         for frame in p.frames:
             kp, dp = SurfDetectKeyPoints(frame)
+            print('features: ',  len(keyTarget))
             if kp is None or dp is None:
                 continue
             else:
                 goodMatch = FLANNMATCHER(DescriptionTarget, dp, config["FlannMatcherThreshold"])
-            if len(keyTarget) == 0:
-                acc = 0
-            else:
-                acc = len(goodMatch) / len(keyTarget)
+                print('Number of goodMatches: ',  len(goodMatch))
+        if len(keyTarget) == 0:
+            acc = 0
+        elif len(goodMatch)>0:
+            acc = len(goodMatch) / len(keyTarget)
             MatchP.append(acc)
         if len(MatchP) > 0:
             MeanAcc = np.mean(MatchP)

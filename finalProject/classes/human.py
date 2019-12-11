@@ -11,3 +11,4 @@ class Human:
         self.missingFrames = 0
         self.locations = []
         self.history = []
+        self.colorIndex = tuple(np.random.rand(3,)*225)
