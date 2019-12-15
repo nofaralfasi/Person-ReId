@@ -85,53 +85,76 @@ def FLANNMATCHER(des1, des2, threshold):  # threshold is the distance between th
         return []
 
 
-def findSourceFeatures(human, myPeople, config: "config file"):
+def findSourceFeatures(human, mySource, config: "config file"):
     keySourceSurf, descriptionSourceSurf = SurfDetectKeyPoints(human["frame"])
     keySourceSift, descriptionSourceSift = SiftDetectKeyPoints(human["frame"])
     keySourceOrb, descriptionSourceOrb = ORBDetectKeyPoints(human["frame"])
     keySourceKaze, descriptionSourceKaze = KazeDetectKeyPoints(human["frame"])
 
-    if keySourceSurf is None or descriptionSourceSurf is None and keySourceSift is None or descriptionSourceSift is None:
-        print("Both Surf and Sift has no key-points")
+    maxKeyPoints = max(len(keySourceSurf), len(keySourceSift), len(keySourceOrb), len(keySourceKaze))
+    maxDescriptions = max(len(descriptionSourceSurf), len(descriptionSourceSift), len(descriptionSourceOrb), len(descriptionSourceKaze))
+
+    if maxKeyPoints == 0 or maxDescriptions == 0:
+        print("Source has no key points or descriptions")
         return None  # dont have key points for this human
     maxMatch = []
-    for p in myPeople:
-        # remove trace frames
-        if len(p.frames) > config["max_length_frames"]:
-            p.history.extend(p.frames[0:len(p.frames) - config["max_length_frames"]])
-            p.frames = p.frames[-config["max_length_frames"]:]
+    MatchP = []
+    floatAcc = 0
+    maxFloatKPSource = 0
+    BinaryAcc = 0
+    maxBinaryKPSource = 0
 
-        MatchP = []
-        for frame in p.frames:
-            kpSurf, dpSurf = SurfDetectKeyPoints(frame)
-            kpSift, dpSift = SiftDetectKeyPoints(frame)
+    for frame in mySource[0].frames:
+        kpSurf, dpSurf = SurfDetectKeyPoints(frame)
+        kpSift, dpSift = SiftDetectKeyPoints(frame)
+        kpOrb, dpOrb = ORBDetectKeyPoints(frame)
+        kpKaze, dpKaze = KazeDetectKeyPoints(frame)
 
-            if kpSurf is None or dpSurf is None  and kpSift is None or dpSift is None:
-                continue
-            else:
-                goodMatchSurf = FLANNMATCHER(descriptionSourceSurf, dpSurf, config["FlannMatcherThreshold"])
-                goodMatchSift = FLANNMATCHER(descriptionSourceSift, dpSift, config["FlannMatcherThreshold"])
-                maxMatches = max(len(goodMatchSurf), len(goodMatchSift))
+        maxKP = max(len(kpSurf), len(kpSift), len(kpOrb), len(kpKaze))
+        maxDes = max(len(dpSurf), len(dpSift), len(dpOrb), len(dpKaze))
 
-                if  maxMatches == len(goodMatchSurf):
-                    goodMatch = goodMatchSurf
-                    maxKeySource = kpSurf
-                    print("Surf has max match: ", len(goodMatch))
-                    print("Sift has lower match: ", len(goodMatchSift))
-                elif maxMatches == len(goodMatchSift):
-                    goodMatch = goodMatchSift
-                    maxKeySource = kpSift
-                    print("Sift has max match: ", len(goodMatch))
-                    print("Surf has lower match: ", len(goodMatchSurf))
-            if len(goodMatch)== 0:
-                acc = 0
-            else:
-                acc = len(goodMatch) / len(maxKeySource)
-            MatchP.append(acc)
-        if len(MatchP) > 0:
-            MeanAcc = np.mean(MatchP)
+        if maxKP == 0 or maxDes == 0:
+            continue
         else:
-            MeanAcc = 0
-        maxMatch.append((p, MeanAcc))
+            goodMatchSurf = FLANNMATCHER(descriptionSourceSurf, dpSurf, config["FlannMatcherThreshold"])
+            goodMatchSift = FLANNMATCHER(descriptionSourceSift, dpSift, config["FlannMatcherThreshold"])
+            goodMatchOrb = BFMatcher(descriptionSourceOrb, dpOrb, config["BFMatcherThreshold"])
+            goodMatchKaze = KazeMatcher(descriptionSourceKaze, dpKaze)
+
+            maxFloatMatches = max(len(goodMatchSurf), len(goodMatchSift))
+            maxBinaryMatches = max(len(goodMatchOrb), len(goodMatchKaze))
+
+            if  maxFloatMatches == len(goodMatchSurf):
+                goodFloatMatch = goodMatchSurf
+                maxFloatKPSource = kpSurf
+                print("Surf has max match: ", len(goodFloatMatch))
+                print("Sift has lower match: ", len(goodMatchSift))
+            elif maxFloatMatches == len(goodMatchSift):
+                goodFloatMatch = goodMatchSift
+                maxFloatKPSource = kpSift
+                print("Sift has max match: ", len(goodFloatMatch))
+                print("Surf has lower match: ", len(goodMatchSurf))
+
+            if  maxBinaryMatches == len(goodMatchOrb):
+                goodBinaryMatch = goodMatchOrb
+                maxBinaryKPSource = kpOrb
+                print("Orb has max match: ", len(goodBinaryMatch))
+                print("Kaze has lower match: ", len(goodMatchKaze))
+            elif maxBinaryMatches == len(goodMatchKaze):
+                goodBinaryMatch = goodMatchKaze
+                maxBinaryKPSource = kpKaze
+                print("Kaze has max match: ", len(goodBinaryMatch))
+                print("Orb has lower match: ", len(goodMatchOrb))
+
+        floatAcc = maxFloatMatches / len(maxFloatKPSource)
+        BinaryAcc = maxBinaryMatches / len(maxBinaryKPSource)
+        MatchP.append(floatAcc)
+        MatchP.append(BinaryAcc)
+
+    if len(MatchP) > 0:
+        MeanAcc = np.mean(MatchP)
+    else:
+        MeanAcc = 0
+    maxMatch.append((mySource[0], MeanAcc))
 
     return maxMatch

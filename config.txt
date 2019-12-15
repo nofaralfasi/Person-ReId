@@ -10,5 +10,6 @@
   "WaitKeySecond" : 30,
   "showHistory" : false,
   "FlannMatcherThreshold" : 0.9,
+  "BFMatcherThreshold" : 0.9,
   "max_length_frames" : 3
 }
