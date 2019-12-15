@@ -11,7 +11,7 @@ def KeyPointsBinary(img, Threshold):
 
 def KeyPointsFloat(img, Threshold):
     kpSurf, desSurf = SurfDetectKeyPoints(img, Threshold)
-    kpSift, desSift = SiftDetectKeyPoints(img, Threshold)
+    kpSift, desSift = SiftDetectKeyPoints(img)
 
     return [(kpSurf, desSurf), (kpSift, desSift)]
 
@@ -84,5 +84,29 @@ def createDescriptorTarget(myTarget):
             appendToFrameObject(kSurf, desSurf, NamesAlgorithms.SURF.name, frameObject)
 
             descriptor[target.indexCount].append(frameObject)
+
+    return descriptor
+
+def createDescriptorSource(mySource):
+    descriptor = {}
+
+    for src in mySource:
+        descriptor[src.indexCount] = []
+
+        for frame in src.frames:
+            kOrb, desOrb = CalculationKeyPoint(frame, ORBDetectKeyPoints)
+            kKaze, desKaze = CalculationKeyPoint(frame, KazeDetectKeyPoints)
+            kSift, desSift = CalculationKeyPoint(frame, SiftDetectKeyPoints)
+            kSurf, desSurf = CalculationKeyPoint(frame, SurfDetectKeyPoints)
+
+            frameObject = {
+                "frame": frame,
+            }
+            appendToFrameObject(kOrb, desOrb, NamesAlgorithms.ORB.name, frameObject)
+            appendToFrameObject(kKaze, desKaze, NamesAlgorithms.KAZE.name, frameObject)
+            appendToFrameObject(kSift, desSift, NamesAlgorithms.SIFT.name, frameObject)
+            appendToFrameObject(kSurf, desSurf, NamesAlgorithms.SURF.name, frameObject)
+
+            descriptor[src.indexCount].append(frameObject)
 
     return descriptor

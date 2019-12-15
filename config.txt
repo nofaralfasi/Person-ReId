@@ -7,9 +7,8 @@
   "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,
   "thresholdAppendNewHumanEnd" : 0.2,
-  "WaitKeySecond" : 40,
+  "WaitKeySecond" : 30,
   "showHistory" : false,
   "FlannMatcherThreshold" : 0.9,
   "max_length_frames" : 5
-
 }

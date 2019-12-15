@@ -12,7 +12,7 @@ def DrawOnFrameMyIds(myids, frame):
     thicknessText = 1
 
     colorBlue = (255, 0, 0)
-    colorRed = (0, 0, 255)
+    colorRed = (100, 10, 200)
 
     radius = 3
     thicknessCircle = -1
@@ -40,21 +40,21 @@ def DrawHumans(MyPeople, frame, affectedPeople):
 
         img = cv2.imread('blank.jpg')
         img[MyPeople[index].locations[-1][0], MyPeople[index].locations[-1][1]]=[255,255,255]
-        cv2.imwrite('new.png',img)
+        # cv2.imwrite('new.png',img)
 
         # Create a black image
-        img = np.zeros((512,512,3), np.uint8)
-        cv2.rectangle(img,(384,0),(510,128),(255,255,255),3)
+        # img = np.zeros((512,512,3), np.uint8)
+        # cv2.rectangle(img,(384,0),(510,128),(255,255,255),3)
 
-        rows,cols,channels = img2.shape
-        roi = img1[0:rows, 0:cols]
+        # rows,cols,channels = img2.shape
+        # roi = img1[0:rows, 0:cols]
 
-        img = frame
-        frm = img[0:0, img.shape[0]:img.shape[1]]
+        # img = frame
+        # frm = img[0:0, img.shape[0]:img.shape[1]]
         # img[0:0, img.shape[0]:img.shape[1]] =
-        mask = np.zeros(img.shape[:2],np.uint8)
-        bgdModel = np.zeros((1,65),np.float64)
-        fgdModel = np.zeros((1,65),np.float64)
+        # mask = np.zeros(img.shape[:2],np.uint8)
+        # bgdModel = np.zeros((1,65),np.float64)
+        # fgdModel = np.zeros((1,65),np.float64)
 
         # rect = (50,50,450,290)
         # cv2.grabCut(img,mask,rect,bgdModel,fgdModel,5,cv2.GC_INIT_WITH_RECT)
@@ -63,15 +63,15 @@ def DrawHumans(MyPeople, frame, affectedPeople):
         # plt.imshow(img),plt.colorbar(),plt.show()
 
         # newmask is the mask image I manually labelled
-        newmask = cv2.imread('new.png',0)
+        # newmask = cv2.imread('new.png',0)
         # wherever it is marked white (sure foreground), change mask=1
         # wherever it is marked black (sure background), change mask=0
-        mask[newmask == 0] = 0
-        mask[newmask == 255] = 1
-        mask, bgdModel, fgdModel = cv2.grabCut(img,mask,None,bgdModel,fgdModel,5,cv2.GC_INIT_WITH_MASK)
-        mask = np.where((mask==2)|(mask==0),0,1).astype('uint8')
-        img = img*mask[:,:,np.newaxis]
-        plt.imshow(img),plt.colorbar(),plt.show()
+        # mask[newmask == 0] = 0
+        # mask[newmask == 255] = 1
+        # mask, bgdModel, fgdModel = cv2.grabCut(img,mask,None,bgdModel,fgdModel,5,cv2.GC_INIT_WITH_MASK)
+        # mask = np.where((mask==2)|(mask==0),0,1).astype('uint8')
+        # img = img*mask[:,:,np.newaxis]
+        # plt.imshow(img),plt.colorbar(),plt.show()
 
 def ShowPeopleTable(MyPeople, config: "configFile"):
     if len(MyPeople) == 0:
