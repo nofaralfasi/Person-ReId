@@ -1,7 +1,7 @@
 import cv2
 
 from finalProject.classes.human import Human
-from finalProject.utils.drawing.draw import DrawHumans, ShowPeopleTable
+from finalProject.utils.drawing.draw import DrawHumans, ShowPeopleTable, DrawSource
 from finalProject.utils.matchers.Matchers import findClosesHuman
 from finalProject.utils.matchers.Matchers import findSourceFeatures
 
@@ -114,8 +114,6 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
     if numOfFrames > 1:
         # start capture
         for index in range(0, numOfFrames, frameRate):
-            affectedPeople = []
-
             print("frame {}".format(index))
             if isVideo:
                 frame2 = sequences[index]
@@ -129,7 +127,6 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                 croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
                 for c in croppedImage:
                     human = Human(frameCounter)
-                    affectedPeople.append(frameCounter)
                     frameCounter += 1
                     human.frames.append(c["frame"])
                     human.locations.append(c["location"])
@@ -142,6 +139,7 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                     if len(mySource) > 0:
                         maxMatch = findSourceFeatures(c, mySource, config=config)
                         if maxMatch is None:
+                            print("couldn't find features...")
                             continue
 
                         element = max(maxMatch, key=lambda item: item[1])
@@ -150,27 +148,25 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                         if element[1] > config["thresholdAppendToHuman"]:  # score match
                             # cv2.imshow('scoreHumanImageFromMyPeople', element[0].frames[-1])
                             indexer = mySource.index(element[0])
-                            affectedPeople.append(indexer)
                             mySource[indexer].frames.append(c["frame"])
                             mySource[indexer].locations.append(c["location"])
                         # k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
                         # append new human in buckets
-                        elif config["thresholdAppendNewHumanStart"] < element[1] < config["thresholdAppendNewHumanEnd"]:
-                            human = Human(frameCounter)
-                            affectedPeople.append(frameCounter)
-                            frameCounter += 1
-                            human.frames.append(c["frame"])
-                            human.locations.append(c["location"])
-                            mySource.append(human)
+                        # elif config["thresholdAppendNewHumanStart"] < element[1] < config["thresholdAppendNewHumanEnd"]:
+                        #     human = Human(frameCounter)
+                        #     affectedPeople.append(frameCounter)
+                        #     frameCounter += 1
+                        #     human.frames.append(c["frame"])
+                        #     human.locations.append(c["location"])
+                        #     mySource.append(human)
                     else:
                         human = Human(frameCounter)
-                        affectedPeople.append(frameCounter)
                         frameCounter += 1
                         human.frames.append(c["frame"])
                         human.locations.append(c["location"])
                         mySource.append(human)
 
-            DrawHumans(mySource, drawFrame, affectedPeople)
+            DrawSource(mySource, drawFrame)
             # find ids from previous frame
             cv2.imshow('frame', drawFrame)
             k = cv2.waitKey(config["WaitKeySecond"]) & 0xff

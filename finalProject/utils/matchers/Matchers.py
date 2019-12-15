@@ -91,7 +91,8 @@ def findSourceFeatures(human, myPeople, config: "config file"):
     keySourceOrb, descriptionSourceOrb = ORBDetectKeyPoints(human["frame"])
     keySourceKaze, descriptionSourceKaze = KazeDetectKeyPoints(human["frame"])
 
-    if keySourceSurf is None or descriptionSourceSurf is None:
+    if keySourceSurf is None or descriptionSourceSurf is None and keySourceSift is None or descriptionSourceSift is None:
+        print("Both Surf and Sift has no key-points")
         return None  # dont have key points for this human
     maxMatch = []
     for p in myPeople:
@@ -105,14 +106,13 @@ def findSourceFeatures(human, myPeople, config: "config file"):
             kpSurf, dpSurf = SurfDetectKeyPoints(frame)
             kpSift, dpSift = SiftDetectKeyPoints(frame)
 
-            if kpSurf is None or dpSurf is None  and kpSift is None or dpSift is None :
+            if kpSurf is None or dpSurf is None  and kpSift is None or dpSift is None:
                 continue
             else:
                 goodMatchSurf = FLANNMATCHER(descriptionSourceSurf, dpSurf, config["FlannMatcherThreshold"])
                 goodMatchSift = FLANNMATCHER(descriptionSourceSift, dpSift, config["FlannMatcherThreshold"])
-                print("Sift has matching of: ", len(goodMatchSift))
-                # goodMatch = max(goodMatchSurf, goodMatchSift)
                 maxMatches = max(len(goodMatchSurf), len(goodMatchSift))
+
                 if  maxMatches == len(goodMatchSurf):
                     goodMatch = goodMatchSurf
                     maxKeySource = kpSurf

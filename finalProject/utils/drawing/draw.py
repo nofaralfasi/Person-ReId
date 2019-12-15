@@ -29,53 +29,26 @@ def DrawOnFrameMyIds(myids, frame):
 
 
 def DrawHumans(MyPeople, frame, affectedPeople):
-    img2 = frame
     thicknessRec = 2
     for index in affectedPeople:
         color = MyPeople[index].colorIndex
-        # print(color)
+        print(color)
         cv2.rectangle(frame, MyPeople[index].locations[-1][0], MyPeople[index].locations[-1][1],
                       color, thicknessRec)
         draw_str(frame, MyPeople[index].locations[-1][0], "id " + str(MyPeople[index].indexCount))
 
-        img = cv2.imread('blank.jpg')
-        img[MyPeople[index].locations[-1][0], MyPeople[index].locations[-1][1]]=[255,255,255]
-        # cv2.imwrite('new.png',img)
 
-        # Create a black image
-        # img = np.zeros((512,512,3), np.uint8)
-        # cv2.rectangle(img,(384,0),(510,128),(255,255,255),3)
+def DrawSource(mySource, frame):
+    thicknessRec = 2
+    color = (255, 100,150)
+    cv2.rectangle(frame, mySource[0].locations[-1][0], mySource[0].locations[-1][1],
+                  color, thicknessRec)
+    draw_str(frame, mySource[0].locations[-1][0], "id " + str(mySource[0].indexCount))
 
-        # rows,cols,channels = img2.shape
-        # roi = img1[0:rows, 0:cols]
-
-        # img = frame
-        # frm = img[0:0, img.shape[0]:img.shape[1]]
-        # img[0:0, img.shape[0]:img.shape[1]] =
-        # mask = np.zeros(img.shape[:2],np.uint8)
-        # bgdModel = np.zeros((1,65),np.float64)
-        # fgdModel = np.zeros((1,65),np.float64)
-
-        # rect = (50,50,450,290)
-        # cv2.grabCut(img,mask,rect,bgdModel,fgdModel,5,cv2.GC_INIT_WITH_RECT)
-        # mask2 = np.where((mask==2)|(mask==0),0,1).astype('uint8')
-        # img = img*mask2[:,:,np.newaxis]
-        # plt.imshow(img),plt.colorbar(),plt.show()
-
-        # newmask is the mask image I manually labelled
-        # newmask = cv2.imread('new.png',0)
-        # wherever it is marked white (sure foreground), change mask=1
-        # wherever it is marked black (sure background), change mask=0
-        # mask[newmask == 0] = 0
-        # mask[newmask == 255] = 1
-        # mask, bgdModel, fgdModel = cv2.grabCut(img,mask,None,bgdModel,fgdModel,5,cv2.GC_INIT_WITH_MASK)
-        # mask = np.where((mask==2)|(mask==0),0,1).astype('uint8')
-        # img = img*mask[:,:,np.newaxis]
-        # plt.imshow(img),plt.colorbar(),plt.show()
 
 def ShowPeopleTable(MyPeople, config: "configFile"):
     if len(MyPeople) == 0:
-        print("no people found")
+        print("no people were found!")
     else:
         if config["showHistory"]:
             photos = "history"
