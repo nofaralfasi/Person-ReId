@@ -99,7 +99,6 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
     return myPeople
 
 def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
-    # mySource = []
     frameCounter = 0
     frameRate = config["frameRate"]
     if config["videoFrameLength"] == -1:
@@ -121,21 +120,18 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                 frame2 = cv2.imread(sequences[index])
 
             drawFrame = copy.copy(frame2)
+            croppedImage = yolo.forward(frame2)
+            croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
+            print("list of detection", len(croppedImage))
             if index == 0:
                 # first frame
-                croppedImage = yolo.forward(frame2)
-                croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
                 for c in croppedImage:
                     human = Human(frameCounter)
                     frameCounter += 1
                     human.frames.append(c["frame"])
                     human.locations.append(c["location"])
-                    # mySource.append(human)
             elif index > 0:
                 # not the first frame
-                croppedImage = yolo.forward(frame2)
-                croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
-                # print("list of detection", len(croppedImage))
                 for c in croppedImage:
                     if len(human.frames) > 0:
                         maxMatch = findSourceFeatures(c, human, config=config)
@@ -147,16 +143,10 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                         # cv2.imshow('targetFromMovie', c["frame"])
                         print('My Source Score: ', element[1])
                         if element[1] > config["thresholdAppendToHuman"]:  # score match
+                            # TODO check if we want to save this frame?
                             # cv2.imshow('scoreHumanImageFromMyPeople', element[0].frames[-1])
-                            # indexer = mySource.index(element[0])
                             human.frames.append(c["frame"])
                             human.locations.append(c["location"])
-                    else:
-                        human = Human(frameCounter)
-                        frameCounter += 1
-                        human.frames.append(c["frame"])
-                        human.locations.append(c["location"])
-                        # mySource.append(human)
 
             DrawSource(human, drawFrame)
             # find ids from previous frame

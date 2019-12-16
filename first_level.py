@@ -44,6 +44,7 @@ if __name__ == "__main__":
         yolo = Yolo()
         yolo.initYolo()
 
+        # SourceDetectionByYolo returns a human
         mySource = SourceDetectionByYolo(frames, yolo, isVideo=config["isVideo"], config=config)
 
         descriptorSource = createDescriptorSource(mySource)

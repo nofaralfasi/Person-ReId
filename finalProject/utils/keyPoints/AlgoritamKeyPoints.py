@@ -89,24 +89,22 @@ def createDescriptorTarget(myTarget):
 
 def createDescriptorSource(mySource):
     descriptor = {}
+    descriptor[mySource.indexCount] = []
 
-    for src in mySource:
-        descriptor[src.indexCount] = []
+    for frame in mySource.frames:
+        kOrb, desOrb = CalculationKeyPoint(frame, ORBDetectKeyPoints)
+        kKaze, desKaze = CalculationKeyPoint(frame, KazeDetectKeyPoints)
+        kSift, desSift = CalculationKeyPoint(frame, SiftDetectKeyPoints)
+        kSurf, desSurf = CalculationKeyPoint(frame, SurfDetectKeyPoints)
 
-        for frame in src.frames:
-            kOrb, desOrb = CalculationKeyPoint(frame, ORBDetectKeyPoints)
-            kKaze, desKaze = CalculationKeyPoint(frame, KazeDetectKeyPoints)
-            kSift, desSift = CalculationKeyPoint(frame, SiftDetectKeyPoints)
-            kSurf, desSurf = CalculationKeyPoint(frame, SurfDetectKeyPoints)
+        frameObject = {
+            "frame": frame,
+        }
+        appendToFrameObject(kOrb, desOrb, NamesAlgorithms.ORB.name, frameObject)
+        appendToFrameObject(kKaze, desKaze, NamesAlgorithms.KAZE.name, frameObject)
+        appendToFrameObject(kSift, desSift, NamesAlgorithms.SIFT.name, frameObject)
+        appendToFrameObject(kSurf, desSurf, NamesAlgorithms.SURF.name, frameObject)
 
-            frameObject = {
-                "frame": frame,
-            }
-            appendToFrameObject(kOrb, desOrb, NamesAlgorithms.ORB.name, frameObject)
-            appendToFrameObject(kKaze, desKaze, NamesAlgorithms.KAZE.name, frameObject)
-            appendToFrameObject(kSift, desSift, NamesAlgorithms.SIFT.name, frameObject)
-            appendToFrameObject(kSurf, desSurf, NamesAlgorithms.SURF.name, frameObject)
-
-            descriptor[src.indexCount].append(frameObject)
+        descriptor[mySource.indexCount].append(frameObject)
 
     return descriptor
