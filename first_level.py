@@ -17,6 +17,7 @@ if __name__ == "__main__":
 
         config = json.load(file_json)
 
+        framesDict = {}
         frames = []
 
         if config["isVideo"]:
@@ -79,11 +80,6 @@ if __name__ == "__main__":
             (frameExmaple[NamesAlgorithms.SURF.name]["keys"], 'tab:green', NamesAlgorithms.SURF.name),
             (frameExmaple[NamesAlgorithms.SIFT.name]["keys"], 'tab:red', NamesAlgorithms.SIFT.name),
         ]
-
-        # print("number of KAZE  key features: ",  len(keys[0]))
-        # print("number of ORB  key features: ",  len(keys[1]))
-        # print("number of SURF  key features: ",  len(keys[2]))
-        # print("number of SIFT  key features: ",  len(keys[3]))
 
         for key in keys:
             if len(key[0]) > 0:

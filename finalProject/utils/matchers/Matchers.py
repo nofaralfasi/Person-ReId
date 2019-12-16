@@ -91,34 +91,6 @@ def findSourceFeatures(human, mySource, config: "config file"):
     keySourceSift, descriptionSourceSift = SiftDetectKeyPoints(human["frame"])
     keySourceOrb, descriptionSourceOrb = ORBDetectKeyPoints(human["frame"])
     keySourceKaze, descriptionSourceKaze = KazeDetectKeyPoints(human["frame"])
-    framesDict = {
-        frames:
-            [
-                {
-                    "Frame": human["frame"],
-                    "orb":
-                        {
-                            "keys": [keySourceOrb],
-                            "desc": [descriptionSourceOrb]
-                        },
-                    "sift":
-                        {
-                            "keys": [keySourceSift],
-                            "desc": [descriptionSourceSift]
-                        },
-                    "surf":
-                        {
-                            "keys": [keySourceSurf],
-                            "desc": [descriptionSourceSurf]
-                        },
-                    "kaze":
-                        {
-                            "keys": [keySourceKaze],
-                            "desc": [descriptionSourceKaze]
-                        }
-                }
-            ]
-    }
 
     maxKeyPoints = max(len(keySourceSurf), len(keySourceSift), len(keySourceOrb), len(keySourceKaze))
     maxDescriptions = max(len(descriptionSourceSurf), len(descriptionSourceSift), len(descriptionSourceOrb), len(descriptionSourceKaze))
@@ -156,21 +128,21 @@ def findSourceFeatures(human, mySource, config: "config file"):
             maxBinaryMatches = max(len(goodMatchOrb), len(goodMatchKaze))
 
             if maxFloatMatches == len(goodMatchSurf):
-                goodFloatMatch = goodMatchSurf
-                maxFloatKPSource = kpSurf
+                # goodFloatMatch = goodMatchSurf
+                # maxFloatKPSource = kpSurf
                 print("Surf has max match: ", len(goodFloatMatch))
             elif maxFloatMatches == len(goodMatchSift):
-                goodFloatMatch = goodMatchSift
-                maxFloatKPSource = kpSift
+                # goodFloatMatch = goodMatchSift
+                # maxFloatKPSource = kpSift
                 print("Sift has max match: ", len(goodFloatMatch))
 
             if maxBinaryMatches == len(goodMatchOrb):
-                goodBinaryMatch = goodMatchOrb
-                maxBinaryKPSource = kpOrb
+                # goodBinaryMatch = goodMatchOrb
+                # maxBinaryKPSource = kpOrb
                 print("Orb has max match: ", len(goodBinaryMatch))
             elif maxBinaryMatches == len(goodMatchKaze):
-                goodBinaryMatch = goodMatchKaze
-                maxBinaryKPSource = kpKaze
+                # goodBinaryMatch = goodMatchKaze
+                # maxBinaryKPSource = kpKaze
                 print("Kaze has max match: ", len(goodBinaryMatch))
 
         floatAcc = maxFloatMatches / len(maxFloatKPSource)
