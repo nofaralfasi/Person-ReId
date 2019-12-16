@@ -104,7 +104,7 @@ def findSourceFeatures(human, mySource, config: "config file"):
     floatAcc = 0
     BinaryAcc = 0
 
-    for frame in mySource[0].frames:
+    for frame in mySource.frames:
         kpSurf, dpSurf = SurfDetectKeyPoints(frame)
         kpSift, dpSift = SiftDetectKeyPoints(frame)
         kpOrb, dpOrb = ORBDetectKeyPoints(frame)
@@ -145,6 +145,6 @@ def findSourceFeatures(human, mySource, config: "config file"):
         MeanAcc = np.mean(MatchP)
     else:
         MeanAcc = 0
-    maxMatch.append((mySource[0], MeanAcc))
+    maxMatch.append((mySource, MeanAcc))
 
     return maxMatch
