@@ -4,7 +4,7 @@ import os
 from finalProject.classes.enumTypeKeyPoints import NamesAlgorithms
 from finalProject.classes.yolo import Yolo
 from finalProject.utils.drawing.draw import drawOnScatter
-from finalProject.utils.keyPoints.AlgoritamKeyPoints import createDescriptorSource
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import createDescriptorTarget
 from finalProject.utils.tracking.TrackingByYolo import SourceDetectionByYolo
 import matplotlib.pyplot as plt
 
@@ -47,7 +47,7 @@ if __name__ == "__main__":
         # SourceDetectionByYolo returns a human
         mySource = SourceDetectionByYolo(frames, yolo, isVideo=config["isVideo"], config=config)
 
-        descriptorSource = createDescriptorSource(mySource)
+        descriptorSource = createDescriptorTarget([mySource])
 
         pp = pprint.PrettyPrinter(indent=4)
 

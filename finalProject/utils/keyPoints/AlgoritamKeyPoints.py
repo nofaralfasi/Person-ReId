@@ -86,25 +86,3 @@ def createDescriptorTarget(myTarget):
             descriptor[target.indexCount].append(frameObject)
 
     return descriptor
-
-def createDescriptorSource(mySource):
-    descriptor = {}
-    descriptor[mySource.indexCount] = []
-
-    for frame in mySource.frames:
-        kOrb, desOrb = CalculationKeyPoint(frame, ORBDetectKeyPoints)
-        kKaze, desKaze = CalculationKeyPoint(frame, KazeDetectKeyPoints)
-        kSift, desSift = CalculationKeyPoint(frame, SiftDetectKeyPoints)
-        kSurf, desSurf = CalculationKeyPoint(frame, SurfDetectKeyPoints)
-
-        SourceFramesInfo = {
-            "frame": frame,
-        }
-        appendToFrameObject(kOrb, desOrb, NamesAlgorithms.ORB.name, SourceFramesInfo)
-        appendToFrameObject(kKaze, desKaze, NamesAlgorithms.KAZE.name, SourceFramesInfo)
-        appendToFrameObject(kSift, desSift, NamesAlgorithms.SIFT.name, SourceFramesInfo)
-        appendToFrameObject(kSurf, desSurf, NamesAlgorithms.SURF.name, SourceFramesInfo)
-
-        descriptor[mySource.indexCount].append(SourceFramesInfo)
-
-    return descriptor
