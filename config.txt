@@ -1,9 +1,9 @@
 {
-  "inputVideo" : "dataset/videos/green.mp4",
+  "inputVideo" : "dataset/videos/redhead.mp4",
   "isVideo" : true,
   "skipRateFrameFromBeginning" : 1,
   "videoFrameLength" : 30,
-  "frameRate" : 4,
+  "frameRate" : 5,
   "thresholdAppendToHuman" : 0.3,
   "thresholdAppendNewHumanStart" : 0.1,
   "thresholdAppendNewHumanEnd" : 0.2,
@@ -11,5 +11,5 @@
   "showHistory" : false,
   "FlannMatcherThreshold" : 0.9,
   "BFMatcherThreshold" : 0.9,
-  "max_length_frames" : 3
+  "max_length_frames" : 5
 }
