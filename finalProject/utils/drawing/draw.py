@@ -41,9 +41,9 @@ def DrawHumans(MyPeople, frame, affectedPeople):
 def DrawSource(mySource, frame):
     thicknessRec = 2
     color = (255, 100,150)
-    cv2.rectangle(frame, mySource[0].locations[-1][0], mySource[0].locations[-1][1],
+    cv2.rectangle(frame, mySource.locations[-1][0], mySource.locations[-1][1],
                   color, thicknessRec)
-    draw_str(frame, mySource[0].locations[-1][0], "id " + str(mySource[0].indexCount))
+    draw_str(frame, mySource.locations[-1][0], "id " + str(mySource.indexCount))
 
 
 def ShowPeopleTable(MyPeople, config: "configFile"):
