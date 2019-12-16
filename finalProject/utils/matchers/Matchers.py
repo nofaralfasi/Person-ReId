@@ -91,6 +91,34 @@ def findSourceFeatures(human, mySource, config: "config file"):
     keySourceSift, descriptionSourceSift = SiftDetectKeyPoints(human["frame"])
     keySourceOrb, descriptionSourceOrb = ORBDetectKeyPoints(human["frame"])
     keySourceKaze, descriptionSourceKaze = KazeDetectKeyPoints(human["frame"])
+    framesDict = {
+        frames:
+            [
+                {
+                    "Frame": human["frame"],
+                    "orb":
+                        {
+                            "keys": [keySourceOrb],
+                            "desc": [descriptionSourceOrb]
+                        },
+                    "sift":
+                        {
+                            "keys": [keySourceSift],
+                            "desc": [descriptionSourceSift]
+                        },
+                    "surf":
+                        {
+                            "keys": [keySourceSurf],
+                            "desc": [descriptionSourceSurf]
+                        },
+                    "kaze":
+                        {
+                            "keys": [keySourceKaze],
+                            "desc": [descriptionSourceKaze]
+                        }
+                }
+            ]
+    }
 
     maxKeyPoints = max(len(keySourceSurf), len(keySourceSift), len(keySourceOrb), len(keySourceKaze))
     maxDescriptions = max(len(descriptionSourceSurf), len(descriptionSourceSift), len(descriptionSourceOrb), len(descriptionSourceKaze))
@@ -98,6 +126,7 @@ def findSourceFeatures(human, mySource, config: "config file"):
     if maxKeyPoints == 0 or maxDescriptions == 0:
         print("Source has no key points or descriptions")
         return None  # dont have key points for this human
+
     maxMatch = []
     MatchP = []
     floatAcc = 0
