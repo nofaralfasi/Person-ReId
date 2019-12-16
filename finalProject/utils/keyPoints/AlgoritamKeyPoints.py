@@ -97,14 +97,14 @@ def createDescriptorSource(mySource):
         kSift, desSift = CalculationKeyPoint(frame, SiftDetectKeyPoints)
         kSurf, desSurf = CalculationKeyPoint(frame, SurfDetectKeyPoints)
 
-        frameObject = {
+        SourceFramesInfo = {
             "frame": frame,
         }
-        appendToFrameObject(kOrb, desOrb, NamesAlgorithms.ORB.name, frameObject)
-        appendToFrameObject(kKaze, desKaze, NamesAlgorithms.KAZE.name, frameObject)
-        appendToFrameObject(kSift, desSift, NamesAlgorithms.SIFT.name, frameObject)
-        appendToFrameObject(kSurf, desSurf, NamesAlgorithms.SURF.name, frameObject)
+        appendToFrameObject(kOrb, desOrb, NamesAlgorithms.ORB.name, SourceFramesInfo)
+        appendToFrameObject(kKaze, desKaze, NamesAlgorithms.KAZE.name, SourceFramesInfo)
+        appendToFrameObject(kSift, desSift, NamesAlgorithms.SIFT.name, SourceFramesInfo)
+        appendToFrameObject(kSurf, desSurf, NamesAlgorithms.SURF.name, SourceFramesInfo)
 
-        descriptor[mySource.indexCount].append(frameObject)
+        descriptor[mySource.indexCount].append(SourceFramesInfo)
 
     return descriptor

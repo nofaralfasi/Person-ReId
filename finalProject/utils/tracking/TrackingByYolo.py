@@ -123,7 +123,6 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
             drawFrame = copy.copy(frame2)
             croppedImage = yolo.forward(frame2)
             croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
-            print("list of detection", len(croppedImage))
 
             # index is the frame number
             for c in croppedImage:
@@ -132,18 +131,6 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                     frameCounter += 1
                 human.frames.append(c["frame"])
                 human.locations.append(c["location"])
-                if index > 0: # not the first frame
-                    maxMatch = findSourceFeatures(c, human, config=config)
-                    if maxMatch is None:
-                        print("couldn't find features...")
-                        continue
-                    else:
-                        element = max(maxMatch, key=lambda item: item[1])
-                        print('My Source Score: ', element[1])
-                        # TODO check if we want to save this frame?
-                        # if element[1] > config["thresholdAppendToHuman"]:  # score match
-                        #     human.frames.append(c["frame"])
-                        #     human.locations.append(c["location"])
             DrawSource(human, drawFrame)
             # find ids from previous frame
             cv2.imshow('frame', drawFrame)

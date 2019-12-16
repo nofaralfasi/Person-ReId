@@ -99,7 +99,7 @@ def findSourceFeatures(human, mySource, config: "config file"):
         print("Source has no key points or descriptions")
         return None  # dont have key points for this human
 
-    maxMatch = []
+    meanMatches = []
     MatchP = []
     floatAcc = 0
     BinaryAcc = 0
@@ -138,13 +138,13 @@ def findSourceFeatures(human, mySource, config: "config file"):
                 print("Kaze has max match: ", maxBinaryMatches)
                 BinaryAcc = maxBinaryMatches / len(kpKaze)
 
-        MatchP.append(floatAcc)
-        MatchP.append(BinaryAcc)
+        MatchP.append(mean(floatAcc, BinaryAcc))
+        # MatchP.append(BinaryAcc)
 
     if len(MatchP) > 0:
         MeanAcc = np.mean(MatchP)
     else:
         MeanAcc = 0
-    maxMatch.append((mySource, MeanAcc))
+    meanMatches.append((mySource, MeanAcc))
 
-    return maxMatch
+    return meanMatches
