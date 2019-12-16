@@ -102,9 +102,7 @@ def findSourceFeatures(human, mySource, config: "config file"):
     maxMatch = []
     MatchP = []
     floatAcc = 0
-    maxFloatKPSource = 0
     BinaryAcc = 0
-    maxBinaryKPSource = 0
 
     for frame in mySource[0].frames:
         kpSurf, dpSurf = SurfDetectKeyPoints(frame)
@@ -128,25 +126,18 @@ def findSourceFeatures(human, mySource, config: "config file"):
             maxBinaryMatches = max(len(goodMatchOrb), len(goodMatchKaze))
 
             if maxFloatMatches == len(goodMatchSurf):
-                # goodFloatMatch = goodMatchSurf
-                # maxFloatKPSource = kpSurf
-                print("Surf has max match: ", len(goodFloatMatch))
+                print("Surf has max match: ", maxFloatMatches)
+                floatAcc = maxFloatMatches / len(kpSurf)
             elif maxFloatMatches == len(goodMatchSift):
-                # goodFloatMatch = goodMatchSift
-                # maxFloatKPSource = kpSift
-                print("Sift has max match: ", len(goodFloatMatch))
-
+                print("Sift has max match: ", maxFloatMatches)
+                floatAcc = maxFloatMatches / len(kpSift)
             if maxBinaryMatches == len(goodMatchOrb):
-                # goodBinaryMatch = goodMatchOrb
-                # maxBinaryKPSource = kpOrb
-                print("Orb has max match: ", len(goodBinaryMatch))
+                print("Orb has max match: ", maxBinaryMatches)
+                BinaryAcc = maxBinaryMatches / len(kpOrb)
             elif maxBinaryMatches == len(goodMatchKaze):
-                # goodBinaryMatch = goodMatchKaze
-                # maxBinaryKPSource = kpKaze
-                print("Kaze has max match: ", len(goodBinaryMatch))
+                print("Kaze has max match: ", maxBinaryMatches)
+                BinaryAcc = maxBinaryMatches / len(kpKaze)
 
-        floatAcc = maxFloatMatches / len(maxFloatKPSource)
-        BinaryAcc = maxBinaryMatches / len(maxBinaryKPSource)
         MatchP.append(floatAcc)
         MatchP.append(BinaryAcc)
 
