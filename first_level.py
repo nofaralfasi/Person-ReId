@@ -44,20 +44,6 @@ if __name__ == "__main__":
         yolo = Yolo()
         yolo.initYolo()
 
-        # cap = cv2.VideoCapture('vtest.avi')
-        #
-        # fgbg = cv2.createBackgroundSubtractorMOG()
-        #
-        # while(1):
-        #     ret, frame = cap.read()
-        #
-        #     fgmask = fgbg.apply(frame)
-        #
-        #     cv2.imshow('frame',fgmask)
-        #     k = cv2.waitKey(30) & 0xff
-        #     if k == 27:
-        #         break
-
         mySource = SourceDetectionByYolo(frames, yolo, isVideo=config["isVideo"], config=config)
 
         descriptorSource = createDescriptorSource(mySource)

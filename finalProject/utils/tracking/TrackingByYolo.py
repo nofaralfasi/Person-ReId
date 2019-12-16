@@ -99,7 +99,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
     return myPeople
 
 def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
-    mySource = []
+    # mySource = []
     frameCounter = 0
     frameRate = config["frameRate"]
     if config["videoFrameLength"] == -1:
@@ -112,7 +112,7 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
         numOfFrames = len(sequences)
 
     if numOfFrames > 1:
-        # start capture
+        # start capture, looping on each frame
         for index in range(0, numOfFrames, frameRate):
             print("frame {}".format(index))
             if isVideo:
@@ -122,7 +122,7 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
 
             drawFrame = copy.copy(frame2)
             if index == 0:
-                # first time
+                # first frame
                 croppedImage = yolo.forward(frame2)
                 croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
                 for c in croppedImage:
@@ -130,14 +130,15 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                     frameCounter += 1
                     human.frames.append(c["frame"])
                     human.locations.append(c["location"])
-                    mySource.append(human)
+                    # mySource.append(human)
             elif index > 0:
+                # not the first frame
                 croppedImage = yolo.forward(frame2)
                 croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
                 # print("list of detection", len(croppedImage))
                 for c in croppedImage:
-                    if len(mySource) > 0:
-                        maxMatch = findSourceFeatures(c, mySource, config=config)
+                    if len(human.frames) > 0:
+                        maxMatch = findSourceFeatures(c, human, config=config)
                         if maxMatch is None:
                             print("couldn't find features...")
                             continue
@@ -147,26 +148,17 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
                         print('My Source Score: ', element[1])
                         if element[1] > config["thresholdAppendToHuman"]:  # score match
                             # cv2.imshow('scoreHumanImageFromMyPeople', element[0].frames[-1])
-                            indexer = mySource.index(element[0])
-                            mySource[indexer].frames.append(c["frame"])
-                            mySource[indexer].locations.append(c["location"])
-                        # k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
-                        # append new human in buckets
-                        # elif config["thresholdAppendNewHumanStart"] < element[1] < config["thresholdAppendNewHumanEnd"]:
-                        #     human = Human(frameCounter)
-                        #     affectedPeople.append(frameCounter)
-                        #     frameCounter += 1
-                        #     human.frames.append(c["frame"])
-                        #     human.locations.append(c["location"])
-                        #     mySource.append(human)
+                            # indexer = mySource.index(element[0])
+                            human.frames.append(c["frame"])
+                            human.locations.append(c["location"])
                     else:
                         human = Human(frameCounter)
                         frameCounter += 1
                         human.frames.append(c["frame"])
                         human.locations.append(c["location"])
-                        mySource.append(human)
+                        # mySource.append(human)
 
-            DrawSource(mySource, drawFrame)
+            DrawSource(human, drawFrame)
             # find ids from previous frame
             cv2.imshow('frame', drawFrame)
             k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
@@ -181,4 +173,4 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
     # ShowPeopleTable(myPeople, config=config)
     # print("done")
 
-    return mySource
+    return human
