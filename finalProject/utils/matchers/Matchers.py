@@ -22,7 +22,7 @@ def KazeMatcher(desc1, desc2):
 def findClosesHuman(human, myPeople, config: "config file"):
     keyTarget, descriptionTarget = SurfDetectKeyPoints(human["frame"])
     # TODO check with Liran if it's a different  DescriptionTarget here or not
-    if keyTarget is None or DescriptionTarget is None:
+    if keyTarget is None or descriptionTarget is None:
         return None  # dont have key points for this human
     maxMatch = []
     for p in myPeople:
@@ -37,7 +37,7 @@ def findClosesHuman(human, myPeople, config: "config file"):
             if kp is None or dp is None:
                 continue
             else:
-                goodMatch = FLANNMATCHER(DescriptionTarget, dp, config["FlannMatcherThreshold"])
+                goodMatch = FLANNMATCHER(descriptionTarget, dp, config["FlannMatcherThreshold"])
             if len(keyTarget) == 0:
                 acc = 0
             else:
@@ -139,7 +139,7 @@ def findSourceFeatures(human, mySource, config: "config file"):
                 print("Kaze has max match: ", maxBinaryMatches)
                 BinaryAcc = maxBinaryMatches / len(kpKaze)
 
-        MatchP.append(mean(floatAcc, BinaryAcc))
+        MatchP.append(np.mean(floatAcc, BinaryAcc))
         # MatchP.append(BinaryAcc)
 
     if len(MatchP) > 0:

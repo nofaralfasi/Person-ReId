@@ -2,7 +2,9 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
+from finalProject.classes.enumTypeKeyPoints import NamesAlgorithms
 from finalProject.utils.drawing.common import draw_str
+
 
 def DrawOnFrameMyIds(myids, frame):
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -40,7 +42,7 @@ def DrawHumans(MyPeople, frame, affectedPeople):
 
 def DrawSource(mySource, frame):
     thicknessRec = 2
-    color = (255, 100,150)
+    color = (255, 100, 150)
     cv2.rectangle(frame, mySource.locations[-1][0], mySource.locations[-1][1],
                   color, thicknessRec)
     draw_str(frame, mySource.locations[-1][0], "id " + str(mySource.indexCount))
@@ -92,3 +94,26 @@ def drawOnScatter(ax, keyPoints, color, label="none"):
     scale = 10
     ax.scatter(xl, yl, c=color, s=scale, label=label,
                alpha=0.8, edgecolors='none')
+
+
+def drawFrameObject(frameObject):
+    fig, ax = plt.subplots()
+
+    frameObject["frame"] = cv2.cvtColor(frameObject["frame"], cv2.COLOR_BGR2RGB)
+
+    ax.imshow(frameObject["frame"])
+
+    keys = [
+        (frameObject[NamesAlgorithms.KAZE.name]["keys"], 'tab:blue', NamesAlgorithms.KAZE.name),
+        (frameObject[NamesAlgorithms.ORB.name]["keys"], 'tab:orange', NamesAlgorithms.ORB.name),
+        (frameObject[NamesAlgorithms.SURF.name]["keys"], 'tab:green', NamesAlgorithms.SURF.name),
+        (frameObject[NamesAlgorithms.SIFT.name]["keys"], 'tab:red', NamesAlgorithms.SIFT.name),
+    ]
+
+    for key in keys:
+        if len(key[0]) > 0:
+            drawOnScatter(ax, key[0], key[1], label=key[2])
+
+    ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    ax.grid(True)
+    plt.show()

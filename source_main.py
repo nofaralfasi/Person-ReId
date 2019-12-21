@@ -17,7 +17,6 @@ if __name__ == "__main__":
 
         config = json.load(file_json)
 
-        framesDict = {}
         frames = []
 
         if config["isVideo"]:
@@ -27,7 +26,6 @@ if __name__ == "__main__":
                 ret, frame = cap.read()
                 i += 1
 
-            index = 0
             while ret:
                 frames.append(frame)
                 ret, frame = cap.read()
@@ -47,31 +45,34 @@ if __name__ == "__main__":
         # SourceDetectionByYolo returns a human
         mySource = SourceDetectionByYolo(frames, yolo, isVideo=config["isVideo"], config=config)
 
-        descriptorSource = createDescriptorTarget([mySource])
+        if mySource is None:
+            print("problem with source")
+        else:
+            descriptorSource = createDescriptorTarget([mySource])
 
-        pp = pprint.PrettyPrinter(indent=4)
+            pp = pprint.PrettyPrinter(indent=4)
 
-        # pp.pprint(descriptorSource)
+            pp.pprint(descriptorSource)
 
-        frameExmaple = descriptorSource[0][0]
+            frameExmaple = descriptorSource[0][0]
 
-        fig, ax = plt.subplots()
+            fig, ax = plt.subplots()
 
-        frameExmaple["frame"] = cv2.cvtColor(frameExmaple["frame"], cv2.COLOR_BGR2RGB)
+            frameExmaple["frame"] = cv2.cvtColor(frameExmaple["frame"], cv2.COLOR_BGR2RGB)
 
-        ax.imshow(frameExmaple["frame"])
+            ax.imshow(frameExmaple["frame"])
 
-        keys = [
-            (frameExmaple[NamesAlgorithms.KAZE.name]["keys"], 'tab:blue', NamesAlgorithms.KAZE.name),
-            (frameExmaple[NamesAlgorithms.ORB.name]["keys"], 'tab:orange', NamesAlgorithms.ORB.name),
-            (frameExmaple[NamesAlgorithms.SURF.name]["keys"], 'tab:green', NamesAlgorithms.SURF.name),
-            (frameExmaple[NamesAlgorithms.SIFT.name]["keys"], 'tab:red', NamesAlgorithms.SIFT.name),
-        ]
+            keys = [
+                (frameExmaple[NamesAlgorithms.KAZE.name]["keys"], 'tab:blue', NamesAlgorithms.KAZE.name),
+                (frameExmaple[NamesAlgorithms.ORB.name]["keys"], 'tab:orange', NamesAlgorithms.ORB.name),
+                (frameExmaple[NamesAlgorithms.SURF.name]["keys"], 'tab:green', NamesAlgorithms.SURF.name),
+                (frameExmaple[NamesAlgorithms.SIFT.name]["keys"], 'tab:red', NamesAlgorithms.SIFT.name),
+            ]
 
-        for key in keys:
-            if len(key[0]) > 0:
-                drawOnScatter(ax, key[0], key[1], label=key[2])
+            for key in keys:
+                if len(key[0]) > 0:
+                    drawOnScatter(ax, key[0], key[1], label=key[2])
 
-        ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-        ax.grid(True)
-        plt.show()
+            ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+            ax.grid(True)
+            plt.show()

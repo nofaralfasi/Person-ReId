@@ -98,9 +98,10 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
 
     return myPeople
 
+
 # sequences is all frames related to the source
 def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
-    frameCounter = 0
+    counterId = 0
     frameRate = config["frameRate"]
     if config["videoFrameLength"] == -1:
         numOfFrames = len(sequences)
@@ -113,6 +114,7 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
 
     if numOfFrames > 1:
         # start capture, looping on the frames, skipping the frameRate
+        human = None
         for index in range(0, numOfFrames, frameRate):
             print("frame {}".format(index))
             if isVideo:
@@ -124,28 +126,25 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
             croppedImage = yolo.forward(frame2)
             croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
 
+            if len(croppedImage) > 1:
+                print("On source found two people , must be one person")
+                return None
+
             # index is the frame number
             for c in croppedImage:
-                if index == 0: # first frame
-                    human = Human(frameCounter)
-                    frameCounter += 1
+                if human is None:
+                    human = Human(counterId)
+                    counterId += 1
                 human.frames.append(c["frame"])
                 human.locations.append(c["location"])
-            DrawSource(human, drawFrame)
-            # find ids from previous frame
+
+            if human is not None:
+                DrawSource(human, drawFrame)
+                # find ids from previous frame
             cv2.imshow('frame', drawFrame)
             k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
             if k == 27:
                 break
     else:
         print("The number of frames is less than one")
-
-    # print("number of people ", len(myPeople))
-    # for index, p in enumerate(myPeople):
-    #     print("number of frames in Person #", index)
-    #     print(len(p.frames))
-    #
-    # ShowPeopleTable(myPeople, config=config)
-    # print("done")
-
     return human
