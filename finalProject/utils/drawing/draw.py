@@ -127,10 +127,10 @@ def drawTargetFinal(acc_targets):
 
     fig, axes = plt.subplots(nrows=2, ncols=cols, sharex=True, sharey=True)
     for key, target in acc_targets.items():
-        # drawFrameObject(target["frameSource"], axes[0, key])
-        # drawFrameObject(target["frameTarget"], axes[1, key])
-        axes[0, key].imshow(target["frameSource"]["frame"])
-        axes[1, key].imshow(target["frameTarget"]["frame"])
+        drawFrameObject(target["frameSource"], axes[0, key])
+        drawFrameObject(target["frameTarget"], axes[1, key])
+        # axes[0, key].imshow(target["frameSource"]["frame"])
+        # axes[1, key].imshow(target["frameTarget"]["frame"])
         axes[1, key].set_xlabel("Accuracy : " + str(target["maxAcc"]))
 
     plt.show()

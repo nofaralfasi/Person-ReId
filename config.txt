@@ -1,6 +1,6 @@
 {
   "source" :{
-    "inputVideo" : "dataset/re-id/videos/source1.mp4",
+    "inputVideo" : "dataset/re-id/videos/source2.mp4",
     "isVideo" : true,
     "skipRateFrameFromBeginning" : 1,
     "videoFrameLength" : 22,
@@ -8,10 +8,10 @@
     "WaitKeySecond" : 10
   },
   "target" : {
-      "inputVideo" : "dataset/re-id/videos/multi_with_source_1.mp4",
+      "inputVideo" : "dataset/re-id/videos/storyLove.mp4",
       "isVideo" : true,
-      "skipRateFrameFromBeginning" : 55,
-      "videoFrameLength" : 10,
+      "skipRateFrameFromBeginning" : 15,
+      "videoFrameLength" : 22,
       "frameRate" : 1,
       "thresholdAppendToHuman" : 0.3,
       "thresholdAppendNewHumanStart" : 0.1,

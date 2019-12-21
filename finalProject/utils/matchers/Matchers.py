@@ -100,9 +100,11 @@ def compareBetweenTwoFramesObject(sourceFrame, targetFrame):
             results.append(0)
         else:
             matches = KazeMatcher(des_s, des_t)
-            acc = len(matches) / len(des_t)
+            # acc = len(matches) / len(des_t)
+            acc = len(matches) / max(len(des_t), len(des_s))
 
-#            acc = len(matches) / max(len(des_t), len(des_s))
+            if acc > 1:
+                acc = 1
             results.append(acc)
 
     for algo in floatAlgo:
@@ -112,8 +114,12 @@ def compareBetweenTwoFramesObject(sourceFrame, targetFrame):
             results.append(0)
         else:
             matches = FLANNMATCHER(des_s, des_t)
-            acc = len(matches) / len(des_t)
-#            acc = len(matches) / max((len(des_t), len(des_s)))
+            # acc = len(matches) / len(des_t)
+            acc = len(matches) / max((len(des_t), len(des_s)))
+
+            if acc > 1:
+                acc = 1
+
             results.append(acc)
 
     return np.mean(results)
