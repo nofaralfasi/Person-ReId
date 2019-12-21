@@ -96,9 +96,7 @@ def drawOnScatter(ax, keyPoints, color, label="none"):
                alpha=0.8, edgecolors='none')
 
 
-def drawFrameObject(frameObject):
-    fig, ax = plt.subplots()
-
+def drawFrameObject(frameObject, ax):
     frameObject["frame"] = cv2.cvtColor(frameObject["frame"], cv2.COLOR_BGR2RGB)
 
     ax.imshow(frameObject["frame"])
@@ -116,10 +114,18 @@ def drawFrameObject(frameObject):
 
     ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     ax.grid(True)
-    plt.show()
+
+    #return ax
+    # plt.show()
 
 
-def drawTargetFinal(acc_targets,sourceFrame):
+def drawTargetFinal(acc_targets):
     fig, axes = plt.subplots(nrows=2, ncols=len(acc_targets.keys()), sharex=True, sharey=True)
-    for key,value in acc_targets.items():
-        ax
+    for key, target in acc_targets.items():
+        # drawFrameObject(target["frameSource"], axes[0, key])
+        # drawFrameObject(target["frameTarget"], axes[1, key])
+        axes[0, key].imshow(target["frameSource"]["frame"])
+        axes[1, key].imshow(target["frameTarget"]["frame"])
+        axes[1, key].set_xlabel("Accuracy : " + str(target["maxAcc"]))
+
+    plt.show()

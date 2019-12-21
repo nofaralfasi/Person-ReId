@@ -125,6 +125,9 @@ def CompareBetweenTwoDescription(sourceDescriptor, targetDescriptor):
                 tableAcc[index_t, index_s] = compareBetweenTwoFramesObject(frame_s, frame_t)
 
         maxAcc = np.amax(tableAcc)
-        ind = np.unravel_index(np.argmax(maxAcc, axis=None), maxAcc.shape)
-        acc_target[_id] = {"maxAcc ": maxAcc, "target": target, "indexMax": ind}
+        ind = np.unravel_index(np.argmax(tableAcc, axis=None), tableAcc.shape)
+        acc_target[_id] = {"maxAcc": maxAcc,
+                           "target": target,
+                           "frameTarget": target[ind[0]],
+                           "frameSource": sourceDescriptor[0][ind[1]]}
     return acc_target

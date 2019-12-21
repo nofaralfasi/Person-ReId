@@ -54,5 +54,16 @@ if __name__ == "__main__":
         # drawFrameObject(frameExampleTarget)
 
         acc_targets = CompareBetweenTwoDescription(descriptorSource, descriptorTarget)
+        """
+        acc_target look like :
+         {
+           id_0 : { 
+           maxAcc : double,
+           target : [arrayOfFrameObject]
+           frameTarget : FrameObject
+           frameSource : FrameObject
+           }
+         }
+        """
 
-        drawTargetFinal(acc_targets, descriptorSource)
+        drawTargetFinal(acc_targets)
