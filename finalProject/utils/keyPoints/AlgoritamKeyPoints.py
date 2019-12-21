@@ -1,4 +1,3 @@
-"""# Sift Algoritam"""
 import cv2
 
 from finalProject.classes.enumTypeKeyPoints import NamesAlgorithms
@@ -12,7 +11,7 @@ def KeyPointsBinary(img, Threshold):
 
 def KeyPointsFloat(img, Threshold):
     kpSurf, desSurf = SurfDetectKeyPoints(img, Threshold)
-    kpSift, desSift = SiftDetectKeyPoints(img, Threshold)
+    kpSift, desSift = SiftDetectKeyPoints(img)
 
     return [(kpSurf, desSurf), (kpSift, desSift)]
 

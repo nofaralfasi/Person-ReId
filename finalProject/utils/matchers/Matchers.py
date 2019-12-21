@@ -1,9 +1,12 @@
 """ **Matchers**
-
 #Kaze Matcher for binary classification - orb , kaze ,brief,fast
 """
 import cv2
 import numpy as np
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import SurfDetectKeyPoints
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import SiftDetectKeyPoints
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import ORBDetectKeyPoints
+from finalProject.utils.keyPoints.AlgoritamKeyPoints import KazeDetectKeyPoints
 from finalProject.utils.keyPoints.AlgoritamKeyPoints import SurfDetectKeyPoints
 
 
@@ -17,7 +20,8 @@ def KazeMatcher(desc1, desc2):
 
 
 def findClosesHuman(human, myPeople, config: "config file"):
-    keyTarget, DescriptionTarget = SurfDetectKeyPoints(human["frame"])
+    keyTarget, descriptionTarget = SurfDetectKeyPoints(human["frame"])
+    # TODO check with Liran if it's a different  DescriptionTarget here or not
     if keyTarget is None or DescriptionTarget is None:
         return None  # dont have key points for this human
     maxMatch = []
@@ -81,3 +85,67 @@ def FLANNMATCHER(des1, des2, threshold):  # threshold is the distance between th
         return good
     else:
         return []
+
+
+def findSourceFeatures(human, mySource, config: "config file"):
+    keySourceSurf, descriptionSourceSurf = SurfDetectKeyPoints(human["frame"])
+    keySourceSift, descriptionSourceSift = SiftDetectKeyPoints(human["frame"])
+    keySourceOrb, descriptionSourceOrb = ORBDetectKeyPoints(human["frame"])
+    keySourceKaze, descriptionSourceKaze = KazeDetectKeyPoints(human["frame"])
+
+    maxKeyPoints = max(len(keySourceSurf), len(keySourceSift), len(keySourceOrb), len(keySourceKaze))
+    maxDescriptions = max(len(descriptionSourceSurf), len(descriptionSourceSift), len(descriptionSourceOrb), len(descriptionSourceKaze))
+
+    if maxKeyPoints == 0 or maxDescriptions == 0:
+        print("Source has no key points or descriptions")
+        return None  # dont have key points for this human
+
+    meanMatches = []
+    MatchP = []
+    floatAcc = 0
+    BinaryAcc = 0
+
+    for frame in mySource.frames:
+        kpSurf, dpSurf = SurfDetectKeyPoints(frame)
+        kpSift, dpSift = SiftDetectKeyPoints(frame)
+        kpOrb, dpOrb = ORBDetectKeyPoints(frame)
+        kpKaze, dpKaze = KazeDetectKeyPoints(frame)
+
+        maxKP = max(len(kpSurf), len(kpSift), len(kpOrb), len(kpKaze))
+        maxDes = max(len(dpSurf), len(dpSift), len(dpOrb), len(dpKaze))
+
+        if maxKP == 0 or maxDes == 0:
+            print("Not enough featurs or descriptions were found!")
+            continue
+        else:
+            goodMatchSurf = FLANNMATCHER(descriptionSourceSurf, dpSurf, config["FlannMatcherThreshold"])
+            goodMatchSift = FLANNMATCHER(descriptionSourceSift, dpSift, config["FlannMatcherThreshold"])
+            goodMatchOrb = BFMatcher(descriptionSourceOrb, dpOrb, config["BFMatcherThreshold"])
+            goodMatchKaze = KazeMatcher(descriptionSourceKaze, dpKaze)
+
+            maxFloatMatches = max(len(goodMatchSurf), len(goodMatchSift))
+            maxBinaryMatches = max(len(goodMatchOrb), len(goodMatchKaze))
+
+            if maxFloatMatches == len(goodMatchSurf):
+                print("Surf has max match: ", maxFloatMatches)
+                floatAcc = maxFloatMatches / len(kpSurf)
+            elif maxFloatMatches == len(goodMatchSift):
+                print("Sift has max match: ", maxFloatMatches)
+                floatAcc = maxFloatMatches / len(kpSift)
+            if maxBinaryMatches == len(goodMatchOrb):
+                print("Orb has max match: ", maxBinaryMatches)
+                BinaryAcc = maxBinaryMatches / len(kpOrb)
+            elif maxBinaryMatches == len(goodMatchKaze):
+                print("Kaze has max match: ", maxBinaryMatches)
+                BinaryAcc = maxBinaryMatches / len(kpKaze)
+
+        MatchP.append(mean(floatAcc, BinaryAcc))
+        # MatchP.append(BinaryAcc)
+
+    if len(MatchP) > 0:
+        MeanAcc = np.mean(MatchP)
+    else:
+        MeanAcc = 0
+    meanMatches.append((mySource, MeanAcc))
+
+    return meanMatches

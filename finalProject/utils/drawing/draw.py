@@ -4,7 +4,6 @@ import numpy as np
 
 from finalProject.utils.drawing.common import draw_str
 
-
 def DrawOnFrameMyIds(myids, frame):
     font = cv2.FONT_HERSHEY_SIMPLEX
     # fontScale
@@ -39,9 +38,17 @@ def DrawHumans(MyPeople, frame, affectedPeople):
         draw_str(frame, MyPeople[index].locations[-1][0], "id " + str(MyPeople[index].indexCount))
 
 
+def DrawSource(mySource, frame):
+    thicknessRec = 2
+    color = (255, 100,150)
+    cv2.rectangle(frame, mySource.locations[-1][0], mySource.locations[-1][1],
+                  color, thicknessRec)
+    draw_str(frame, mySource.locations[-1][0], "id " + str(mySource.indexCount))
+
+
 def ShowPeopleTable(MyPeople, config: "configFile"):
     if len(MyPeople) == 0:
-        print("no people found")
+        print("no people were found!")
     else:
         if config["showHistory"]:
             photos = "history"

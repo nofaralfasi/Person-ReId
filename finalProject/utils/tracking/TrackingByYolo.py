@@ -1,8 +1,10 @@
 import cv2
 
 from finalProject.classes.human import Human
-from finalProject.utils.drawing.draw import DrawHumans, ShowPeopleTable
+from finalProject.utils.drawing.draw import DrawHumans, ShowPeopleTable, DrawSource
 from finalProject.utils.matchers.Matchers import findClosesHuman
+from finalProject.utils.matchers.Matchers import findSourceFeatures
+
 import copy
 
 
@@ -95,3 +97,55 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
     # print("done")
 
     return myPeople
+
+# sequences is all frames related to the source
+def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
+    frameCounter = 0
+    frameRate = config["frameRate"]
+    if config["videoFrameLength"] == -1:
+        numOfFrames = len(sequences)
+    else:
+        numOfFrames = config["videoFrameLength"]
+
+    if config["videoFrameLength"] > len(sequences):
+        print("videoFrameLength larger then video")
+        numOfFrames = len(sequences)
+
+    if numOfFrames > 1:
+        # start capture, looping on the frames, skipping the frameRate
+        for index in range(0, numOfFrames, frameRate):
+            print("frame {}".format(index))
+            if isVideo:
+                frame2 = sequences[index]
+            else:
+                frame2 = cv2.imread(sequences[index])
+
+            drawFrame = copy.copy(frame2)
+            croppedImage = yolo.forward(frame2)
+            croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
+
+            # index is the frame number
+            for c in croppedImage:
+                if index == 0: # first frame
+                    human = Human(frameCounter)
+                    frameCounter += 1
+                human.frames.append(c["frame"])
+                human.locations.append(c["location"])
+            DrawSource(human, drawFrame)
+            # find ids from previous frame
+            cv2.imshow('frame', drawFrame)
+            k = cv2.waitKey(config["WaitKeySecond"]) & 0xff
+            if k == 27:
+                break
+    else:
+        print("The number of frames is less than one")
+
+    # print("number of people ", len(myPeople))
+    # for index, p in enumerate(myPeople):
+    #     print("number of frames in Person #", index)
+    #     print(len(p.frames))
+    #
+    # ShowPeopleTable(myPeople, config=config)
+    # print("done")
+
+    return human

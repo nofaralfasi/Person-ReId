@@ -48,6 +48,7 @@ ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 # construct a blob from the input image and then perform a forward
 # pass of the YOLO object detector, giving us our bounding boxes and
 # associated probabilities
+# blobFromImage - Creates 4-dimensional blob from image. Optionally resizes and crops image from center, subtract mean values, scales values by scalefactor, swap Blue and Red channels.
 blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416),
 	swapRB=True, crop=False)
 net.setInput(blob)
