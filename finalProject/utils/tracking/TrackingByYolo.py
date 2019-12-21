@@ -3,7 +3,6 @@ import cv2
 from finalProject.classes.human import Human
 from finalProject.utils.drawing.draw import DrawHumans, ShowPeopleTable, DrawSource
 from finalProject.utils.matchers.Matchers import findClosesHuman
-from finalProject.utils.matchers.Matchers import findSourceFeatures
 
 import copy
 
@@ -26,7 +25,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
         for index in range(0, numOfFrames, frameRate):
             affectedPeople = []
 
-            print("frame {}".format(index))
+            #print("frame {}".format(index))
             if isVideo:
                 frame2 = sequences[index]
             else:
@@ -48,7 +47,7 @@ def TrackingByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
             elif index > 0:
                 croppedImage = yolo.forward(frame2)
                 croppedImage = list(filter(lambda crop: crop["frame"].size, croppedImage))
-                print("list of detection", len(croppedImage))
+                # print("list of detection", len(croppedImage))
                 for c in croppedImage:
                     if len(myPeople) > 0:
                         maxMatch = findClosesHuman(c, myPeople, config=config)
@@ -116,7 +115,7 @@ def SourceDetectionByYolo(sequences: [], yolo, isVideo: bool, config: "file"):
         # start capture, looping on the frames, skipping the frameRate
         human = None
         for index in range(0, numOfFrames, frameRate):
-            print("frame {}".format(index))
+            # print("frame {}".format(index))
             if isVideo:
                 frame2 = sequences[index]
             else:

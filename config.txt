@@ -2,16 +2,16 @@
   "source" :{
     "inputVideo" : "dataset/re-id/videos/ball.mp4",
     "isVideo" : true,
-    "skipRateFrameFromBeginning" : 70,
-    "videoFrameLength" : 20,
+    "skipRateFrameFromBeginning" : 80,
+    "videoFrameLength" : 10,
     "frameRate" : 1,
     "WaitKeySecond" : 10
   },
   "target" : {
-      "inputVideo" : "dataset/re-id/videos/cctv1.mp4",
+      "inputVideo" : "dataset/re-id/videos/output1.mp4",
       "isVideo" : true,
-      "skipRateFrameFromBeginning" : 70,
-      "videoFrameLength" : 20,
+      "skipRateFrameFromBeginning" : 80,
+      "videoFrameLength" : 10,
       "frameRate" : 1,
       "thresholdAppendToHuman" : 0.3,
       "thresholdAppendNewHumanStart" : 0.1,

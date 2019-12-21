@@ -34,7 +34,7 @@ def DrawHumans(MyPeople, frame, affectedPeople):
     thicknessRec = 2
     for index in affectedPeople:
         color = MyPeople[index].colorIndex
-        print(color)
+        # print(color)
         cv2.rectangle(frame, MyPeople[index].locations[-1][0], MyPeople[index].locations[-1][1],
                       color, thicknessRec)
         draw_str(frame, MyPeople[index].locations[-1][0], "id " + str(MyPeople[index].indexCount))
@@ -117,3 +117,9 @@ def drawFrameObject(frameObject):
     ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
     ax.grid(True)
     plt.show()
+
+
+def drawTargetFinal(acc_targets,sourceFrame):
+    fig, axes = plt.subplots(nrows=2, ncols=len(acc_targets.keys()), sharex=True, sharey=True)
+    for key,value in acc_targets.items():
+        ax

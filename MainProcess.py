@@ -1,8 +1,9 @@
 import json
 import pprint
 from finalProject.classes.yolo import Yolo
-from finalProject.utils.drawing.draw import drawFrameObject
+from finalProject.utils.drawing.draw import drawFrameObject, drawTargetFinal
 from finalProject.utils.keyPoints.AlgoritamKeyPoints import createDescriptorTarget
+from finalProject.utils.matchers.Matchers import CompareBetweenTwoDescription
 from finalProject.utils.preprocessing.preprocess import readFromInputVideoFrames, framesExists
 from finalProject.utils.tracking.TrackingByYolo import SourceDetectionByYolo, TrackingByYolo
 
@@ -46,12 +47,12 @@ if __name__ == "__main__":
         # target descriptor
         descriptorTarget = createDescriptorTarget(myTargets)
 
-        frameExampleTarget = descriptorTarget[0][0]
-        frameExampleSource = descriptorSource[0][0]
+        # frameExampleTarget = descriptorTarget[0][0]
+        # frameExampleSource = descriptorSource[0][0]
 
-        drawFrameObject(frameExampleSource)
-        drawFrameObject(frameExampleTarget)
+        # drawFrameObject(frameExampleSource)
+        # drawFrameObject(frameExampleTarget)
 
+        acc_targets = CompareBetweenTwoDescription(descriptorSource, descriptorTarget)
 
-
-
+        drawTargetFinal(acc_targets, descriptorSource)
