@@ -34,7 +34,7 @@ def SurfDetectKeyPoints(img, Threshold=0.5):
 """#orb algoritam"""
 
 
-def ORBDetectKeyPoints(img, n_features=400):
+def ORBDetectKeyPoints(img, n_features=200):
     # Initiate STAR detector
     orb = cv2.ORB_create(nfeatures=n_features)  # find the keypoints with ORB
     kp = orb.detect(img, None)

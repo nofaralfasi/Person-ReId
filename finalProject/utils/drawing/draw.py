@@ -120,7 +120,12 @@ def drawFrameObject(frameObject, ax):
 
 
 def drawTargetFinal(acc_targets):
-    fig, axes = plt.subplots(nrows=2, ncols=len(acc_targets.keys()), sharex=True, sharey=True)
+
+    cols = len(acc_targets.keys())
+    if len(acc_targets.keys()) == 1:
+        cols += 1
+
+    fig, axes = plt.subplots(nrows=2, ncols=cols, sharex=True, sharey=True)
     for key, target in acc_targets.items():
         # drawFrameObject(target["frameSource"], axes[0, key])
         # drawFrameObject(target["frameTarget"], axes[1, key])

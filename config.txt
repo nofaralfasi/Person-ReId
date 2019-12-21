@@ -1,16 +1,16 @@
 {
   "source" :{
-    "inputVideo" : "dataset/re-id/videos/ball.mp4",
+    "inputVideo" : "dataset/re-id/videos/source1.mp4",
     "isVideo" : true,
-    "skipRateFrameFromBeginning" : 80,
-    "videoFrameLength" : 10,
+    "skipRateFrameFromBeginning" : 1,
+    "videoFrameLength" : 22,
     "frameRate" : 1,
     "WaitKeySecond" : 10
   },
   "target" : {
-      "inputVideo" : "dataset/re-id/videos/output1.mp4",
+      "inputVideo" : "dataset/re-id/videos/multi_with_source_1.mp4",
       "isVideo" : true,
-      "skipRateFrameFromBeginning" : 80,
+      "skipRateFrameFromBeginning" : 55,
       "videoFrameLength" : 10,
       "frameRate" : 1,
       "thresholdAppendToHuman" : 0.3,

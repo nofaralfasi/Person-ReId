@@ -14,7 +14,7 @@ from finalProject.utils.keyPoints.AlgoritamKeyPoints import SurfDetectKeyPoints
 
 def KazeMatcher(desc1, desc2):
     matcher = cv2.DescriptorMatcher_create(cv2.DescriptorMatcher_BRUTEFORCE_HAMMING)
-    nn_matches = matcher.knnMatch(desc1, desc2, 2)
+    nn_matches = matcher.knnMatch(desc1, desc2, k=2)
     return nn_matches
 
 
@@ -101,6 +101,8 @@ def compareBetweenTwoFramesObject(sourceFrame, targetFrame):
         else:
             matches = KazeMatcher(des_s, des_t)
             acc = len(matches) / len(des_t)
+
+#            acc = len(matches) / max(len(des_t), len(des_s))
             results.append(acc)
 
     for algo in floatAlgo:
@@ -111,6 +113,7 @@ def compareBetweenTwoFramesObject(sourceFrame, targetFrame):
         else:
             matches = FLANNMATCHER(des_s, des_t)
             acc = len(matches) / len(des_t)
+#            acc = len(matches) / max((len(des_t), len(des_s)))
             results.append(acc)
 
     return np.mean(results)
