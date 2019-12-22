@@ -101,11 +101,11 @@ def compareBetweenTwoFramesObject(sourceFrame, targetFrame):
         else:
             matches = KazeMatcher(des_s, des_t)
             # acc = len(matches) / len(des_t)
-            acc = len(matches) / max(len(des_t), len(des_s))
-
-            if acc > 1:
-                acc = 1
-            results.append(acc)
+            # acc = len(matches) / max(len(des_t), len(des_s))
+            #
+            # if acc > 1:
+            #     acc = 1
+            results.append(len(matches))
 
     for algo in floatAlgo:
         des_s = sourceFrame[algo]["des"]
@@ -115,12 +115,12 @@ def compareBetweenTwoFramesObject(sourceFrame, targetFrame):
         else:
             matches = FLANNMATCHER(des_s, des_t)
             # acc = len(matches) / len(des_t)
-            acc = len(matches) / max((len(des_t), len(des_s)))
+            # acc = len(matches) / max((len(des_t), len(des_s)))
+            #
+            # if acc > 1:
+            #     acc = 1
 
-            if acc > 1:
-                acc = 1
-
-            results.append(acc)
+            results.append(len(matches))
 
     return np.mean(results)
 
@@ -133,9 +133,9 @@ def CompareBetweenTwoDescription(sourceDescriptor, targetDescriptor):
             for index_s, frame_s in enumerate(sourceDescriptor[0]):
                 tableAcc[index_t, index_s] = compareBetweenTwoFramesObject(frame_s, frame_t)
 
-        maxAcc = np.amax(tableAcc)
+        maxMatches = np.amax(tableAcc)
         ind = np.unravel_index(np.argmax(tableAcc, axis=None), tableAcc.shape)
-        acc_target[_id] = {"maxAcc": maxAcc,
+        acc_target[_id] = {"maxAcc": maxMatches,
                            "target": target,
                            "frameTarget": target[ind[0]],
                            "frameSource": sourceDescriptor[0][ind[1]]}

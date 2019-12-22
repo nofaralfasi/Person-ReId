@@ -104,8 +104,8 @@ def drawFrameObject(frameObject, ax):
     keys = [
         (frameObject[NamesAlgorithms.KAZE.name]["keys"], 'tab:blue', NamesAlgorithms.KAZE.name),
         (frameObject[NamesAlgorithms.ORB.name]["keys"], 'tab:orange', NamesAlgorithms.ORB.name),
-        (frameObject[NamesAlgorithms.SURF.name]["keys"], 'tab:green', NamesAlgorithms.SURF.name),
-        (frameObject[NamesAlgorithms.SIFT.name]["keys"], 'tab:red', NamesAlgorithms.SIFT.name),
+      #  (frameObject[NamesAlgorithms.SURF.name]["keys"], 'tab:green', NamesAlgorithms.SURF.name),
+     #   (frameObject[NamesAlgorithms.SIFT.name]["keys"], 'tab:red', NamesAlgorithms.SIFT.name),
     ]
 
     for key in keys:
@@ -131,6 +131,6 @@ def drawTargetFinal(acc_targets):
         drawFrameObject(target["frameTarget"], axes[1, key])
         # axes[0, key].imshow(target["frameSource"]["frame"])
         # axes[1, key].imshow(target["frameTarget"]["frame"])
-        axes[1, key].set_xlabel("Accuracy : " + str(target["maxAcc"]))
+        axes[1, key].set_xlabel("# Matches : " + str(target["maxAcc"]))
 
     plt.show()

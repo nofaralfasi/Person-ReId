@@ -1,5 +1,7 @@
 import cv2
 import os
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def framesExists(frames):
@@ -30,3 +32,16 @@ def readFromInputVideoFrames(config):
         frames = list(map(lambda file: path + "/" + file, frames))
 
     return frames
+
+
+def reduceNoise(frames):
+    framesMask = []
+    backSub = cv2.createBackgroundSubtractorMOG2(varThreshold=100)
+
+    for f in frames:
+        extracted = None
+        fgMask = backSub.apply(f)
+        extracted = cv2.bitwise_and(f, f, extracted, mask=fgMask)
+        framesMask.append(extracted)
+
+    return framesMask
