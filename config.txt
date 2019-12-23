@@ -1,19 +1,19 @@
 {
   "source" :{
-    "inputVideo" : "dataset/re-id/videos/source2.mp4",
+    "inputVideo" : "dataset/re-id/videos/liran.mp4",
     "isVideo" : true,
     "skipRateFrameFromBeginning" : 1,
-    "videoFrameLength" : 20,
+    "videoFrameLength" : 3,
     "frameRate" : 1,
     "WaitKeySecond" : 10
   },
   "target" : {
-      "inputVideo" : "dataset/re-id/videos/vtest.avi",
+      "inputVideo" : "dataset/re-id/videos/camera_Street.mp4",
       "isVideo" : true,
       "skipRateFrameFromBeginning" : 1,
-      "videoFrameLength" : 20,
-      "frameRate" : 1,
-      "thresholdAppendToHuman" : 0.3,
+      "videoFrameLength" : 800,
+      "frameRate" : 5,
+      "thresholdAppendToHuman" : 0.2,
       "thresholdAppendNewHumanStart" : 0.1,
       "thresholdAppendNewHumanEnd" : 0.2,
       "WaitKeySecond" : 10,

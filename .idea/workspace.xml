@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="">
+    <list default="true" id="dab990d1-df83-4ba3-95ce-1c2644766d21" name="Default Changelist" comment="add optical flow crop">
+      <change afterPath="$PROJECT_DIR$/screenshots/acc_metric.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/finalResult.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/lirancatch.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screenshots/lirancatch2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainProcess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bg_sub.py" beforeDir="false" afterPath="$PROJECT_DIR$/bg_sub.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finalProject/utils/drawing/draw.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/drawing/draw.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/matchers/Matchers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finalProject/utils/preprocessing/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalProject/utils/preprocessing/preprocess.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,21 +53,21 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/dataset/re-id/reduceNoise" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/dataset/re-id/videos" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/dataset/re-id/videos" />
-      <recent name="$PROJECT_DIR$/classes" />
-      <recent name="$PROJECT_DIR$/re-id/videos" />
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/screenshots" />
       <recent name="$PROJECT_DIR$/dataset/images/liran" />
       <recent name="$PROJECT_DIR$/final-project" />
       <recent name="$PROJECT_DIR$/datasets" />
       <recent name="$PROJECT_DIR$/utils/keyPoints" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/dataset/re-id/videos" />
+      <recent name="$PROJECT_DIR$/classes" />
+      <recent name="$PROJECT_DIR$/re-id/videos" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -240,7 +239,9 @@
       <workItem from="1575892498097" duration="613000" />
       <workItem from="1575896755950" duration="8000" />
       <workItem from="1576948304160" duration="4974000" />
-      <workItem from="1576996845706" duration="6218000" />
+      <workItem from="1576996845706" duration="8603000" />
+      <workItem from="1577088395671" duration="69000" />
+      <workItem from="1577113263386" duration="1248000" />
     </task>
     <task id="LOCAL-00001" summary="optical flow">
       <created>1575112722454</created>
@@ -557,7 +558,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576953269160</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="add optical flow crop">
+      <created>1577003149354</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1577003149354</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -593,13 +601,14 @@
     <MESSAGE value="add main source target" />
     <MESSAGE value="create a visual table acc" />
     <MESSAGE value="need to improve acc" />
-    <option name="LAST_COMMIT_MESSAGE" value="need to improve acc" />
+    <MESSAGE value="add optical flow crop" />
+    <option name="LAST_COMMIT_MESSAGE" value="add optical flow crop" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$bg_sub.coverage" NAME="bg_sub Coverage Results" MODIFIED="1577001115912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$KalmanFilter.coverage" NAME="KalmanFilter Coverage Results" MODIFIED="1575295812179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$kalman.coverage" NAME="kalman Coverage Results" MODIFIED="1575190906662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Final_Project_Afeka$MainProcess.coverage" NAME="MainProcess Coverage Results" MODIFIED="1577003083085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Final_Project_Afeka$MainProcess.coverage" NAME="MainProcess Coverage Results" MODIFIED="1577005833504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$lk_track.coverage" NAME="lk_track Coverage Results" MODIFIED="1575305862132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/opticalFlowLiran" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$yoloTrackerMain.coverage" NAME="yoloTrackerMain Coverage Results" MODIFIED="1576928790354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Final_Project_Afeka$TrackingByYolo.coverage" NAME="TrackingByYolo Coverage Results" MODIFIED="1575638011946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/finalProject/utils/tracking" />
