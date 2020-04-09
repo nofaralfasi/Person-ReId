@@ -23,7 +23,7 @@ class Yolo:
         COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),
                                    dtype="uint8")
 
-        (H, W) = image.shape[:2]
+        (H, W) = image.shape[:2]  # returns a tuple of number of rows(H) and columns(W)
         ln = self.net.getLayerNames()
         ln = [ln[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
         blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416),
@@ -39,8 +39,7 @@ class Yolo:
         for output in layerOutputs:
             # loop over each of the detections
             for detection in output:
-                # extract the class ID and confidence (i.e., probability) of
-                # the current object detection
+                # extract the class ID and confidence (i.e., probability) of the current object detection
                 scores = detection[5:]
                 classID = np.argmax(scores)
                 confidence = scores[classID]
