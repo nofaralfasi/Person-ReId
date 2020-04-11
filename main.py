@@ -9,7 +9,7 @@ from finalProject.classes.yolo import Yolo
 from finalProject.utils.drawing.draw import draw_final_results
 from finalProject.utils.keyPoints.AlgoritamKeyPoints import create_keypoints_descriptors
 from finalProject.utils.matchers.Matchers import compute_accuracy_table
-from finalProject.utils.preprocessing.preprocess import read_frames_from_video, is_frames_exists, reduce_noise, removeRemovalColor
+from finalProject.utils.preprocessing.preprocess import read_frames_from_video, check_frames_exist, reduce_noise, removeRemovalColor
 from finalProject.utils.tracking.TrackingByYolo import source_detection_by_yolo, tracking_by_yolo
 
 if __name__ == "__main__":
@@ -24,14 +24,14 @@ if __name__ == "__main__":
 
         """ source video """
         source_frames = read_frames_from_video(config["source"])  # a list of all frames extracted from source video
-        if not is_frames_exists(source_frames):  # if not len(source_frames) > 0
+        if not check_frames_exist(source_frames):  # if not len(source_frames) > 0
             print("problem with source video input")
             exit(0)
 
-        # pre processing reduce noise background
+        # preprocessing reduce noise background
         if config["source"]["reduceNoise"]:
             source_frames = reduce_noise(source_frames)
-        if not is_frames_exists(source_frames):
+        if not check_frames_exist(source_frames):
             print("problem with reduce noise source video input")
             exit(0)
 
@@ -49,37 +49,35 @@ if __name__ == "__main__":
             print("fail to detect human on source video")
             exit(0)
 
-        # source_descriptors = create_keypoints_descriptors([source_person])  # gets source descriptors to each frame
         create_keypoints_descriptors([source_person])  # gets source descriptors to each frame
 
         """ target video """
         target_frames = read_frames_from_video(config["target"])
-        if not is_frames_exists(target_frames):
+        if not check_frames_exist(target_frames):
             print("problem with target video input")
             exit(0)
 
         if config["target"]["reduceNoise"]:
             target_frames = reduce_noise(target_frames)
-        if not is_frames_exists(target_frames):
-            print("problem with target video input -reduce noise")
+        if not check_frames_exist(target_frames):
+            print("problem with target video input - in reduce noise")
             exit(0)
 
         if config["target"]["removeRemovalColor"]:
             target_frames = removeRemovalColor(target_frames)
+        if not check_frames_exist(target_frames):
+            print("problem with target video input - in remove color")
+            exit(0)
 
         target_people = tracking_by_yolo(target_frames, yolo, is_video=config["target"]["isVideo"], config=config["target"])
-        if not is_frames_exists(target_people):
+        if not check_frames_exist(target_people):
             print("fail to detect humans on target video")
             exit(0)
 
-        # target_descriptors = create_keypoints_descriptors(target_people)
-
         create_keypoints_descriptors(target_people)
 
-        # acc_targets = compute_accuracy_table(source_descriptors, target_descriptors)
-        acc_targets = compute_accuracy_table(source_person, target_people)
         """
-        acc_target look like :
+        acc_target looks like this:
          {
            id_0 : {
            maxAcc : double,
@@ -89,5 +87,6 @@ if __name__ == "__main__":
            }
          }
         """
+        acc_targets = compute_accuracy_table(source_person, target_people)
 
         draw_final_results(acc_targets, options=config["output"])

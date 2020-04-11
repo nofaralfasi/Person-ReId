@@ -11,19 +11,18 @@ parser.add_argument('--thr', default=0.2, type=float, help='Threshold value for 
 parser.add_argument('--width', default=368, type=int, help='Resize input to specific width.')
 parser.add_argument('--height', default=368, type=int, help='Resize input to specific height.')
 
-
 args = parser.parse_args()
 
-BODY_PARTS = { "Nose": 0, "Neck": 1, "RShoulder": 2, "RElbow": 3, "RWrist": 4,
-               "LShoulder": 5, "LElbow": 6, "LWrist": 7, "RHip": 8, "RKnee": 9,
-               "RAnkle": 10, "LHip": 11, "LKnee": 12, "LAnkle": 13, "REye": 14,
-               "LEye": 15, "REar": 16, "LEar": 17, "Background": 18 }
+BODY_PARTS = {"Nose": 0, "Neck": 1, "RShoulder": 2, "RElbow": 3, "RWrist": 4,
+              "LShoulder": 5, "LElbow": 6, "LWrist": 7, "RHip": 8, "RKnee": 9,
+              "RAnkle": 10, "LHip": 11, "LKnee": 12, "LAnkle": 13, "REye": 14,
+              "LEye": 15, "REar": 16, "LEar": 17, "Background": 18}
 
-POSE_PAIRS = [ ["Neck", "RShoulder"], ["Neck", "LShoulder"], ["RShoulder", "RElbow"],
-               ["RElbow", "RWrist"], ["LShoulder", "LElbow"], ["LElbow", "LWrist"],
-               ["Neck", "RHip"], ["RHip", "RKnee"], ["RKnee", "RAnkle"], ["Neck", "LHip"],
-               ["LHip", "LKnee"], ["LKnee", "LAnkle"], ["Neck", "Nose"], ["Nose", "REye"],
-               ["REye", "REar"], ["Nose", "LEye"], ["LEye", "LEar"] ]
+POSE_PAIRS = [["Neck", "RShoulder"], ["Neck", "LShoulder"], ["RShoulder", "RElbow"],
+              ["RElbow", "RWrist"], ["LShoulder", "LElbow"], ["LElbow", "LWrist"],
+              ["Neck", "RHip"], ["RHip", "RKnee"], ["RKnee", "RAnkle"], ["Neck", "LHip"],
+              ["LHip", "LKnee"], ["LKnee", "LAnkle"], ["Neck", "Nose"], ["Nose", "REye"],
+              ["REye", "REar"], ["Nose", "LEye"], ["LEye", "LEar"]]
 
 inWidth = args.width
 inHeight = args.height
@@ -60,8 +59,7 @@ while cv.waitKey(1) < 0:
         heatMap = out[0, i, :, :]
 
         # Originally, we try to find all the local maximums. To simplify a sample
-        # we just find a global one. However only a single pose at the same time
-        # could be detected this way.
+        # we just find a global one. However only a single pose at the same time could be detected this way.
         _, conf, _, point = cv.minMaxLoc(heatMap)
         x = (frameWidth * point[0]) / out.shape[3]
         y = (frameHeight * point[1]) / out.shape[2]
@@ -72,8 +70,8 @@ while cv.waitKey(1) < 0:
     for pair in POSE_PAIRS:
         partFrom = pair[0]
         partTo = pair[1]
-        assert(partFrom in BODY_PARTS)
-        assert(partTo in BODY_PARTS)
+        assert (partFrom in BODY_PARTS)
+        assert (partTo in BODY_PARTS)
 
         idFrom = BODY_PARTS[partFrom]
         idTo = BODY_PARTS[partTo]

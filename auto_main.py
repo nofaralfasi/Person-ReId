@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from finalProject.classes.yolo import Yolo
 from finalProject.utils.keyPoints.AlgoritamKeyPoints import sift_keypoints_detection
 from finalProject.utils.matchers.Matchers import flann_matcher
-from finalProject.utils.preprocessing.preprocess import read_frames_from_video, is_frames_exists
+from finalProject.utils.preprocessing.preprocess import read_frames_from_video, check_frames_exist
 from finalProject.utils.tracking.TrackingByYolo import source_detection_by_yolo, tracking_by_yolo
 
 
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
         # source
         frameSource = read_frames_from_video(config["source"])
-        if not is_frames_exists(frameSource):
+        if not check_frames_exist(frameSource):
             print("problem with source video input")
             exit(0)
 
@@ -93,18 +93,11 @@ if __name__ == "__main__":
 
         # target
         frameTarget = read_frames_from_video(config["target"])
-        if not is_frames_exists(frameTarget):
+        if not check_frames_exist(frameTarget):
             print("problem with target video input")
             exit(0)
 
-        if not is_frames_exists(frameTarget):
-            print("problem with target video input -reduce noise")
-            exit(0)
-
-        myTargets = tracking_by_yolo(frameTarget, yolo, is_video=config["target"]["isVideo"],
-                                     config=config["target"])
-
-        # source
+        myTargets = tracking_by_yolo(frameTarget, yolo, is_video=config["target"]["isVideo"], config=config["target"])
 
         sources_output = forward(mySource.frames)  # array of outputs (key,des,image)
         targets_outputs = []  # array of targets , each target have array of frames
