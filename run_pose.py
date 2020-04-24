@@ -30,7 +30,6 @@ inHeight = args.height
 with open('./config.txt') as file_json:
     config = json.load(file_json)
 
-# net = cv.dnn.readNetFromCaffe("openpose/deploy_coco.prototxt", "openpose/pose_iter_440000.caffemodel")
 net = cv.dnn.readNetFromTensorflow("openpose/tensor_pose.pb")
 
 cap = cv.VideoCapture(config["source"]["inputVideo"])
