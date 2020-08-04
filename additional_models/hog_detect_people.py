@@ -6,7 +6,7 @@ import imutils
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
-cap = cv2.VideoCapture('C:/Users/HP/PycharmProjects/FinalProject-ReId/dataset/re-id/videos/home.mp4')
+cap = cv2.VideoCapture('home.mp4')
 
 while cap.isOpened():
     # Reading the video stream
